@@ -142,6 +142,7 @@ body[data-dir=b] .tabs2 button{border-radius:6px}
 .mail b{display:block;margin:2px 0 4px}
 .mail p{margin:0 0 8px;color:var(--soft);white-space:pre-line}
 .mail .btn{min-height:2.5rem;font-size:.92rem;padding:0 1rem}
+@media(max-width:760px){.site .links{display:none}.site .tools{margin-inline-start:auto}}
 @media(max-width:640px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.site .btn{display:none}.logo{font-size:1.3rem}}
 </style>
 
@@ -435,7 +436,7 @@ const ICON_MAIL=`<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy=
 const ICON_OK=`<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="34" fill="var(--tint)"/><path d="M22 37l9 9 19-20" stroke="var(--p)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 const activeProfile=()=>J("qa-profile",null);
 function setProfile(p){if(p&&p.id)ls.set("qa-profile",JSON.stringify(p));else ls.del("qa-profile")}
-function progLine(P){return P.any?`${count(P.mem,["آية محفوظة","آيتان محفوظتان","آيات محفوظة","آية محفوظة"])}، و${count(P.full.length,["سورة متقنة","سورتان متقنتان","سور متقنة","سورة متقنة"])}`+(P.due?`، و${num(P.due)} للمراجعة`:""):"لم يبدأ الحفظ بعد"}
+function progLine(P){return P.any?`${count(P.mem,["آية واحدة محفوظة","آيتان محفوظتان","آيات محفوظة","آية محفوظة"])}، و${count(P.full.length,["سورة واحدة متقنة","سورتان متقنتان","سور متقنة","سورة متقنة"])}`+(P.due?`، و${num(P.due)} للمراجعة`:""):"لم يبدأ الحفظ بعد"}
 function statsBox(P){return `<div class="stats"><div><b>${num(P.mem)}</b><span>آية محفوظة</span></div><div><b>${num(P.full.length)}</b><span>سورة متقنة</span></div><div><b>${num(P.due)}</b><span>للمراجعة اليوم</span></div><div><b>${num(P.streak)}</b><span>أيام متتالية</span></div></div>`}
 let flash="";
 function go(h){if(location.hash.slice(1)==h)render();else location.hash=h}
