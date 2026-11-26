@@ -53,7 +53,7 @@ select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);backgrou
 <script>
 let ITEMS=[],LIVE={};
 const $=s=>document.querySelector(s);
-const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const AR=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
 const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function fnv(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(16)}
 let toastT;function toast(m,ms){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,ms||2800)}
@@ -110,7 +110,7 @@ async function start(id){
   mr.start(250);
   const el=$('#it-'+CSS.escape(id));el.classList.add('live');
   const btn=el.querySelector('[data-a=rec]');btn.textContent='⏹️ أوقف';btn.dataset.a='stop';
-  el.querySelector('.acts').insertAdjacentHTML('beforeend','<span class="timer">● ٠ ث</span>');
+  el.querySelector('.acts').insertAdjacentHTML('beforeend','<span class="timer">● 0 ث</span>');
   tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000),tm=el.querySelector('.timer');if(tm)tm.textContent='● '+AR(s)+' ث';if(s>=120)stop()},250);
 }
 function stop(){try{if(mr&&mr.state!=='inactive')mr.stop()}catch(e){}}

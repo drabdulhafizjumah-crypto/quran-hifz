@@ -159,7 +159,7 @@ body[data-dir=b] .tabs2 button{border-radius:6px}
 
 <main class="band"><div class="in" id="view" aria-live="polite"></div></main>
 
-<button class="mbtn" id="mbtn" aria-expanded="false">📬 البريد التجريبي <i id="mcount">٠</i></button>
+<button class="mbtn" id="mbtn" aria-expanded="false">📬 البريد التجريبي <i id="mcount">0</i></button>
 <div class="mbox" id="mbox" hidden role="dialog" aria-label="البريد التجريبي"></div>
 
 <script>
@@ -269,9 +269,9 @@ const SUR=[[1,"الفاتحة",7],[114,"الناس",6],[113,"الفلق",5],[112
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
 const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
-const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const num=n=>String(n).replace(/\d/g,d=>"0123456789"[d]);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-/* عدد مع المعدود: days(3) = «٣ أيام» */
+/* عدد مع المعدود: days(3) = «3 أيام» */
 function count(n,[one,two,few,many]){if(n==1)return one;if(n==2)return two;if(n>=3&&n<=10)return num(n)+' '+few;return num(n)+' '+many}
 const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
 /* ملخّص تقدّم ملف (pid فارغ = صاحب الجهاز) */
@@ -338,12 +338,12 @@ const API={
   async signUp(d){const db=load(),email=normEmail(d.email);
     if(Object.values(db.users).some(u=>u.email==email)){return this.requestLogin(email)}
     const tok=rid("t");db.tokens[tok]={kind:"signup",email,data:{name:d.name.trim(),country:d.country,role:d.role,age:d.role=="learner"?+d.age:null},exp:Date.now()+15*MIN};
-    mail(db,email,"أكّد بريدك وادخل إلى «"+N[0]+"»",`السلام عليكم ${d.name.trim()}،\nاضغط الزر لتأكيد بريدك وإكمال إنشاء حسابك. الرابط صالح ١٥ دقيقة.\nإن لم تطلب ذلك فتجاهل الرسالة.`,link("verify",tok),"أكّد بريدي وادخل");
+    mail(db,email,"أكّد بريدك وادخل إلى «"+N[0]+"»",`السلام عليكم ${d.name.trim()}،\nاضغط الزر لتأكيد بريدك وإكمال إنشاء حسابك. الرابط صالح 15 دقيقة.\nإن لم تطلب ذلك فتجاهل الرسالة.`,link("verify",tok),"أكّد بريدي وادخل");
     store(db);return{sent:email}},
   /* Supabase: auth.signInWithOtp({email, options:{shouldCreateUser:false}})
      لا نكشف إن كان البريد مسجّلاً: الرسالة على الشاشة واحدة في الحالتين. */
   async requestLogin(e){const db=load(),email=normEmail(e),u=Object.values(db.users).find(u=>u.email==email);
-    if(u){const tok=rid("t");db.tokens[tok]={kind:"login",email,exp:Date.now()+15*MIN};mail(db,email,"رابط الدخول إلى «"+N[0]+"»",`السلام عليكم ${u.name}،\nاضغط الزر للدخول. الرابط صالح ١٥ دقيقة ولمرة واحدة.`,link("verify",tok),"ادخل الآن")}
+    if(u){const tok=rid("t");db.tokens[tok]={kind:"login",email,exp:Date.now()+15*MIN};mail(db,email,"رابط الدخول إلى «"+N[0]+"»",`السلام عليكم ${u.name}،\nاضغط الزر للدخول. الرابط صالح 15 دقيقة ولمرة واحدة.`,link("verify",tok),"ادخل الآن")}
     else mail(db,email,"لا يوجد حساب بهذا البريد",`طلب أحدهم رابط دخول بهذا البريد، ولا يوجد حساب مسجّل به.\nيمكنك إنشاء حساب مجاناً، أو تجاهل الرسالة.`,QA.CFG.siteUrl+"account.html#signup","أنشئ حساباً");
     store(db);return{sent:email}},
   /* Supabase: يتمّ تلقائياً عند فتح الرابط (detectSessionInUrl)، ثم نُدرج صف profiles أول مرة */
@@ -491,7 +491,7 @@ login(){return `
 sent(email){return `
 <div class="card big">${ICON_MAIL}
   <h2>افتح بريدك</h2>
-  <p class="muted">أرسلنا رابطاً إلى <b dir="ltr">${esc(email)}</b>. اضغطه خلال ١٥ دقيقة لتدخل.</p>
+  <p class="muted">أرسلنا رابطاً إلى <b dir="ltr">${esc(email)}</b>. اضغطه خلال 15 دقيقة لتدخل.</p>
   <p class="muted" style="font-size:.92rem">لم يصل؟ انظر في مجلد الرسائل غير المرغوبة، أو <a href="#login">اطلب رابطاً جديداً</a>.</p>
   ${CLOUD?`<p class="muted" style="font-size:.92rem">إن لم يكن لك حساب بهذا البريد فلن يصلك شيء، <a href="#signup">فأنشئ حساباً</a>.</p>`:`<div class="ok" style="text-align:start">في هذه النسخة التجريبية تجد الرسالة في «البريد التجريبي» أسفل الصفحة.</div>`}
 </div>`},

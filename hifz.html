@@ -207,7 +207,7 @@ body{zoom:var(--fs,1)}
     <div class="grid">
       <div class="mushaf"><div class="in"><div class="sname"><span id="lName"></span></div><div id="lBasm" class="basm"></div><div id="lText" class="qt"></div><div class="tjbar" id="tjBar"></div></div></div>
       <div class="side">
-        <div class="box"><h3>١. استمع</h3>
+        <div class="box"><h3>1. استمع</h3>
           <div class="row"><button class="btn pri" id="play">▶ تشغيل المقطع</button><button class="btn" id="stop">إيقاف</button></div>
           <div class="row" style="margin-top:10px">
             <label class="f">التكرار<select id="rep"><option>1</option><option selected>3</option><option>5</option><option>10</option></select></label>
@@ -215,7 +215,7 @@ body{zoom:var(--fs,1)}
           </div>
           <p class="muted" id="audioMsg" style="margin:8px 0 0">اضغط آية لسماعها وحدها.</p>
         </div>
-        <div class="box"><h3>٢. أخفِ الكلمات تدريجياً</h3>
+        <div class="box"><h3>2. أخفِ الكلمات تدريجياً</h3>
           <div class="stages" id="stages"></div>
           <p class="muted" id="stageTxt" style="margin:8px 0 0"></p>
         </div>
@@ -245,7 +245,7 @@ body{zoom:var(--fs,1)}
     <div class="grid">
       <div class="ucard" id="uCard"></div>
       <div class="side">
-        <div class="box"><h3>المستوى</h3><div class="seg" id="ageSeg"><button data-age="0">٥–٩ سنوات</button><button data-age="1">١٠–١٥ سنة</button><button data-age="2">الكبار</button></div></div>
+        <div class="box"><h3>المستوى</h3><div class="seg" id="ageSeg"><button data-age="0">5–9 سنوات</button><button data-age="1">10–15 سنة</button><button data-age="2">الكبار</button></div></div>
         <div class="box" id="quiz"></div>
         <p class="draft">مسودة للمراجعة: المعاني المبسّطة والأسئلة أعدّها مساعد ذكي اعتماداً على التفسير الميسّر، وتحتاج مراجعة معلم قبل النشر. نص التفسير منقول كما هو من مجمع الملك فهد.</p>
       </div>
@@ -255,7 +255,7 @@ body{zoom:var(--fs,1)}
   <section id="tab-review" hidden>
     <div class="grid">
       <div><h2 style="margin:0 0 6px;font-size:22px">مراجعة اليوم</h2><p class="muted" style="margin:0 0 12px">تُجدول الآيات بالتكرار المتباعد: كلما أتقنت آية طالت المدة قبل أن تعود، وما أخطأت فيه يعود أولاً.</p><div class="rlist" id="rList"></div></div>
-      <div class="side"><div class="box"><h3>كيف تعمل المراجعة</h3><p class="muted" style="margin:0">الآية الجديدة تعود بعد يوم، ثم ٢، ٤، ٧، ١٥، ٣٠ يوماً كلما نجحت. إن نسيتها عادت إلى البداية.</p></div>
+      <div class="side"><div class="box"><h3>كيف تعمل المراجعة</h3><p class="muted" style="margin:0">الآية الجديدة تعود بعد يوم، ثم 2، 4، 7، 15، 30 يوماً كلما نجحت. إن نسيتها عادت إلى البداية.</p></div>
       <button class="btn pri" id="revStart">ابدأ المراجعة</button></div>
     </div>
   </section>
@@ -374,7 +374,7 @@ const TJ={"1":[[[],[[0,1,0]],[[0,1,0],[1,2,1],[9,10,3]],[[0,1,0],[1,2,1],[7,8,4]
 function fnv(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(16)}
 const BASM=DATA[0].v[0];
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
-const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const AR=n=>String(n).replace(/\d/g,d=>'0123456789'[d]);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
 const IV=[0,1,2,4,7,15,30];
@@ -439,8 +439,8 @@ const basmHtml=()=>sur().n===1?'':esc(BASM);
 let stage=0;const ST=['النص كاملاً','إخفاء ربع الكلمات','إخفاء النصف','إخفاء ثلاثة أرباع','الحرف الأول فقط','من الذاكرة تماماً'];
 $('#stages').innerHTML=ST.map((_,i)=>`<button data-s="${i}" aria-pressed="${i==0}">${AR(i+1)}</button>`).join('');
 function firstLetter(w){const m=w.match(/^[ء-يٱ][ً-ٰٟۖ-ۭ]*/);return m?m[0]:w[0]}
-const TG='gggabcdqnnnngnngg',TJN=['همزة وصل: لا تُلفظ عند الوصل','لام شمسية: لا تُلفظ','حرف لا يُلفظ','مدّ طبيعي: حركتان','مدّ جائز: ٢ أو ٤ أو ٦ حركات','مدّ واجب متّصل: ٤ أو ٥ حركات','مدّ لازم: ٦ حركات','قلقلة','غنّة: حركتان','إخفاء بغنّة','إخفاء شفوي بغنّة','إدغام بغنّة','إدغام بلا غنّة','إدغام شفوي بغنّة','إقلاب: تُقلب النون ميماً مع الغنّة','إدغام متجانسين','إدغام متقاربين'];
-const TJL=[['g','لا يُلفظ'],['n','غنّة: إخفاء، إدغام، إقلاب'],['q','قلقلة'],['a','مدّ حركتان'],['b','مدّ جائز ٢، ٤، ٦'],['c','مدّ واجب ٤ أو ٥'],['d','مدّ لازم ٦']];
+const TG='gggabcdqnnnngnngg',TJN=['همزة وصل: لا تُلفظ عند الوصل','لام شمسية: لا تُلفظ','حرف لا يُلفظ','مدّ طبيعي: حركتان','مدّ جائز: 2 أو 4 أو 6 حركات','مدّ واجب متّصل: 4 أو 5 حركات','مدّ لازم: 6 حركات','قلقلة','غنّة: حركتان','إخفاء بغنّة','إخفاء شفوي بغنّة','إدغام بغنّة','إدغام بلا غنّة','إدغام شفوي بغنّة','إقلاب: تُقلب النون ميماً مع الغنّة','إدغام متجانسين','إدغام متقاربين'];
+const TJL=[['g','لا يُلفظ'],['n','غنّة: إخفاء، إدغام، إقلاب'],['q','قلقلة'],['a','مدّ حركتان'],['b','مدّ جائز 2، 4، 6'],['c','مدّ واجب 4 أو 5'],['d','مدّ لازم 6']];
 const tjOn=()=>S.tj!==0;
 function wHtml(s,a,i,w){const r=tjOn()&&TJ[s]&&TJ[s][a-1]&&TJ[s][a-1][i];if(!r||!r.length)return esc(w);
   const cs=[...w];let o='',p=0;for(const [st,en,k] of r){o+=esc(cs.slice(p,st).join(''))+`<span class="tj t${TG[k]}" data-r="${k}">${esc(cs.slice(st,en).join(''))}</span>`;p=en}return o+esc(cs.slice(p).join(''))}
@@ -689,7 +689,7 @@ function renderQ(){
   if(!q){
     const all=quiz.score===quiz.qs.length;S.quiz=S.quiz||{};S.quiz[quiz.s]=Math.max(S.quiz[quiz.s]||0,quiz.score/quiz.qs.length);
     if(all)S.pts+=20;checkBadges();save();stats();
-    $('#quiz').innerHTML=`<div class="reward" style="padding:6px">${all?STAR:''}<p class="score">${AR(quiz.score)} / ${AR(quiz.qs.length)}</p><p style="margin:4px 0 10px">${all?'فهمت السورة، أحسنت! (+٢٠ نقطة)':'راجع البطاقة ثم حاول مرة أخرى.'}</p><div class="row" style="justify-content:center"><button class="btn pri" id="qAgain">أعد الأسئلة</button><button class="btn" id="qMem">احفظ السورة</button></div></div>`;
+    $('#quiz').innerHTML=`<div class="reward" style="padding:6px">${all?STAR:''}<p class="score">${AR(quiz.score)} / ${AR(quiz.qs.length)}</p><p style="margin:4px 0 10px">${all?'فهمت السورة، أحسنت! (+20 نقطة)':'راجع البطاقة ثم حاول مرة أخرى.'}</p><div class="row" style="justify-content:center"><button class="btn pri" id="qAgain">أعد الأسئلة</button><button class="btn" id="qMem">احفظ السورة</button></div></div>`;
     $('#qAgain').onclick=startQuiz;$('#qMem').onclick=()=>tab('learn');return;
   }
   const opts=shuffle(q[1].map((o,k)=>({o,k})));quiz.tries=0;
@@ -726,9 +726,9 @@ const BADGES=[
  {id:'understand',t:'فهمت سورة',d:'أجبت كل أسئلة سورة',f:()=>Object.values(S.quiz||{}).some(v=>v>=1)},
  {id:'first',t:'أول آية',d:'أتقنت أول آية',f:()=>Object.values(S.ay).some(x=>x.mem)},
  {id:'surah',t:'سورة كاملة',d:'أتقنت كل آيات سورة',f:()=>DATA.some(d=>d.v.every((_,i)=>S.ay[K(d.n,i+1)]?.mem))},
- {id:'p100',t:'مئة نقطة',d:'جمعت ١٠٠ نقطة',f:()=>S.pts>=100},
+ {id:'p100',t:'مئة نقطة',d:'جمعت 100 نقطة',f:()=>S.pts>=100},
  {id:'goal',t:'هدف اليوم',d:'أتممت هدفك اليومي',f:()=>S.doneDay===today()&&S.doneCount>=S.goal},
- {id:'streak3',t:'ثلاثة أيام',d:'حفظت ٣ أيام متتالية',f:()=>S.streak>=3},
+ {id:'streak3',t:'ثلاثة أيام',d:'حفظت 3 أيام متتالية',f:()=>S.streak>=3},
  {id:'master',t:'إتقان',d:'وصلت آية إلى أعلى مرتبة',f:()=>Object.values(S.ay).some(x=>x.b>=5)},
 ];
 function checkBadges(){for(const b of BADGES)if(!S.badges[b.id]&&b.f()){S.badges[b.id]=1;setTimeout(()=>toast('وسام جديد: '+b.t),900)}}

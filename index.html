@@ -121,7 +121,7 @@ body[data-dir=b] .chip{border-radius:6px}
 @media(prefers-reduced-motion:reduce){.mic{animation:none}body{transition:none}}
 .note{background:color-mix(in srgb,var(--acc) 10%,var(--card));border-radius:10px;padding:8px 12px;font-size:.95rem;text-align:start;margin-top:10px}
 
-/* ===== ١ احفظ ===== */
+/* ===== 1 احفظ ===== */
 .steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;counter-reset:st}
 .step{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;position:relative}
 .step::before{counter-increment:st;content:counter(st,arabic-indic);position:absolute;top:14px;left:16px;font:800 1.6rem/1 var(--dfont);color:color-mix(in srgb,var(--p) 30%,transparent)}
@@ -135,7 +135,7 @@ ul.ticks{padding:0;list-style:none;margin:14px 0 0;display:grid;gap:8px}
 ul.ticks li{display:flex;gap:10px}
 ul.ticks li::before{content:"✓";color:var(--p);font-weight:700}
 
-/* ===== ٢ افهم ===== */
+/* ===== 2 افهم ===== */
 .und .in{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(24px,4vw,48px);align-items:start}
 .lvls{display:grid;gap:10px;margin-top:6px}
 .lvls div{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
@@ -153,7 +153,7 @@ ul.ticks li::before{content:"✓";color:var(--p);font-weight:700}
 .qz button.right{border-color:var(--p);background:color-mix(in srgb,var(--p) 12%,var(--card))}
 .qz button.wrong{border-color:var(--acc)}
 
-/* ===== ٣ تحدّي اليوم ===== */
+/* ===== 3 تحدّي اليوم ===== */
 .today .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:start}
 .today .shead{margin-bottom:0}
 body[data-dir=b] .today .in{grid-template-areas:"main tree" "tasks tree"}
@@ -174,7 +174,7 @@ body[data-dir=b] .streak span.on{background:var(--p);border-color:var(--p);color
 .tasks small{display:block;color:var(--soft);font-size:.88rem;text-decoration:none}
 .tasks .pts{margin-inline-start:auto;font-weight:700;color:var(--p);white-space:nowrap;background:var(--tint);border-radius:999px;padding:2px 10px}
 
-/* ===== ٤ وليّ الأمر ===== */
+/* ===== 4 وليّ الأمر ===== */
 .par .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
 .rep{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px;box-shadow:0 10px 30px color-mix(in srgb,var(--ink) 6%,transparent)}
 .rep header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:12px}
@@ -295,7 +295,7 @@ footer .about p{color:var(--soft)}
     <p class="tag">احفظ القرآن الكريم، وسمّع بصوتك، وافهم ما تحفظ.</p>
     <p class="sub">مصحف يستمع إليك ويدلّك على موضع الخطأ، وشرح يناسب عمرك، وتحدٍّ صغير كل يوم.</p>
     <div class="acts"><a class="btn" href="hifz.html#learn" id="startBtn">ابدأ الحفظ الآن</a><a class="btn o" href="account.html#parent">أنا وليّ أمر</a></div>
-    <div class="ages"><span>عمري:</span><button class="chip" data-age="k">من ٥ إلى ٩</button><button class="chip" data-age="t">من ١٠ إلى ١٥</button><button class="chip" data-age="a">١٦ فأكثر</button></div>
+    <div class="ages"><span>عمري:</span><button class="chip" data-age="k">من 5 إلى 9</button><button class="chip" data-age="t">من 10 إلى 15</button><button class="chip" data-age="a">16 فأكثر</button></div>
   </div>
   <div class="pic" id="heroPic"></div>
   <div class="facts">
@@ -308,7 +308,7 @@ footer .about p{color:var(--soft)}
 
 <section class="band" id="hifz"><div class="in">
   <div class="shead">
-    <span class="eyebrow"><b>١</b>احفظ</span>
+    <span class="eyebrow"><b>1</b>احفظ</span>
     <h2>أربع خطوات لكل سورة</h2>
     <p class="lead">من أول سماع إلى الحفظ المتقن، والمراجعة تأتي في وقتها حتى لا تنسى.</p>
   </div>
@@ -332,14 +332,14 @@ footer .about p{color:var(--soft)}
 <section class="und band alt" id="fahm"><div class="in">
   <div>
     <div class="shead">
-      <span class="eyebrow"><b>٢</b>افهم</span>
+      <span class="eyebrow"><b>2</b>افهم</span>
       <h2>شرح على قدر عمرك</h2>
       <p class="lead">الآية نفسها بثلاثة مستويات من الشرح، وبعد الشرح سؤال قصير يثبّت الفهم.</p>
     </div>
     <div class="lvls">
-      <div><i>٥+</i><p style="margin:0"><b>الصغار</b><span>قصة قصيرة ومعنى بسيط</span></p></div>
-      <div><i>١٠+</i><p style="margin:0"><b>اليافعون</b><span>معاني الكلمات والهدايات</span></p></div>
-      <div><i>١٦+</i><p style="margin:0"><b>الكبار</b><span>التفسير الميسّر وهدايات أعمق</span></p></div>
+      <div><i>5+</i><p style="margin:0"><b>الصغار</b><span>قصة قصيرة ومعنى بسيط</span></p></div>
+      <div><i>10+</i><p style="margin:0"><b>اليافعون</b><span>معاني الكلمات والهدايات</span></p></div>
+      <div><i>16+</i><p style="margin:0"><b>الكبار</b><span>التفسير الميسّر وهدايات أعمق</span></p></div>
     </div>
   </div>
   <div class="lvl">
@@ -356,7 +356,7 @@ footer .about p{color:var(--soft)}
 <section class="today band alt2" id="today"><div class="in">
   <div class="tmain">
     <div class="shead">
-      <span class="eyebrow"><b>٣</b>تحدَّ</span>
+      <span class="eyebrow"><b>3</b>تحدَّ</span>
       <h2>تحدّي اليوم</h2>
       <p class="lead">خمس دقائق تكفي. أكمل المهام الثلاث لتنضج ثمرة جديدة في شجرتك.</p>
     </div>
@@ -370,7 +370,7 @@ footer .about p{color:var(--soft)}
 <section class="par band" id="par"><div class="in">
   <div>
     <div class="shead" style="margin-bottom:0">
-      <span class="eyebrow"><b>٤</b>لوليّ الأمر</span>
+      <span class="eyebrow"><b>4</b>لوليّ الأمر</span>
       <h2>تابع دون أن تراقب</h2>
       <p class="lead">تقرير أسبوعي بسيط يصلك عن حفظ ابنك أو ابنتك: ما حُفظ، وما يحتاج مراجعة، وكم يوماً واظب.</p>
     </div>
@@ -379,12 +379,12 @@ footer .about p{color:var(--soft)}
   </div>
   <div class="rep" id="rep">
     <div class="kidsel" id="kidsel" hidden></div>
-    <header><b id="repName">تقرير سارة، ٧ سنوات</b><span id="repNote">مثال توضيحي</span></header>
+    <header><b id="repName">تقرير سارة، 7 سنوات</b><span id="repNote">مثال توضيحي</span></header>
     <div id="repBody">
-    <div class="row"><span>الحفظ</span><div class="bar"><i style="width:24%"></i></div><em>٩ من ٣٧ سورة</em></div>
-    <div class="row"><span>المراجعة</span><div class="bar"><i style="width:80%"></i></div><em>٤ من ٥ في وقتها</em></div>
-    <div class="row"><span>الفهم</span><div class="bar"><i style="width:66%"></i></div><em>٦ بطاقات</em></div>
-    <div class="sum"><div><b>٥</b><span>أيام هذا الأسبوع</span></div><div><b>٣٨</b><span>دقيقة</span></div><div><b>الكوثر</b><span>آخر سورة أتقنتها</span></div></div>
+    <div class="row"><span>الحفظ</span><div class="bar"><i style="width:24%"></i></div><em>9 من 37 سورة</em></div>
+    <div class="row"><span>المراجعة</span><div class="bar"><i style="width:80%"></i></div><em>4 من 5 في وقتها</em></div>
+    <div class="row"><span>الفهم</span><div class="bar"><i style="width:66%"></i></div><em>6 بطاقات</em></div>
+    <div class="sum"><div><b>5</b><span>أيام هذا الأسبوع</span></div><div><b>38</b><span>دقيقة</span></div><div><b>الكوثر</b><span>آخر سورة أتقنتها</span></div></div>
     </div>
   </div>
 </div></section>
@@ -568,9 +568,9 @@ const SUR=[[1,"الفاتحة",7],[114,"الناس",6],[113,"الفلق",5],[112
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
 const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
-const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const num=n=>String(n).replace(/\d/g,d=>"0123456789"[d]);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-/* عدد مع المعدود: days(3) = «٣ أيام» */
+/* عدد مع المعدود: days(3) = «3 أيام» */
 function count(n,[one,two,few,many]){if(n==1)return one;if(n==2)return two;if(n>=3&&n<=10)return num(n)+' '+few;return num(n)+' '+many}
 const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
 /* ملخّص تقدّم ملف (pid فارغ = صاحب الجهاز) */
@@ -609,7 +609,7 @@ const LV={k:{h:"للصغار",b:"أَعْطَى اللهُ نَبِيَّنَا 
 t:{h:"لليافعين",b:"<b>الكوثر:</b> الْخَيْرُ الْكَثِيرُ، وَمِنْهُ نَهْرٌ فِي الْجَنَّةِ.<br>إِخْبَارُ النَّبِيِّ ﷺ بِعَطَاءِ اللهِ لَهُ الْخَيْرَ الْكَثِيرَ، وَالْأَمْرُ بِشُكْرِهِ بِالصَّلَاةِ وَالذَّبْحِ لَهُ وَحْدَهُ. وَهِيَ أَقْصَرُ سُورَةٍ فِي الْقُرْآنِ، ثَلَاثُ آيَاتٍ.",q:["ما معنى «الأبتر»؟",["المقطوع من كل خير","كثير الأولاد","الغني"],0],s:"معاني الكلمات والهدايات"},
 a:{h:"للكبار",b:"إنا أعطيناك -أيها النبي- الخير الكثير في الدنيا والآخرة، ومن ذلك نهر الكوثر في الجنة الذي حافتاه خيام اللؤلؤ المجوَّف، وطينه المسك.",q:["بمَ أُمر النبي ﷺ شكراً على الكوثر؟",["إخلاص الصلاة والنحر لله","الصيام","الهجرة"],0],s:"التفسير الميسّر، مجمع الملك فهد لطباعة المصحف الشريف"}};
 const AY=[["إِنَّآ","أَعۡطَيۡنَٰكَ","ٱلۡكَوۡثَرَ"],["فَصَلِّ","لِرَبِّكَ","وَٱنۡحَرۡ"],["إِنَّ","شَانِئَكَ","هُوَ","ٱلۡأَبۡتَرُ"]];
-const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const num=n=>String(n).replace(/\d/g,d=>"0123456789"[d]);
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const store={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 const root=document.documentElement;
@@ -630,7 +630,7 @@ $$("[data-age]").forEach(b=>b.onclick=()=>setAge(b.dataset.age));
 /* ===== ربط الرئيسية بالمصحف وبالتقدّم المحفوظ على الجهاز ===== */
 const P0=QA.prog(QA.J('qa-profile',null)?.id||'');   // تقدّم من يحفظ الآن على هذا الجهاز
 const SES=QA.session();
-/* الشجرة: ٣٧ ثمرة بعدد سور جزء عمّ، تنضج الثمرة حين تُتقن سورتها */
+/* الشجرة: 37 ثمرة بعدد سور جزء عمّ، تنضج الثمرة حين تُتقن سورتها */
 function drawTree(P){
   const juz=P.surahs.filter(s=>s.n>=78);let st,ex=false;
   if(P.any)st=juz.map(s=>s.m===s.c?"r":s.m>0?"g":"u");
@@ -647,7 +647,7 @@ function drawTree(P){
   g+=pts.map(([x,y],i)=>{const k=order[i];if(k==null)return"";const S=st[k],sr=juz[k];const f=S=="r"?"var(--p2)":S=="g"?"var(--acc)":"color-mix(in srgb,var(--p) 30%,var(--bg))";const r=S=="u"?11:15;
     return `<a href="hifz.html?s=${sr.n}#learn"><title>${QA.esc(sr.name)}${ex?"":`: ${QA.num(sr.m)} من ${QA.num(sr.c)} آية`}</title><path d="M${x} ${y-r}q4-8 10-8" stroke="#3d6b2c" stroke-width="2.5" fill="none"/><circle cx="${x}" cy="${y}" r="${r}" fill="${f}" ${S=="u"?'stroke="color-mix(in srgb,var(--p) 60%,var(--bg))" stroke-width="1.5"':''}/>${S!="u"?`<circle cx="${x-r*.35}" cy="${y-r*.35}" r="${r*.28}" fill="#fff" opacity=".55"/>`:""}</a>`}).join("");
   sv.innerHTML=g;
-  sv.setAttribute("aria-label",(ex?"مثال لشجرة الحفظ: ":"شجرة حفظك: ")+QA.num(nR)+" ثمرة ناضجة من ٣٧");
+  sv.setAttribute("aria-label",(ex?"مثال لشجرة الحفظ: ":"شجرة حفظك: ")+QA.num(nR)+" ثمرة ناضجة من 37");
   $("#treeKey").innerHTML=`<span><i style="background:var(--p2)"></i>${ex?"حُفظت":"حفظتها"}: ${QA.num(nR)}</span><span><i style="background:var(--acc)"></i>${ex?"تُحفظ الآن":"أحفظها الآن"}: ${QA.num(nG)}</span><span><i style="background:color-mix(in srgb,var(--p) 30%,var(--bg))"></i>لم تبدأ: ${QA.num(nU)}</span>`+(ex?`<span style="flex-basis:100%;text-align:center">مثال توضيحي، وتصير شجرتك حين تبدأ الحفظ</span>`:"");
 }
 /* تحدّي اليوم: من تقدّم المتعلّم الفعلي */
