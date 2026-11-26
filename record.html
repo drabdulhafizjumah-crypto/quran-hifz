@@ -1,0 +1,134 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>استوديو التسجيل</title><meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri&family=IBM+Plex+Sans+Arabic:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:light dark;--bg:light-dark(#fffdf6,#121c18);--card:light-dark(#fff,#15201b);--ink:light-dark(#14231d,#e8efe9);--mute:light-dark(#5b6b64,#9fb0a8);--green:light-dark(#0b6b52,#3fbf95);--green2:light-dark(#e3f3ec,#173a2f);--gold:light-dark(#b8860b,#e7b84a);--gold2:light-dark(#fbf1d6,#3a3016);--red:light-dark(#c62828,#ff7a70);--red2:light-dark(#fde8e6,#3d1d1b);--line:light-dark(#d9e4de,#2a3a33)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans Arabic",system-ui,sans-serif;line-height:1.6}
+header{background:var(--green);color:#fff;padding:16px}
+header h1{margin:0;font-size:22px}header p{margin:4px 0 0;opacity:.9;font-size:14px}
+main{max-width:860px;margin:0 auto;padding:16px}
+.help{background:var(--gold2);border-radius:12px;padding:12px 16px;font-size:15px}
+.help ol{margin:6px 0 0;padding-inline-start:20px}
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+select,button{font:inherit}
+select{padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+.prog{flex:1;min-width:160px}.prog b{color:var(--green)}
+.meter{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:4px}.meter i{display:block;height:100%;background:var(--green);width:0}
+.btn{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 16px;cursor:pointer}
+.btn:disabled{opacity:.45;cursor:default}
+.pri{background:var(--green);border-color:var(--green);color:#fff;font-weight:700}
+.rec{background:var(--red);border-color:var(--red);color:#fff;font-weight:700}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin:14px 0}
+.item.done{border-color:var(--green)}.item.stale{border-color:var(--gold);background:var(--gold2)}
+.item.live{box-shadow:0 0 0 3px var(--red)}
+.top{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--mute)}
+.badge{border-radius:999px;padding:1px 10px;font-size:13px;white-space:nowrap}
+.done .badge{background:var(--green2);color:var(--green)}.stale .badge{background:var(--gold);color:#1b1b1b}
+.txt{font-family:Amiri,serif;font-size:26px;line-height:2;margin:8px 0 12px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.acts small{color:var(--mute)}
+.timer{color:var(--red);font-weight:700}
+#toast{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);background:#14231d;color:#fff;padding:10px 18px;border-radius:12px;font-size:15px;max-width:92vw}
+@media(max-width:520px){.txt{font-size:22px}header h1{font-size:19px}}
+</style></head><body>
+<header><h1>🎙️ استوديو تسجيل بطاقات «افهم»</h1><p>صفحة خاصة بالمعلّم لتسجيل النصوص بصوته، فيسمعها الطالب بدل الصوت الآلي.</p></header>
+<main>
+<div class="help"><b>طريقة العمل:</b><ol>
+<li>اضغط «سجّل» واقرأ النص المكتوب، ثم اضغط «أوقف». يطلب المتصفح إذن الميكروفون في المرة الأولى.</li>
+<li>اضغط «استمع» للمراجعة، و«أعد التسجيل» إن لم يعجبك.</li>
+<li>التسجيلات تُحفظ في هذا المتصفح، فيمكنك التوقف والعودة لاحقاً من الجهاز والمتصفح نفسيهما.</li>
+<li>حين تنتهي (أو بعد كل سورة) اضغط «تنزيل الكل» وأرسل الملف الناتج، وسأضعه في الموقع.</li>
+</ol>البطاقة الصفراء تعني أن النص تغيّر بعد تسجيله، فيلزم تسجيلها من جديد.</div>
+<div class="bar">
+<select id="sf" aria-label="السورة"></select>
+<select id="vf" aria-label="العرض"><option value="all">كل النصوص</option><option value="todo">غير المسجّل فقط</option><option value="done">المسجّل فقط</option></select>
+<div class="prog"><span id="pt"></span><div class="meter"><i id="pm"></i></div></div>
+<button class="btn pri" id="dl">⬇️ تنزيل الكل</button>
+</div>
+<div id="list"></div>
+</main>
+<div id="toast" hidden></div>
+<script>
+let ITEMS=[],LIVE={};
+const $=s=>document.querySelector(s);
+const AR=n=>String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function fnv(s){let h=0x811c9dc5;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return h.toString(16)}
+let toastT;function toast(m,ms){const t=$('#toast');t.textContent=m;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>t.hidden=true,ms||2800)}
+function build(D){const out=[];for(const s of D){const c=s.c;if(!c)continue;
+  const add=(i,g,x)=>out.push({id:s.n+'-'+i,s:s.name,n:s.n,g,t:String(x).trim()});
+  add('kids','الفكرة العامة للصغار',c.kids);add('theme','الفكرة العامة للناشئة والكبار',c.theme);
+  c.words.forEach(([a,i,m],j)=>add('w'+j,'معنى كلمة «'+s.v[a-1].split(/\s+/)[i]+'»'+(j<3?' (تظهر للصغار أيضاً)':''),m));
+  c.lessons.forEach((x,j)=>add('l'+j,'هداية '+AR(j+1)+(j<2?' (تظهر للصغار أيضاً)':''),x));
+  (c.adult||[]).forEach((x,j)=>add('a'+j,'هداية للكبار '+AR(j+1),x));
+  if(c.teen_extra)add('x','فائدة إضافية للناشئة والكبار',c.teen_extra);
+  s.t.forEach((g,k)=>{const lab=g[0]===g[1]?'آية '+AR(g[0]):'الآيات '+AR(g[0])+'–'+AR(g[1]);add('s'+k+'-0','معنى '+lab+' للصغار',c.simple[k][0]);add('s'+k+'-1','معنى '+lab+' للناشئة',c.simple[k][1])})}
+  out.forEach(it=>it.h=fnv(it.t));return out}
+async function loadSite(){const t=await (await fetch('./index.html',{cache:'no-store'})).text();
+  const m=t.match(/const DATA=(.*);\nconst AUDIO=(.*);\n/);if(!m)throw 0;ITEMS=build(JSON.parse(m[1]));LIVE=JSON.parse(m[2])}
+// ---- storage (IndexedDB, with in-memory fallback)
+const REC={};let db=null;
+function dbOpen(){return new Promise(res=>{try{const q=indexedDB.open('quran-rec',1);q.onupgradeneeded=()=>q.result.createObjectStore('r');q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)}catch(e){res(null)}})}
+function dbAll(){return new Promise(res=>{if(!db)return res();try{const st=db.transaction('r').objectStore('r'),q=st.openCursor();q.onsuccess=()=>{const c=q.result;if(c){REC[c.key]=c.value;c.continue()}else res()};q.onerror=()=>res()}catch(e){res()}})}
+function dbPut(k,v){REC[k]=v;try{if(db)db.transaction('r','readwrite').objectStore('r').put(v,k)}catch(e){}}
+function dbDel(k){delete REC[k];try{if(db)db.transaction('r','readwrite').objectStore('r').delete(k)}catch(e){}}
+function state(it){const r=REC[it.id];if(r)return r.h===it.h?'done':'stale';if(LIVE[it.id])return LIVE[it.id]===it.h?'live':'stale';return 'todo'}
+// ---- UI
+function initSel(){const surahs=[...new Map(ITEMS.map(i=>[i.n,i.s])).entries()];
+$('#sf').innerHTML='<option value="0">كل السور</option>'+surahs.map(([n,s])=>`<option value="${n}">سورة ${esc(s)}</option>`).join('');
+try{const p=JSON.parse(localStorage.getItem('rec-ui')||'{}');if(p.s)$('#sf').value=p.s;if(p.v)$('#vf').value=p.v}catch(e){}}
+$('#sf').onchange=$('#vf').onchange=()=>{try{localStorage.setItem('rec-ui',JSON.stringify({s:$('#sf').value,v:$('#vf').value}))}catch(e){}render()};
+function badge(st){return{done:'✓ مسجّل',stale:'⚠ النص تغيّر: أعد التسجيل',live:'✓ منشور في الموقع',todo:''}[st]}
+function card(it){const st=state(it),has=!!REC[it.id];
+  return `<div class="item ${st==='live'?'done':st}" id="it-${it.id}"><div class="top"><span>سورة ${esc(it.s)} · ${esc(it.g)}</span>${badge(st)?`<span class="badge">${badge(st)}</span>`:''}</div>
+  <div class="txt">${esc(it.t)}</div><div class="acts">
+  <button class="btn rec" data-a="rec">${has?'🔁 أعد التسجيل':'🎙️ سجّل'}</button>
+  <button class="btn" data-a="play" ${has?'':'disabled'}>▶️ استمع</button>
+  ${has?`<button class="btn" data-a="del">🗑️ احذف</button><small>${AR(Math.round((REC[it.id].d||0)/100)/10)} ث</small>`:''}</div></div>`}
+function vis(){const n=+$('#sf').value,v=$('#vf').value;return ITEMS.filter(i=>(!n||i.n===n)&&(v==='all'||(v==='todo'?!['done','live'].includes(state(i)):['done','live'].includes(state(i)))))}
+function prog(){const n=+$('#sf').value,pool=ITEMS.filter(i=>!n||i.n===n),d=pool.filter(i=>['done','live'].includes(state(i))).length;
+  $('#pt').innerHTML=`سُجّل <b>${AR(d)}</b> من ${AR(pool.length)} نصاً`;$('#pm').style.width=(pool.length?d/pool.length*100:0)+'%';
+  $('#dl').disabled=!Object.keys(REC).length}
+function render(){const L=vis();$('#list').innerHTML=L.length?L.map(card).join(''):'<p class="help">لا توجد نصوص في هذا العرض.</p>';prog()}
+function redraw(id){const it=ITEMS.find(i=>i.id===id),el=$('#it-'+CSS.escape(id));if(el)el.outerHTML=card(it);prog()}
+// ---- recording
+let stream=null,mr=null,curId=null,t0=0,tick=null,player=null;
+const MIME=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'].find(m=>window.MediaRecorder&&MediaRecorder.isTypeSupported&&MediaRecorder.isTypeSupported(m))||'';
+const ext=t=>/mp4|aac/.test(t)?'m4a':/ogg/.test(t)?'ogg':'webm';
+async function start(id){
+  if(!window.MediaRecorder){toast('هذا المتصفح لا يدعم التسجيل. جرّب كروم أو إيدج.');return}
+  if(mr)stop();
+  try{if(!stream)stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}})}
+  catch(e){toast('لم يُسمح باستخدام الميكروفون. اسمح به من رمز القفل بجانب عنوان الصفحة.',5000);return}
+  const chunks=[];mr=new MediaRecorder(stream,MIME?{mimeType:MIME}:{});curId=id;t0=Date.now();
+  mr.ondataavailable=e=>{if(e.data&&e.data.size)chunks.push(e.data)};
+  mr.onstop=()=>{const it=ITEMS.find(i=>i.id===id),type=mr.mimeType||MIME||'audio/webm',b=new Blob(chunks,{type}),d=Date.now()-t0;mr=null;curId=null;clearInterval(tick);
+    if(d<600||!b.size){toast('التسجيل قصير جداً، أعد المحاولة.');redraw(id);return}
+    dbPut(id,{b,type,h:it.h,d,at:Date.now()});redraw(id);toast('حُفظ التسجيل ✓');next(id)};
+  mr.start(250);
+  const el=$('#it-'+CSS.escape(id));el.classList.add('live');
+  const btn=el.querySelector('[data-a=rec]');btn.textContent='⏹️ أوقف';btn.dataset.a='stop';
+  el.querySelector('.acts').insertAdjacentHTML('beforeend','<span class="timer">● ٠ ث</span>');
+  tick=setInterval(()=>{const s=Math.floor((Date.now()-t0)/1000),tm=el.querySelector('.timer');if(tm)tm.textContent='● '+AR(s)+' ث';if(s>=120)stop()},250);
+}
+function stop(){try{if(mr&&mr.state!=='inactive')mr.stop()}catch(e){}}
+function next(id){const L=vis(),i=L.findIndex(x=>x.id===id),n=L.slice(i+1).find(x=>!REC[x.id]);if(n){const el=$('#it-'+CSS.escape(n.id));if(el)el.scrollIntoView({behavior:'smooth',block:'center'})}}
+function play(id){if(player){player.pause();player=null}const r=REC[id];if(!r)return;const u=URL.createObjectURL(r.b);player=new Audio(u);player.onended=()=>URL.revokeObjectURL(u);player.play().catch(()=>toast('تعذّر التشغيل'))}
+$('#list').addEventListener('click',e=>{const b=e.target.closest('button[data-a]');if(!b)return;const id=b.closest('.item').id.slice(3),a=b.dataset.a;
+  if(a==='rec')start(id);else if(a==='stop')stop();else if(a==='play')play(id);else if(a==='del'){dbDel(id);redraw(id)}});
+// ---- download all
+function loadZip(){return new Promise((res,rej)=>{if(window.JSZip)return res();const s=document.createElement('script');s.src='https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js';s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+$('#dl').onclick=async()=>{const ids=Object.keys(REC);if(!ids.length)return;
+  try{await loadZip()}catch(e){toast('تعذّر تحميل أداة الضغط. تأكد من الاتصال بالإنترنت.');return}
+  toast('جارٍ تجهيز الملف…');const z=new JSZip(),man={};
+  for(const id of ids){const r=REC[id];z.file(id+'.'+ext(r.type),r.b);man[id]={h:r.h,type:r.type,d:r.d}}
+  z.file('manifest.json',JSON.stringify(man,null,1));
+  const blob=await z.generateAsync({type:'blob',compression:'STORE'}),a=document.createElement('a'),d=new Date();
+  a.href=URL.createObjectURL(blob);a.download=`quran-recordings-${d.getFullYear()}-${d.getMonth()+1}-${d.getDate()}.zip`;document.body.appendChild(a);a.click();
+  setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},4000);toast(`نُزّل الملف وفيه ${AR(ids.length)} تسجيلاً. أرسله لي.`,5000)};
+$('#list').innerHTML='<p class="help">جارٍ تحميل النصوص…</p>';
+loadSite().then(()=>{initSel();return dbOpen()}).then(d=>{db=d;if(!d)toast('لن تُحفظ التسجيلات بعد إغلاق الصفحة في هذا الوضع، فنزّلها قبل الإغلاق.',6000);return dbAll()}).then(render)
+ .catch(()=>{$('#list').innerHTML='<p class="help">تعذّر تحميل النصوص. تأكد من الاتصال بالإنترنت ثم حدّث الصفحة.</p>'});
+</script></body></html>
