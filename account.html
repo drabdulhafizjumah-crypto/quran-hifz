@@ -1,0 +1,482 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>حسابي</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<script>try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;const f=[.9,1,1.12,1.25,1.4][+(localStorage.getItem("fs")??1)];if(f)document.documentElement.style.setProperty("--fs",f)}catch(e){}</script>
+</head><body><style>
+/* ===== الألوان: غيّر القيم هنا فقط بعد اعتماد الاسم =====
+   كل لون له قيمتان: (الوضع النهاري، الوضع الليلي)
+   --p اللون الرئيسي · --p2 الثانوي · --acc لون التنبيه والميكروفون
+   --field خلفية الأقسام الملوّنة · --field2 خلفية فاتحة ثانية */
+:root{
+  --bg:light-dark(#ffffff,#0f1712);--ink:light-dark(#14231a,#eef4ef);--soft:light-dark(#4b5d51,#a9bcae);--line:light-dark(#e1e9e3,#2a3a30);
+  --p:light-dark(#1f8f4e,#4cc47c);--p2:light-dark(#ffc83d,#e7b234);--acc:light-dark(#f2603f,#ff8466);
+  --field:light-dark(#eef8f1,#132018);--field2:light-dark(#fff8e3,#211e12);--card:light-dark(#ffffff,#18231c);--tint:light-dark(#e2f4e8,#1c3024);
+  --onp:light-dark(#ffffff,#0f1712);
+  --dfont:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",sans-serif;--r:22px;--fs:1;
+  color-scheme:light}
+body[data-dir=b]{
+  --bg:light-dark(#ffffff,#0c1411);--ink:light-dark(#161b19,#ecf1ee);--soft:light-dark(#56615c,#a3b2ab);--line:light-dark(#e3e7e4,#26332d);
+  --p:light-dark(#0b6b50,#3fb08c);--p2:light-dark(#c9a55a,#c9a55a);--acc:light-dark(#c2362b,#ff7a6b);
+  --field:light-dark(#f1f7f4,#111d18);--field2:light-dark(#faf7ef,#17191a);--card:light-dark(#ffffff,#121c18);--tint:light-dark(#e3f0ea,#16291f);
+  --onp:light-dark(#ffffff,#0c1411);
+  --dfont:"Reem Kufi","IBM Plex Sans Arabic",sans-serif;--r:8px}
+:root[data-theme=dark]{color-scheme:dark}
+/* ===== الأساس ===== */
+html{font-size:calc(100% * var(--fs))}
+*{box-sizing:border-box;min-width:0}
+body{direction:rtl;background:var(--bg);color:var(--ink);font:1rem/1.7 "IBM Plex Sans Arabic",system-ui,sans-serif;overflow-x:clip;margin:0;transition:background .25s,color .25s}
+.band{padding-block:clamp(44px,6vw,84px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.in{max-width:1160px;margin-inline:auto}
+h1,h2,h3{font-family:var(--dfont);line-height:1.2;margin:0;letter-spacing:0}
+h2{font-size:clamp(1.65rem,1.2rem + 1.6vw,2.3rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 .6em}
+a{color:inherit}
+.q{font-family:"Amiri Quran",serif;font-size:clamp(1.5rem,1.2rem + 1vw,1.9rem);line-height:2.1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:3rem;padding:0 1.4rem;border-radius:999px;border:2px solid var(--p);background:var(--p);color:var(--onp);font:700 1.05rem/1 "IBM Plex Sans Arabic",sans-serif;text-decoration:none;cursor:pointer}
+.btn.o{background:transparent;color:var(--p)}
+.btn:hover{filter:brightness(1.08)}
+:is(.btn,.chip,.tool,.qz button,a):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+body[data-dir=b] .btn{border-radius:6px}
+/* رأس كل قسم: شارة، عنوان، تمهيد */
+.shead{max-width:40em;margin-bottom:clamp(22px,3vw,36px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;color:var(--p);background:var(--tint);border-radius:999px;padding:4px 14px 4px 6px;margin-bottom:12px}
+.eyebrow b{display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--p);color:var(--onp);font-size:.85rem}
+body[data-dir=b] .eyebrow,body[data-dir=b] .eyebrow b{border-radius:4px}
+.lead{color:var(--soft);font-size:1.08rem;margin-top:10px}
+.alt{background:var(--field)}
+.alt2{background:var(--field2)}
+
+/* ===== شريط التنقل ===== */
+.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-block:10px!important}
+.site .in{display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--dfont);font-size:1.55rem;font-weight:800;text-decoration:none;white-space:nowrap}
+.logo svg{width:36px;height:36px;flex:none}
+.links{display:flex;gap:4px;margin-inline-start:auto;font-weight:500}
+.links a{text-decoration:none;color:var(--soft);padding:6px 12px;border-radius:999px}
+.links a:hover{color:var(--p);background:var(--tint)}
+.tools{display:flex;align-items:center;gap:6px;margin-inline-start:8px}
+.links+.tools{margin-inline-start:8px}
+.tgrp{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.tool{display:grid;place-items:center;min-width:44px;height:44px;padding:0 8px;background:var(--card);border:0;color:var(--ink);font:700 1rem "IBM Plex Sans Arabic",sans-serif;cursor:pointer}
+.tool:hover{background:var(--tint)}
+.tool:disabled{opacity:.35;cursor:default;background:var(--card)}
+.tool svg{width:20px;height:20px}
+.tool.one{border:1.5px solid var(--line);border-radius:999px}
+.tgrp .tool+.tool{border-inline-start:1.5px solid var(--line)}
+.tool{white-space:nowrap}
+body[data-dir=b] .tgrp,body[data-dir=b] .tool.one{border-radius:6px}
+.site .btn{min-height:44px;padding:0 1.1rem}
+.ic-sun{display:none}
+:root[data-theme=dark] .ic-sun{display:block}:root[data-theme=dark] .ic-moon{display:none}
+
+
+/* ===== صفحة الحساب ===== */
+[hidden]{display:none!important}
+.demo-note{background:var(--field2);border-bottom:1px solid var(--line);font-size:.92rem;color:var(--soft);padding-block:10px!important}
+.demo-note b{color:var(--ink)}
+main.band{padding-block:clamp(28px,5vw,56px)}
+main .in{max-width:860px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,28px);box-shadow:0 10px 30px color-mix(in srgb,var(--ink) 6%,transparent);margin-bottom:18px}
+.card h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.8rem);margin-bottom:6px}
+.card h3{margin-bottom:6px}
+.muted{color:var(--soft)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:16px 0}
+.why{background:var(--field);border-radius:14px;padding:14px}
+.why b{display:block;margin-bottom:2px}
+.why span{color:var(--soft);font-size:.92rem}
+.acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+form.f{display:grid;gap:14px;margin-top:14px}
+.f label>span{font-weight:700;font-size:.95rem;margin-bottom:6px;display:block}
+.f label>span small{font-weight:400;color:var(--soft)}
+.f input[type=text],.f input[type=email],.f input[type=number],.f select{width:100%;font:1rem "IBM Plex Sans Arabic",sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px;min-height:48px}
+.f :is(input,select):focus{outline:2px solid var(--p);border-color:var(--p)}
+.f .hint{font-size:.88rem;color:var(--soft);margin-top:4px}
+.f .btn{justify-self:start}
+.seg2{display:flex;flex-wrap:wrap;gap:8px}
+.seg2 input{position:absolute;opacity:0;pointer-events:none}
+.seg2 label{display:block}
+.seg2 span{display:inline-flex;align-items:center;gap:8px;min-height:48px;padding:0 1.1rem;border:2px solid var(--line);border-radius:999px;cursor:pointer;font-weight:700}
+.seg2 input:checked+span{border-color:var(--p);background:var(--p);color:var(--onp)}
+.seg2 input:focus-visible+span{outline:3px solid var(--acc);outline-offset:2px}
+body[data-dir=b] .seg2 span{border-radius:6px}
+.err{color:var(--acc);font-weight:700;min-height:1.4em;font-size:.95rem}
+.ok{background:color-mix(in srgb,var(--p) 10%,var(--card));border:1.5px solid color-mix(in srgb,var(--p) 40%,var(--line));border-radius:14px;padding:12px 14px}
+.big{display:grid;place-items:center;text-align:center;padding-block:10px}
+.big svg{width:72px;height:72px;margin-bottom:8px}
+.pill{display:inline-block;font-size:.8rem;font-weight:700;border-radius:999px;padding:2px 10px;background:var(--tint);color:var(--p);white-space:nowrap}
+.pill.wait{background:var(--field2);color:color-mix(in srgb,var(--p2) 60%,var(--ink))}
+.pill.no{background:color-mix(in srgb,var(--acc) 12%,var(--card));color:var(--acc)}
+.who{display:flex;flex-wrap:wrap;gap:6px 16px;align-items:center;justify-content:space-between}
+.who .meta{color:var(--soft);font-size:.92rem}
+.kids{display:grid;gap:12px;margin-top:12px}
+.kid{border:1px solid var(--line);border-radius:16px;padding:14px 16px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 14px;align-items:center}
+.kid.on{border-color:var(--p);box-shadow:0 0 0 2px color-mix(in srgb,var(--p) 25%,transparent)}
+.kid b{font-size:1.08rem}
+.kid .st{color:var(--soft);font-size:.9rem}
+.kid .ka{display:flex;flex-wrap:wrap;gap:8px;grid-column:1/-1}
+.kid .ka .btn{min-height:2.6rem;padding:0 1rem;font-size:.95rem}
+.btn.s{min-height:2.6rem;padding:0 1rem;font-size:.95rem}
+.btn.d{border-color:var(--acc);color:var(--acc);background:transparent}
+.tabs2{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 4px}
+.tabs2 button{border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;min-height:44px;padding:0 1rem;font:700 .95rem "IBM Plex Sans Arabic",sans-serif;cursor:pointer}
+.tabs2 button[aria-selected=true]{border-color:var(--p);color:var(--p);background:var(--tint)}
+body[data-dir=b] .tabs2 button{border-radius:6px}
+.list{list-style:none;padding:0;margin:10px 0 0;display:grid;gap:8px}
+.list li{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;background:var(--field);border-radius:12px;padding:10px 14px}
+.list li .sp{margin-inline-start:auto}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:12px;text-align:center}
+.stats div{background:var(--field2);border-radius:12px;padding:10px 4px}
+.stats b{display:block;font-size:1.4rem;color:var(--p);font-family:var(--dfont)}
+.stats span{font-size:.82rem;color:var(--soft)}
+/* البريد التجريبي */
+.mbtn{position:fixed;inset-inline-start:16px;bottom:16px;z-index:9;display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--bg);border:0;border-radius:999px;min-height:48px;padding:0 18px;font:700 .95rem "IBM Plex Sans Arabic",sans-serif;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.mbtn i{font-style:normal;background:var(--acc);color:#fff;border-radius:999px;min-width:1.6em;padding:0 6px;font-size:.85rem}
+.mbox{position:fixed;inset-inline-start:16px;bottom:76px;z-index:9;width:min(420px,calc(100vw - 32px));max-height:min(70vh,620px);overflow:auto;background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:0 20px 50px rgba(0,0,0,.3);padding:16px}
+.mbox h3{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.mbox h3 button{background:none;border:0;color:var(--soft);font-size:1.4rem;cursor:pointer;min-width:40px;min-height:40px}
+.mail{border:1px solid var(--line);border-radius:14px;padding:12px;margin-top:10px;font-size:.93rem}
+.mail .to{color:var(--soft);font-size:.82rem;direction:ltr;text-align:end}
+.mail b{display:block;margin:2px 0 4px}
+.mail p{margin:0 0 8px;color:var(--soft);white-space:pre-line}
+.mail .btn{min-height:2.5rem;font-size:.92rem;padding:0 1rem}
+@media(max-width:640px){.grid2,.grid3{grid-template-columns:minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.site .btn{display:none}.logo{font-size:1.3rem}}
+</style>
+
+<nav class="site band" aria-label="التنقل الرئيسي"><div class="in">
+  <a class="logo" href="./"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c3 5 3 9 0 12-3-3-3-7 0-12z" fill="var(--p)"/><circle cx="20" cy="26" r="11" fill="var(--p2)"/><circle cx="16" cy="23" r="3" fill="#fff" opacity=".5"/></svg><span class="nm"></span></a>
+  <div class="links"><a href="./">الرئيسية</a><a href="hifz.html">المصحف</a></div>
+  <div class="tools">
+    <span class="tgrp" role="group" aria-label="حجم الخط"><button class="tool" id="fsDown" aria-label="تصغير الخط">أ−</button><button class="tool" id="fsUp" aria-label="تكبير الخط">أ+</button></span>
+    <button class="tool one" id="theme" aria-pressed="false" aria-label="الوضع الليلي"><svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg><svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <a class="btn" href="hifz.html">افتح المصحف</a>
+</div></nav>
+<div class="demo-note band"><div class="in"><b>نسخة تجريبية:</b> الحسابات هنا تُحفظ في هذا المتصفح فقط، ورسائل البريد لا تُرسل فعلاً بل تظهر في «البريد التجريبي» أسفل الصفحة. تعمل الحسابات الحقيقية بعد ربط الموقع بخادم مجاني.</div></div>
+
+<main class="band"><div class="in" id="view" aria-live="polite"></div></main>
+
+<button class="mbtn" id="mbtn" aria-expanded="false">📬 البريد التجريبي <i id="mcount">٠</i></button>
+<div class="mbox" id="mbox" hidden role="dialog" aria-label="البريد التجريبي"></div>
+
+<script>
+/* مشترك بين الرئيسية وصفحة الحساب: الإعدادات، قراءة التقدّم المحفوظ على الجهاز، والجلسة */
+window.QA=(()=>{
+const CFG={
+  // رابط الموقع الذي يُرسل في المشاركة ورسائل البريد. يُستبدل بالنطاق بعد شرائه.
+  siteUrl:'https://drabdulhafizjumah-crypto.github.io/quran-hifz/',
+  // خدمة استقبال «شاركنا فكرتك» (مثل Formspree). فارغ = النموذج لا يرسل بعد ويحفظ الفكرة على الجهاز.
+  ideasEndpoint:'',
+  // 'demo' = حسابات تجريبية في المتصفح. عند تفعيل Supabase تصبح 'supabase' مع url و anonKey.
+  backend:'demo',supabaseUrl:'',supabaseAnonKey:''
+};
+const NAMES=[["اقرأ وارتقِ","iqrawartaqi","«اقرأ وارتقِ ورتّل كما كنت ترتّل في الدنيا، فإنّ منزلتك عند آخر آية تقرؤها»."],["أترجّة","otrujja","«مثلُ المؤمنِ الذي يقرأُ القرآنَ كمثلِ الأُترجّة، ريحُها طيّبٌ وطعمُها طيّب»."],["غَرْس","ghars","نغرس القرآن في القلوب صغاراً، فيكبر معنا."],["رَتِّل","rattil","﴿وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾"],["سَكِينة","sakina","حفظ هادئ وفهم مطمئن، لكل الأعمار."],["مِشكاة","mishkah","نور يُهتدى به في الحفظ والفهم."],["تدبّر وحفظ","hifzwatadabbur","نحفظ لنفهم، ونفهم لنعمل."]];
+const SUR=[[1,"الفاتحة",7],[114,"الناس",6],[113,"الفلق",5],[112,"الإخلاص",4],[111,"المسد",5],[110,"النصر",3],[109,"الكافرون",6],[108,"الكوثر",3],[107,"الماعون",7],[106,"قريش",4],[105,"الفيل",5],[104,"الهمزة",9],[103,"العصر",3],[102,"التكاثر",8],[101,"القارعة",11],[100,"العاديات",11],[99,"الزلزلة",8],[98,"البينة",8],[97,"القدر",5],[96,"العلق",19],[95,"التين",8],[94,"الشرح",8],[93,"الضحى",11],[92,"الليل",21],[91,"الشمس",15],[90,"البلد",20],[89,"الفجر",30],[88,"الغاشية",26],[87,"الأعلى",19],[86,"الطارق",17],[85,"البروج",22],[84,"الإنشقاق",25],[83,"المطففين",36],[82,"الإنفطار",19],[81,"التكوير",29],[80,"عبس",42],[79,"النازعات",46],[78,"النبإ",40]];
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
+const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+const num=n=>String(n).replace(/\d/g,d=>"٠١٢٣٤٥٦٧٨٩"[d]);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* عدد مع المعدود: days(3) = «٣ أيام» */
+function count(n,[one,two,few,many]){if(n==1)return one;if(n==2)return two;if(n>=3&&n<=10)return num(n)+' '+few;return num(n)+' '+many}
+const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
+/* ملخّص تقدّم ملف (pid فارغ = صاحب الجهاز) */
+function prog(pid){
+  const S=J(progKey(pid),{}),ay=S.ay||{},t=today();let mem=0,due=0;
+  for(const k in ay){if(ay[k].mem)mem++;if(ay[k].b&&ay[k].due<=t)due++}
+  const surahs=SUR.map(([n,name,c])=>{let m=0;for(let i=1;i<=c;i++)if(ay[n+':'+i]?.mem)m++;return{n,name,c,m}});
+  const live=S.last>=t-1;
+  return{S,mem,due,surahs,full:surahs.filter(s=>s.m===s.c),started:surahs.filter(s=>s.m>0&&s.m<s.c),
+    quiz:Object.values(S.quiz||{}).filter(v=>v>=1).length,streak:live?(S.streak||0):0,last:S.last||0,
+    doneToday:S.doneDay===t?(S.doneCount||0):0,goal:S.goal||5,pts:S.pts||0,surah:S.surah||114,any:Object.keys(ay).length>0};
+}
+/* الجلسة في النسخة التجريبية */
+function session(){const ss=J('qa-session',null),db=J('qa-demo-db',{});const u=ss&&db.users&&db.users[ss.uid];return u?{user:u,db}:null}
+/* ملفات الأبناء لوليّ الأمر المسجّل: ملفات أنشأها على الجهاز + حسابات مربوطة بموافقة الابن */
+function kids(){
+  const s=session();if(!s||s.user.role!=='parent')return[];const db=s.db;
+  const local=Object.values(db.kids||{}).filter(k=>k.parent===s.user.id).map(k=>({id:k.id,name:k.name,age:k.age,kind:'local'}));
+  const linked=Object.values(db.links||{}).filter(l=>l.parent===s.user.id&&l.status==='approved').map(l=>{const u=db.users[l.child];return u&&{id:u.id,name:u.name,age:u.age,kind:'linked'}}).filter(Boolean);
+  return[...local,...linked];
+}
+const ageText=a=>a?count(+a,['سنة واحدة','سنتان','سنوات','سنة']):'';
+return{CFG,NAMES,SUR,ls,J,today,num,esc,count,prog,progKey,session,kids,ageText,
+  name(){return NAMES[+(ls.get('nm2')||0)]||NAMES[0]||['الموقع','','']}};
+})();
+
+</script>
+<script>
+{
+document.documentElement.dir="rtl";document.documentElement.lang="ar";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const {esc,num,ls,J,count}=QA;
+const root=document.documentElement;
+/* ===== الإعدادات العامة: الاسم والاتجاه والوضع الليلي والخط ===== */
+const N=QA.name();$$(".nm").forEach(e=>e.textContent=N[0]);document.title="حسابي: "+N[0];
+document.body.dataset.dir=ls.get("dir")||"a";
+function setTheme(t){root.dataset.theme=t;ls.set("theme",t);const b=$("#theme");b.setAttribute("aria-pressed",t=="dark");b.setAttribute("aria-label",t=="dark"?"الوضع النهاري":"الوضع الليلي");b.title=b.getAttribute("aria-label")}
+$("#theme").onclick=()=>setTheme(root.dataset.theme=="dark"?"light":"dark");setTheme(root.dataset.theme=="dark"?"dark":"light");
+const FS=[.9,1,1.12,1.25,1.4];let fs=+(ls.get("fs")??1);if(!(fs in FS))fs=1;
+function setFs(i){fs=Math.max(0,Math.min(FS.length-1,i));root.style.setProperty("--fs",FS[fs]);ls.set("fs",fs);$("#fsDown").disabled=fs==0;$("#fsUp").disabled=fs==FS.length-1}
+$("#fsDown").onclick=()=>setFs(fs-1);$("#fsUp").onclick=()=>setFs(fs+1);setFs(fs);
+
+/* ===================================================================
+   الخادم التجريبي (DemoBackend)
+   يحاكي ما سيقوم به الخادم الحقيقي، ويحفظ كل شيء في localStorage.
+   كل دالة هنا يقابلها في Supabase ما هو مكتوب في التعليق، فيُستبدل
+   هذا الكائن وحده عند التفعيل دون تغيير الواجهة.
+   =================================================================== */
+const DB_KEY="qa-demo-db",SES_KEY="qa-session";
+const load=()=>Object.assign({users:{},tokens:{},kids:{},links:{},outbox:[]},J(DB_KEY,{}));
+const store=db=>ls.set(DB_KEY,JSON.stringify(db));
+const rid=(p)=>p+Array.from(crypto.getRandomValues(new Uint8Array(9)),b=>b.toString(36).padStart(2,"0")).join("").slice(0,14);
+const normEmail=e=>String(e||"").trim().toLowerCase();
+const okEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e);
+const link=(k,v)=>QA.CFG.siteUrl+"account.html#"+k+"="+v;
+function mail(db,to,subject,body,href,label){db.outbox.unshift({id:rid("m"),to,subject,body,href,label,at:Date.now(),read:false})}
+const MIN=60e3,DAY=864e5;
+const API={
+  /* Supabase: auth.signInWithOtp({email, options:{data:{name,country,role,age}, emailRedirectTo}})
+     الحساب لا يُنشأ إلا بعد أن يضغط صاحبه الرابط في بريده. */
+  async signUp(d){const db=load(),email=normEmail(d.email);
+    if(Object.values(db.users).some(u=>u.email==email)){return this.requestLogin(email)}
+    const tok=rid("t");db.tokens[tok]={kind:"signup",email,data:{name:d.name.trim(),country:d.country,role:d.role,age:d.role=="learner"?+d.age:null},exp:Date.now()+15*MIN};
+    mail(db,email,"أكّد بريدك وادخل إلى «"+N[0]+"»",`السلام عليكم ${d.name.trim()}،\nاضغط الزر لتأكيد بريدك وإكمال إنشاء حسابك. الرابط صالح ١٥ دقيقة.\nإن لم تطلب ذلك فتجاهل الرسالة.`,link("verify",tok),"أكّد بريدي وادخل");
+    store(db);return{sent:email}},
+  /* Supabase: auth.signInWithOtp({email, options:{shouldCreateUser:false}})
+     لا نكشف إن كان البريد مسجّلاً: الرسالة على الشاشة واحدة في الحالتين. */
+  async requestLogin(e){const db=load(),email=normEmail(e),u=Object.values(db.users).find(u=>u.email==email);
+    if(u){const tok=rid("t");db.tokens[tok]={kind:"login",email,exp:Date.now()+15*MIN};mail(db,email,"رابط الدخول إلى «"+N[0]+"»",`السلام عليكم ${u.name}،\nاضغط الزر للدخول. الرابط صالح ١٥ دقيقة ولمرة واحدة.`,link("verify",tok),"ادخل الآن")}
+    else mail(db,email,"لا يوجد حساب بهذا البريد",`طلب أحدهم رابط دخول بهذا البريد، ولا يوجد حساب مسجّل به.\nيمكنك إنشاء حساب مجاناً، أو تجاهل الرسالة.`,QA.CFG.siteUrl+"account.html#signup","أنشئ حساباً");
+    store(db);return{sent:email}},
+  /* Supabase: يتمّ تلقائياً عند فتح الرابط (detectSessionInUrl)، ثم نُدرج صف profiles أول مرة */
+  async verify(tok){const db=load(),t=db.tokens[tok];delete db.tokens[tok];
+    if(!t||t.exp<Date.now()){store(db);throw new Error("انتهت صلاحية الرابط أو استُعمل من قبل. اطلب رابطاً جديداً.")}
+    let u=Object.values(db.users).find(u=>u.email==t.email);
+    if(!u&&t.kind=="signup"){u={id:rid("u"),email:t.email,...t.data,created:Date.now()};db.users[u.id]=u}
+    if(!u){store(db);throw new Error("لا يوجد حساب بهذا البريد.")}
+    store(db);ls.set(SES_KEY,JSON.stringify({uid:u.id}));return u},
+  me(){const s=QA.session();return s&&s.user},
+  /* Supabase: auth.signOut() */
+  async logout(){ls.del(SES_KEY);ls.del("qa-profile")},
+  /* Supabase: update profiles set ... where id = auth.uid() */
+  async updateMe(d){const db=load(),u=db.users[this.me().id];Object.assign(u,d);store(db);return u},
+  /* ملف طفل ليس له بريد، يملكه وليّ الأمر. Supabase: insert into children(parent_id,name,age) */
+  async addKid(name,age){const db=load(),me=this.me(),k={id:rid("k"),parent:me.id,name:name.trim(),age:+age||null,created:Date.now()};db.kids[k.id]=k;store(db);return k},
+  async removeKid(id){const db=load();if(db.kids[id]?.parent==this.me().id){delete db.kids[id];store(db)}ls.del(QA.progKey(id))},
+  /* طلب ربط حساب ابن مسجّل. Supabase: Edge Function «request-link» تُنشئ صفاً في
+     parent_links(status='pending', token) وترسل بريد الموافقة إلى الابن عبر Resend. */
+  async requestLink(childEmail){const db=load(),me=this.me(),email=normEmail(childEmail);
+    if(email==me.email)throw new Error("هذا بريدك أنت. اكتب بريد ابنك أو ابنتك.");
+    const c=Object.values(db.users).find(u=>u.email==email);
+    if(c&&c.role=="parent")throw new Error("هذا البريد مسجّل لوليّ أمر، لا لمتعلّم.");
+    if(c&&Object.values(db.links).some(l=>l.parent==me.id&&l.child==c.id&&l.status!="declined"))throw new Error("أرسلت طلباً إلى هذا البريد من قبل.");
+    if(!c){mail(db,email,me.name+" يدعوك إلى «"+N[0]+"»",`السلام عليكم،\n${me.name} يدعوك إلى موقع «${N[0]}» لحفظ القرآن وفهمه.\nأنشئ حسابك أولاً، ثم يرسل لك طلب الربط.`,QA.CFG.siteUrl+"account.html#signup","أنشئ حسابي");store(db);return{invited:email}}
+    const l={id:rid("l"),parent:me.id,child:c.id,status:"pending",token:rid("a"),exp:Date.now()+7*DAY,created:Date.now()};db.links[l.id]=l;
+    mail(db,c.email,"طلب ربط من وليّ أمرك",`السلام عليكم ${c.name}،\n${me.name} (${me.email}) يطلب ربط حسابه بحسابك بصفته وليّ أمرك، ليتابع حفظك وفهمك.\nإن كان وليّ أمرك فعلاً فاضغط الزر وراجع الطلب. وإن لم تعرفه فتجاهل الرسالة، ولن يُربط شيء.`,link("approve",l.token),"راجع الطلب");
+    mail(db,me.email,"أرسلنا طلب الربط إلى "+c.name,`أرسلنا إلى بريد ${c.name} طلب الموافقة على الربط.\nسيصلك تأكيد حين يوافق، والطلب صالح سبعة أيام.`,null,null);
+    store(db);return{pending:c.name}},
+  /* صفحة الموافقة يفتحها الابن من بريده، ويكفي الرابط وحده دون دخول.
+     Supabase: Edge Function «answer-link» تتحقق من token وترسل تأكيداً إلى وليّ الأمر. */
+  peekLink(token){const db=load(),l=Object.values(db.links).find(l=>l.token==token);if(!l)return null;return{l,parent:db.users[l.parent],child:db.users[l.child]}},
+  async answerLink(token,yes){const db=load(),l=Object.values(db.links).find(l=>l.token==token);
+    if(!l||l.status!="pending")throw new Error("هذا الطلب أُجيب عنه من قبل أو أُلغي.");
+    if(l.exp<Date.now())throw new Error("انتهت صلاحية الطلب. اطلب من وليّ أمرك إرساله من جديد.");
+    l.status=yes?"approved":"declined";l.answered=Date.now();const p=db.users[l.parent],c=db.users[l.child];
+    mail(db,p.email,yes?"تمّ ربط حساب "+c.name+" بحسابك":c.name+" لم يوافق على الربط",yes?`السلام عليكم ${p.name}،\nوافق ${c.name} على ربط حسابه بحسابك، فصار تقدّمه يظهر في ملفات أبنائك.`:`السلام عليكم ${p.name}،\nلم يوافق صاحب البريد ${c.email} على طلب الربط، فلم يُربط شيء.`,QA.CFG.siteUrl+"account.html#parent",yes?"افتح ملفات أبنائي":"حسابي");
+    if(yes)mail(db,c.email,"رُبط حسابك بوليّ أمرك",`صار ${p.name} يرى تقدّمك في الحفظ والفهم. ويمكنك إلغاء الربط في أي وقت من صفحة حسابك.`,QA.CFG.siteUrl+"account.html","حسابي");
+    store(db);return l.status},
+  /* إلغاء الربط من أي الطرفين */
+  async unlink(id){const db=load(),me=this.me(),l=db.links[id];if(l&&(l.parent==me.id||l.child==me.id)){l.status="removed";store(db)}},
+  links(){const db=load(),me=this.me();return Object.values(db.links).filter(l=>(l.parent==me.id||l.child==me.id)&&l.status!="removed").map(l=>({...l,p:db.users[l.parent],c:db.users[l.child]}))},
+  outbox(){return load().outbox},
+  markRead(){const db=load();db.outbox.forEach(m=>m.read=true);store(db)},
+  reset(){ls.del(DB_KEY);ls.del(SES_KEY);ls.del("qa-profile")}
+};
+
+/* ===== البيانات المساعدة ===== */
+const COUNTRIES=["الإمارات","السعودية","الكويت","قطر","البحرين","عُمان","اليمن","العراق","سوريا","الأردن","فلسطين","لبنان","مصر","السودان","ليبيا","تونس","الجزائر","المغرب","موريتانيا","الصومال","جيبوتي","جزر القمر","تركيا","ماليزيا","إندونيسيا","باكستان","المملكة المتحدة","ألمانيا","فرنسا","الولايات المتحدة","كندا","أستراليا","بلد آخر"];
+const ROLE={learner:"متعلّم",parent:"وليّ أمر"};
+const ICON_MAIL=`<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="34" fill="var(--tint)"/><rect x="16" y="22" width="40" height="28" rx="5" fill="var(--p)"/><path d="M19 26l17 13 17-13" stroke="var(--onp)" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const ICON_OK=`<svg viewBox="0 0 72 72" aria-hidden="true"><circle cx="36" cy="36" r="34" fill="var(--tint)"/><path d="M22 37l9 9 19-20" stroke="var(--p)" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+const activeProfile=()=>J("qa-profile",null);
+function setProfile(p){if(p&&p.id)ls.set("qa-profile",JSON.stringify(p));else ls.del("qa-profile")}
+function progLine(P){return P.any?`${count(P.mem,["آية محفوظة","آيتان محفوظتان","آيات محفوظة","آية محفوظة"])}، و${count(P.full.length,["سورة متقنة","سورتان متقنتان","سور متقنة","سورة متقنة"])}`+(P.due?`، و${num(P.due)} للمراجعة`:""):"لم يبدأ الحفظ بعد"}
+function statsBox(P){return `<div class="stats"><div><b>${num(P.mem)}</b><span>آية محفوظة</span></div><div><b>${num(P.full.length)}</b><span>سورة متقنة</span></div><div><b>${num(P.due)}</b><span>للمراجعة اليوم</span></div><div><b>${num(P.streak)}</b><span>أيام متتالية</span></div></div>`}
+let flash="";
+function go(h){if(location.hash.slice(1)==h)render();else location.hash=h}
+
+/* ===== الشاشات ===== */
+const V={
+home(){const P=QA.prog("");return `
+<div class="card">
+  <h2>الحساب اختياري</h2>
+  <p class="muted">كل ما في الموقع متاح دون تسجيل: الحفظ والتسميع والمراجعة وبطاقات «افهم». وتقدّمك محفوظ على هذا الجهاز.</p>
+  <div class="grid3">
+    <div class="why"><b>انقل تقدّمك</b><span>يُحفظ في حسابك فتكمل من أي جهاز.</span></div>
+    <div class="why"><b>تابع أبناءك</b><span>حساب واحد للعائلة وملف لكل طفل.</span></div>
+    <div class="why"><b>شارك في التحديات</b><span>تحدّيات فردية وعائلية، بلا لوحات ترتيب عامة.</span></div>
+  </div>
+  <p class="muted" style="margin:0">لا كلمة مرور: ندخلك برابط يصل إلى بريدك.</p>
+  <div class="acts"><a class="btn" href="#signup">أنشئ حساباً</a><a class="btn o" href="#login">لديّ حساب</a></div>
+</div>
+<div class="card"><h3>تقدّمك على هذا الجهاز</h3><p class="muted" style="margin:0">${progLine(P)}</p>${P.any?statsBox(P):`<div class="acts"><a class="btn o" href="hifz.html#learn">ابدأ الحفظ دون حساب</a></div>`}</div>`},
+signup(role){return `
+<div class="card">
+  <h2>أنشئ حساباً</h2>
+  <p class="muted">أربع معلومات فقط، ولا نطلب كلمة مرور.</p>
+  <form class="f" id="fSign" novalidate>
+    <fieldset style="border:0;padding:0;margin:0"><legend style="font-weight:700;margin-bottom:8px">الحساب لـ</legend>
+      <div class="seg2"><label><input type="radio" name="role" value="learner" ${role!="parent"?"checked":""}><span>متعلّم (أحفظ لنفسي)</span></label><label><input type="radio" name="role" value="parent" ${role=="parent"?"checked":""}><span>وليّ أمر (أتابع أبنائي)</span></label></div>
+    </fieldset>
+    <div class="grid2">
+      <label><span>الاسم</span><input type="text" name="name" autocomplete="name" required maxlength="60"></label>
+      <label><span>البريد الإلكتروني</span><input type="email" name="email" autocomplete="email" dir="ltr" required></label>
+      <label><span>البلد</span><select name="country" required><option value="">اختر البلد</option>${COUNTRIES.map(c=>`<option>${c}</option>`).join("")}</select></label>
+      <label id="ageWrap"><span>العمر</span><input type="number" name="age" min="4" max="120" inputmode="numeric"><div class="hint">نختار به مستوى الشرح المناسب.</div></label>
+    </div>
+    <div class="ok" id="kidNote" hidden>إن كنت دون السادسة عشرة فيمكن لوليّ أمرك أن يربط حسابه بحسابك لاحقاً، ولا يُربط إلا بعد موافقتك من بريدك.</div>
+    <p class="muted" style="margin:0;font-size:.9rem">نستعمل هذه البيانات لحفظ تقدّمك ومتابعة وليّ الأمر فقط، ولا نشاركها مع أحد.</p>
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn" type="submit">أرسلوا لي رابط التأكيد</button>
+  </form>
+  <p class="muted" style="margin:14px 0 0">لديك حساب؟ <a href="#login">ادخل برابط إلى بريدك</a></p>
+</div>`},
+login(){return `
+<div class="card">
+  <h2>الدخول</h2>
+  <p class="muted">اكتب بريدك، ونرسل إليك رابطاً تدخل به دون كلمة مرور.</p>
+  <form class="f" id="fLogin" novalidate>
+    <label><span>البريد الإلكتروني</span><input type="email" name="email" autocomplete="email" dir="ltr" required></label>
+    <div class="err" id="err" role="alert"></div>
+    <button class="btn" type="submit">أرسلوا لي رابط الدخول</button>
+  </form>
+  <p class="muted" style="margin:14px 0 0">ليس لديك حساب؟ <a href="#signup">أنشئ حساباً</a></p>
+</div>`},
+sent(email){return `
+<div class="card big">${ICON_MAIL}
+  <h2>افتح بريدك</h2>
+  <p class="muted">أرسلنا رابطاً إلى <b dir="ltr">${esc(email)}</b>. اضغطه خلال ١٥ دقيقة لتدخل.</p>
+  <p class="muted" style="font-size:.92rem">لم يصل؟ انظر في مجلد الرسائل غير المرغوبة، أو <a href="#login">اطلب رابطاً جديداً</a>.</p>
+  <div class="ok" style="text-align:start">في هذه النسخة التجريبية تجد الرسالة في «البريد التجريبي» أسفل الصفحة.</div>
+</div>`},
+error(msg){return `<div class="card"><h2>تعذّر ذلك</h2><p class="muted">${esc(msg)}</p><div class="acts"><a class="btn" href="#login">اطلب رابطاً جديداً</a><a class="btn o" href="./">الرئيسية</a></div></div>`},
+approve(token){const x=API.peekLink(token);
+  if(!x)return V.error("لم نجد هذا الطلب. ربما أُلغي.");
+  const {l,parent,child}=x;
+  if(l.status!="pending")return `<div class="card big">${ICON_OK}<h2>${l.status=="approved"?"الحساب مربوط":"أُجيب عن الطلب"}</h2><p class="muted">${l.status=="approved"?`حسابك مربوط بحساب ${esc(parent.name)}.`:"لم يُربط شيء."}</p><a class="btn o" href="#">حسابي</a></div>`;
+  return `
+<div class="card">
+  <h2>طلب ربط من وليّ أمرك</h2>
+  <p>السلام عليكم ${esc(child.name)}، يطلب <b>${esc(parent.name)}</b> <span class="muted" dir="ltr">(${esc(parent.email)})</span> ربط حسابه بحسابك بصفته وليّ أمرك.</p>
+  <div class="grid2" style="margin:14px 0">
+    <div class="why"><b>إذا وافقت يرى</b><span>ما حفظته، وما تحتاج مراجعته، وبطاقات «افهم» التي أتممتها، وأيامك المتتالية.</span></div>
+    <div class="why"><b>ولا يستطيع</b><span>أن يغيّر بريدك أو يدخل حسابك. ويمكنك إلغاء الربط في أي وقت.</span></div>
+  </div>
+  <p class="muted">وافق فقط إن كان وليّ أمرك فعلاً. وإن لم تعرفه فاختر «لا أوافق».</p>
+  <div class="err" id="err" role="alert"></div>
+  <div class="acts"><button class="btn" id="yes">نعم، هو وليّ أمري</button><button class="btn o" id="no">لا أوافق</button></div>
+</div>`},
+dash(){const u=API.me(),links=API.links(),ap=activeProfile();
+  const head=`
+<div class="card">
+  ${flash?`<div class="ok" style="margin-bottom:14px">${flash}</div>`:""}
+  <div class="who"><div><h2>السلام عليكم، ${esc(u.name.split(" ")[0])}</h2><div class="meta">${ROLE[u.role]} · <span dir="ltr">${esc(u.email)}</span> · ${esc(u.country||"")}${u.age?" · "+QA.ageText(u.age):""}</div></div>
+  <div class="acts" style="margin:0"><button class="btn o s" id="edit">تعديل بياناتي</button><button class="btn o s" id="out">خروج</button></div></div>
+  <form class="f" id="fEdit" hidden novalidate>
+    <div class="grid2">
+      <label><span>الاسم</span><input type="text" name="name" value="${esc(u.name)}" required maxlength="60"></label>
+      <label><span>البلد</span><select name="country">${COUNTRIES.map(c=>`<option ${c==u.country?"selected":""}>${c}</option>`).join("")}</select></label>
+      ${u.role=="learner"?`<label><span>العمر</span><input type="number" name="age" min="4" max="120" value="${u.age||""}"></label>`:""}
+    </div>
+    <div class="err" id="err2" role="alert"></div>
+    <div class="acts" style="margin:0"><button class="btn s" type="submit">حفظ</button><button class="btn o s" type="button" id="cancelEdit">إلغاء</button></div>
+  </form>
+</div>
+<div class="card"><h3>المزامنة</h3><p class="muted" style="margin:0">تقدّمك محفوظ الآن على هذا الجهاز. حين نربط الموقع بالخادم يُرفع إلى حسابك تلقائياً، فتكمل من أي جهاز.</p></div>`;
+  if(u.role=="learner"){const P=QA.prog(""),mine=links.filter(l=>l.child==u.id);
+    return head+`
+<div class="card"><h3>تقدّمي</h3><p class="muted" style="margin:0">${progLine(P)}</p>${statsBox(P)}<div class="acts"><a class="btn" href="hifz.html#learn">واصل الحفظ</a><a class="btn o" href="hifz.html#progress">خريطة حفظي</a></div></div>
+<div class="card"><h3>وليّ الأمر</h3>
+  ${mine.length?`<ul class="list">${mine.map(l=>`<li><b>${esc(l.p.name)}</b><span class="muted" dir="ltr">${esc(l.p.email)}</span><span class="sp">${l.status=="approved"?`<span class="pill">مربوط</span> <button class="btn o s d" data-unlink="${l.id}">إلغاء الربط</button>`:l.status=="pending"?`<span class="pill wait">ينتظر موافقتك من بريدك</span>`:`<span class="pill no">رفضتَ الطلب</span>`}</span></li>`).join("")}</ul>`
+  :`<p class="muted" style="margin:0">لا يوجد وليّ أمر مربوط بحسابك. يستطيع وليّ أمرك أن يرسل إليك طلب ربط من حسابه، فيصلك بريد للموافقة.</p>`}
+</div>`}
+  const ks=QA.kids(),P0=QA.prog(""),mineL=links.filter(l=>l.parent==u.id&&l.status!="approved");
+  const kidCard=(k,i)=>{const P=QA.prog(k.id),on=ap&&ap.id==k.id;return `<div class="kid ${on?"on":""}"><div><b>${esc(k.name)}</b>${k.age?` <span class="muted">· ${QA.ageText(k.age)}</span>`:""} ${k.kind=="linked"?'<span class="pill">حساب مربوط</span>':'<span class="pill wait">ملف على هذا الجهاز</span>'}<div class="st">${progLine(P)}</div></div>${on?'<span class="pill">يحفظ الآن</span>':""}
+    <div class="ka"><button class="btn s" data-use="${k.id}">${on?"افتح المصحف باسمه":"ابدأ الحفظ باسمه"}</button>${k.kind=="local"?`<button class="btn o s d" data-del="${k.id}">حذف الملف</button>`:`<button class="btn o s d" data-unlink="${links.find(l=>l.child==k.id&&l.parent==u.id&&l.status=="approved")?.id}">إلغاء الربط</button>`}</div></div>`};
+  return head+`
+<div class="card" id="profiles"><h3>من يحفظ الآن على هذا الجهاز؟</h3>
+  <p class="muted" style="margin:0">اختر الملف قبل أن تفتح المصحف، فيُحفظ التقدّم باسم صاحبه.</p>
+  <div class="kids">
+    <div class="kid ${!ap?"on":""}"><div><b>أنا (${esc(u.name.split(" ")[0])})</b><div class="st">${progLine(P0)}</div></div>${!ap?'<span class="pill">يحفظ الآن</span>':""}<div class="ka"><button class="btn s" data-use="">${!ap?"افتح المصحف":"احفظ باسمي"}</button></div></div>
+    ${ks.map(kidCard).join("")}
+  </div>
+</div>
+<div class="card" id="parent"><h3>أضف ابناً أو ابنة</h3>
+  <div class="tabs2" role="tablist"><button role="tab" aria-selected="true" data-t="new">طفل ليس له حساب</button><button role="tab" aria-selected="false" data-t="link">ابن له حساب</button></div>
+  <form class="f" id="fKid" novalidate>
+    <p class="muted" style="margin:0">ملف داخل حسابك، لا يحتاج بريداً. يناسب الصغار.</p>
+    <div class="grid2"><label><span>الاسم</span><input type="text" name="name" required maxlength="40"></label><label><span>العمر</span><input type="number" name="age" min="3" max="25" required></label></div>
+    <div class="err" id="err3" role="alert"></div><button class="btn" type="submit">أضف الملف</button>
+  </form>
+  <form class="f" id="fLink" hidden novalidate>
+    <p class="muted" style="margin:0">اكتب بريد حساب ابنك. نرسل إليه طلباً، ولا يتم الربط إلا بعد موافقته من بريده، ثم يصلك تأكيد.</p>
+    <label><span>بريد الابن أو الابنة</span><input type="email" name="email" dir="ltr" required></label>
+    <div class="err" id="err4" role="alert"></div><button class="btn" type="submit">أرسل طلب الربط</button>
+  </form>
+  ${mineL.length?`<h3 style="margin-top:18px">طلبات الربط</h3><ul class="list">${mineL.map(l=>`<li><b>${esc(l.c.name)}</b><span class="muted" dir="ltr">${esc(l.c.email)}</span><span class="sp">${l.status=="pending"?'<span class="pill wait">ينتظر موافقته</span>':'<span class="pill no">لم يوافق</span>'}</span></li>`).join("")}</ul>`:""}
+</div>`}
+};
+
+/* ===== التوجيه ===== */
+function render(){
+  const h=decodeURIComponent(location.hash.slice(1)),[k,v]=h.split("="),u=API.me(),el=$("#view");
+  if(k=="verify"){API.verify(v).then(u=>{flash=`دخلت بنجاح. أهلاً بك يا ${esc(u.name.split(" ")[0])}.`;history.replaceState(null,"","#");render();mailUI()}).catch(e=>{el.innerHTML=V.error(e.message);mailUI()});return}
+  if(k=="approve"){el.innerHTML=V.approve(v);const ans=yes=>API.answerLink(v,yes).then(s=>{el.innerHTML=`<div class="card big">${ICON_OK}<h2>${s=="approved"?"تمّ الربط":"لم يُربط شيء"}</h2><p class="muted">${s=="approved"?"أرسلنا تأكيداً إلى وليّ أمرك، وصار يرى تقدّمك.":"أبلغنا صاحب الطلب أنك لم توافق."}</p><a class="btn o" href="#">حسابي</a></div>`;mailUI()}).catch(e=>$("#err").textContent=e.message);
+    $("#yes")&&($("#yes").onclick=()=>ans(true));$("#no")&&($("#no").onclick=()=>ans(false));return}
+  if(k=="sent"){el.innerHTML=V.sent(v||"");return}
+  if(u&&(!k||k=="parent"||k=="profiles"||k=="login"||k=="signup")){el.innerHTML=V.dash();flash="";wireDash();if(k=="parent"||k=="profiles")$("#"+k)?.scrollIntoView({block:"start"});return}
+  if(k=="signup"){el.innerHTML=V.signup(v);wireSign();return}
+  if(k=="login"){el.innerHTML=V.login();wireLogin();return}
+  if(k=="parent"){el.innerHTML=V.signup("parent");wireSign();return}
+  el.innerHTML=V.home();
+}
+function wireSign(){const f=$("#fSign"),age=()=>{const r=f.role.value;$("#ageWrap").hidden=r!="learner";const a=+f.age.value;$("#kidNote").hidden=!(r=="learner"&&a&&a<16)};
+  f.onchange=f.oninput=age;age();
+  f.onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(f));let m="";
+    if(!d.name.trim())m="اكتب الاسم.";else if(!okEmail(normEmail(d.email)))m="اكتب بريداً صحيحاً، مثل name@example.com";else if(!d.country)m="اختر البلد.";else if(d.role=="learner"&&!(+d.age>=4&&+d.age<=120))m="اكتب العمر بالأرقام.";
+    $("#err").textContent=m;if(m)return;const r=await API.signUp(d);mailUI(true);go("sent="+r.sent)}}
+function wireLogin(){const f=$("#fLogin");f.onsubmit=async e=>{e.preventDefault();const em=normEmail(f.email.value);if(!okEmail(em)){$("#err").textContent="اكتب بريداً صحيحاً.";return}const r=await API.requestLogin(em);mailUI(true);go("sent="+r.sent)}}
+function wireDash(){
+  $("#out").onclick=async()=>{await API.logout();flash="";go("")};
+  $("#edit").onclick=()=>{$("#fEdit").hidden=false;$("#edit").hidden=true};
+  $("#cancelEdit").onclick=()=>{$("#fEdit").hidden=true;$("#edit").hidden=false};
+  $("#fEdit").onsubmit=async e=>{e.preventDefault();const d=Object.fromEntries(new FormData(e.target));if(!d.name.trim()){$("#err2").textContent="اكتب الاسم.";return}if("age"in d)d.age=+d.age||null;await API.updateMe(d);flash="حُفظت بياناتك.";render()};
+  $$("[data-unlink]").forEach(b=>b.onclick=async()=>{if(b.dataset.c){await API.unlink(b.dataset.unlink);const ap=activeProfile();if(ap&&!QA.kids().some(k=>k.id==ap.id))setProfile(null);flash="أُلغي الربط.";render()}else{b.dataset.c=1;b.textContent="اضغط مرة أخرى للتأكيد"}});
+  $$("[data-use]").forEach(b=>b.onclick=()=>{const id=b.dataset.use,k=QA.kids().find(k=>k.id==id);setProfile(k?{id:k.id,name:k.name,age:k.age}:null);location.href="hifz.html#learn"});
+  $$("[data-del]").forEach(b=>b.onclick=async()=>{if(b.dataset.c){await API.removeKid(b.dataset.del);if(activeProfile()?.id==b.dataset.del)setProfile(null);flash="حُذف الملف وتقدّمه من هذا الجهاز.";render()}else{b.dataset.c=1;b.textContent="سيُحذف تقدّمه أيضاً. اضغط للتأكيد"}});
+  const tb=$(".tabs2");if(!tb)return;
+  tb.onclick=e=>{const b=e.target.closest("[data-t]");if(!b)return;$$(".tabs2 button").forEach(x=>x.setAttribute("aria-selected",x==b));$("#fKid").hidden=b.dataset.t!="new";$("#fLink").hidden=b.dataset.t!="link"};
+  $("#fKid").onsubmit=async e=>{e.preventDefault();const f=e.target;if(!f.name.value.trim()){$("#err3").textContent="اكتب اسم الطفل.";return}if(!(+f.age.value>=3)){$("#err3").textContent="اكتب العمر بالأرقام.";return}const k=await API.addKid(f.name.value,f.age.value);flash=`أُضيف ملف ${esc(k.name)}. اضغط «ابدأ الحفظ باسمه» قبل أن يحفظ.`;render()};
+  $("#fLink").onsubmit=async e=>{e.preventDefault();const em=normEmail(e.target.email.value);if(!okEmail(em)){$("#err4").textContent="اكتب بريداً صحيحاً.";return}
+    try{const r=await API.requestLink(em);flash=r.pending?`أرسلنا طلب الموافقة إلى بريد ${esc(r.pending)}، وسيصلك تأكيد حين يوافق.`:`لا يوجد حساب بهذا البريد، فأرسلنا إليه دعوة للتسجيل. بعد تسجيله أرسل طلب الربط مرة أخرى.`;mailUI(true);render()}catch(x){$("#err4").textContent=x.message}};
+}
+/* ===== البريد التجريبي ===== */
+function mailUI(open){const ms=API.outbox(),unread=ms.filter(m=>!m.read).length;$("#mcount").textContent=num(unread);$("#mcount").hidden=!unread;
+  const box=$("#mbox");
+  box.innerHTML=`<h3>البريد التجريبي<button id="mclose" aria-label="إغلاق">×</button></h3><p class="muted" style="font-size:.88rem;margin:0">الرسائل التي كان الموقع سيرسلها. يظهر هنا بريد كل الحسابات التجريبية على هذا المتصفح.</p>`+
+    (ms.length?ms.map(m=>`<div class="mail"><div class="to">${esc(m.to)}</div><b>${esc(m.subject)}</b><p>${esc(m.body)}</p>${m.href?`<a class="btn s" href="${esc(m.href.replace(QA.CFG.siteUrl,""))}">${esc(m.label)}</a>`:""}</div>`).join(""):`<p class="muted">لا رسائل بعد.</p>`)+
+    `<div class="acts"><button class="btn o s d" id="mreset">مسح كل بيانات التجربة</button></div>`;
+  $("#mclose").onclick=()=>toggle(false);
+  $("#mreset").onclick=e=>{if(e.target.dataset.c){API.reset();toggle(false);mailUI();go("")}else{e.target.dataset.c=1;e.target.textContent="تُحذف الحسابات التجريبية والرسائل. اضغط للتأكيد"}};
+  box.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>toggle(false)));
+  if(open)toggle(true)}
+function toggle(o){$("#mbox").hidden=!o;$("#mbtn").setAttribute("aria-expanded",o);if(o){API.markRead();$("#mcount").hidden=true}}
+$("#mbtn").onclick=()=>{const o=$("#mbox").hidden;mailUI();toggle(o)};
+addEventListener("hashchange",render);
+render();mailUI();
+}
+</script>
+</body></html>

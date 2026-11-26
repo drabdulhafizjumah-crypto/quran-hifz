@@ -66,7 +66,7 @@ function build(D){const out=[];for(const s of D){const c=s.c;if(!c)continue;
   if(c.teen_extra)add('x','فائدة إضافية للناشئة والكبار',c.teen_extra);
   s.t.forEach((g,k)=>{const lab=g[0]===g[1]?'آية '+AR(g[0]):'الآيات '+AR(g[0])+'–'+AR(g[1]);add('s'+k+'-0','معنى '+lab+' للصغار',c.simple[k][0]);add('s'+k+'-1','معنى '+lab+' للناشئة',c.simple[k][1])})}
   out.forEach(it=>it.h=fnv(it.t));return out}
-async function loadSite(){const t=await (await fetch('./index.html',{cache:'no-store'})).text();
+async function loadSite(){const t=await (await fetch('./hifz.html',{cache:'no-store'})).text();
   const m=t.match(/const DATA=(.*);\nconst AUDIO=(.*);\n/);if(!m)throw 0;ITEMS=build(JSON.parse(m[1]));LIVE=JSON.parse(m[2])}
 // ---- storage (IndexedDB, with in-memory fallback)
 const REC={};let db=null;
