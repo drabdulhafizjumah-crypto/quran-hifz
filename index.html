@@ -238,6 +238,101 @@ body[data-dir=b] .iform .rchip{border-radius:6px}
 .ilist li{display:flex;gap:12px;align-items:center;background:var(--field);border-radius:14px;padding:12px 14px}
 .ilist i{font-style:normal;font-size:1.4rem}
 
+
+/* ===== زاد اليوم: آية اليوم + اختبر حفظك ===== */
+.daily .in{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:20px;align-items:start}
+.dcard{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(18px,3vw,28px);display:flex;flex-direction:column}
+.dcard .dh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.dcard .dh h2{font-size:clamp(1.3rem,1.1rem + .8vw,1.6rem);display:flex;align-items:center;gap:10px}
+.dcard .dh h2 svg{width:1.3em;height:1.3em;flex:none}
+.dcard .dh small{color:var(--soft);font-size:.88rem}
+.ayd{font-family:"Amiri Quran",serif;font-size:clamp(1.45rem,1.15rem + 1vw,1.9rem);line-height:2.15;color:var(--ink);text-align:center;background:var(--field);border-radius:14px;padding:14px 16px;margin:0}
+.ayd .am{font-size:.9rem}
+.aydref{text-align:center;color:var(--p);font-weight:700;margin:8px 0 12px}
+.tfs{border-top:1px solid var(--line);padding-top:12px;color:var(--ink);font-size:1.02rem;line-height:1.9}
+.tfs b{display:block;color:var(--p);font-size:.9rem;margin-bottom:2px}
+.dacts{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:14px}
+.dacts .chip{display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.dacts .chip svg{width:18px;height:18px}
+.qq{font-family:"Amiri Quran",serif;font-size:clamp(1.25rem,1.05rem + .7vw,1.55rem);line-height:2.1;background:var(--field2);border-radius:14px;padding:12px 14px;text-align:center;margin:0 0 12px}
+.qopts{display:grid;gap:8px}
+.qopts button{font-family:"Amiri Quran",serif;font-size:1.12rem;line-height:1.9;text-align:start;background:var(--card);color:var(--ink);border:2px solid var(--line);border-radius:12px;padding:8px 14px;min-height:48px;cursor:pointer}
+.qopts button:hover:not(:disabled){border-color:var(--p)}
+.qopts button.right{border-color:var(--p);background:color-mix(in srgb,var(--p) 12%,var(--card))}
+.qopts button.wrong{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 8%,var(--card))}
+.qopts button:disabled{cursor:default}
+.qres{min-height:1.6em;font-weight:700;margin:10px 0 0}
+.qres.ok{color:var(--p)}.qres.no{color:var(--acc)}
+body[data-dir=b] .qopts button,body[data-dir=b] .ayd,body[data-dir=b] .qq{border-radius:6px}
+
+/* ===== خطة اليوم + خريطة المواظبة ===== */
+.tasks .tag{display:inline-block;font-size:.75rem;font-weight:700;border-radius:999px;padding:1px 9px;margin-bottom:3px;background:var(--tint);color:var(--p)}
+.tasks .tag.near{background:color-mix(in srgb,var(--p2) 30%,var(--card));color:light-dark(#6b4d00,#f3d27a)}
+.tasks .tag.far{background:color-mix(in srgb,var(--acc) 16%,var(--card));color:var(--acc)}
+.tasks .tag.und{background:var(--field2);color:var(--soft)}
+.tasks .done .tag{opacity:.7}
+.heat{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.heat h3{font-size:1.05rem;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline}
+.heat h3 small{font:500 .85rem "IBM Plex Sans Arabic",sans-serif;color:var(--soft)}
+.hgrid{display:grid;grid-template-rows:repeat(7,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;margin-top:10px;max-width:420px}
+.hgrid i{aspect-ratio:1;border-radius:3px;background:var(--field);display:block}
+.hgrid i.l1{background:color-mix(in srgb,var(--p) 40%,var(--field))}
+.hgrid i.l2{background:color-mix(in srgb,var(--p) 70%,var(--field))}
+.hgrid i.l3{background:var(--p)}
+.hgrid i.now{outline:2px solid var(--acc);outline-offset:-1px}
+.hgrid i.fut{visibility:hidden}
+.hkey{display:flex;gap:6px;align-items:center;font-size:.8rem;color:var(--soft);margin-top:8px;flex-wrap:wrap}
+.hkey i{width:12px;height:12px;border-radius:3px;display:inline-block}
+.hsum{display:flex;gap:16px;flex-wrap:wrap;margin-top:8px;font-size:.9rem;color:var(--soft)}
+.hsum b{color:var(--p);font-size:1.1rem}
+
+/* ===== رحلتي مع القرآن ===== */
+.jour .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,4vw,48px);align-items:start}
+.jform{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,2.5vw,22px);display:grid;gap:12px;margin-top:6px}
+.jform .jk{display:flex;flex-wrap:wrap;gap:8px}
+.jform textarea{width:100%;min-height:5.5em;resize:vertical;font:1rem "IBM Plex Sans Arabic",sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:10px 12px}
+.jform textarea:focus{outline:2px solid var(--p);border-color:var(--p)}
+.jform .btn{justify-self:start}
+.jnote{color:var(--soft);font-size:.85rem;margin:0}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:12px;position:relative}
+.tl::before{content:"";position:absolute;top:8px;bottom:8px;inset-inline-start:11px;width:2px;background:var(--line)}
+.tl li{position:relative;padding-inline-start:34px}
+.tl li::before{content:"";position:absolute;inset-inline-start:5px;top:16px;width:14px;height:14px;border-radius:50%;background:var(--card);border:3px solid var(--p)}
+.tl li.ach::before{border-color:var(--p2)}.tl li.thk::before{border-color:var(--acc)}
+.tl .jc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.tl .jc header{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:4px}
+.tl .jc header span{font-size:.75rem;font-weight:700;border-radius:999px;padding:1px 9px;background:var(--tint);color:var(--p)}
+.tl li.ach .jc header span{background:color-mix(in srgb,var(--p2) 30%,var(--card));color:light-dark(#6b4d00,#f3d27a)}
+.tl li.thk .jc header span{background:color-mix(in srgb,var(--acc) 14%,var(--card));color:var(--acc)}
+.tl .jc time{font-size:.8rem;color:var(--soft)}
+.tl .jc p{margin:0;white-space:pre-wrap}
+.tl .jdel{background:none;border:0;color:var(--soft);font:500 .8rem "IBM Plex Sans Arabic",sans-serif;cursor:pointer;padding:4px 6px;min-height:32px}
+.tl .jdel:hover{color:var(--acc)}
+.jex{color:var(--soft);font-size:.85rem;margin:0 0 10px}
+
+/* ===== تنافسوا في الخير ===== */
+.comp .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,48px);align-items:center}
+.cbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:0 10px 30px color-mix(in srgb,var(--ink) 6%,transparent)}
+.chead{background:var(--field);padding:14px 18px;display:flex;align-items:center;gap:12px}
+.chead .pc{flex:none;display:grid;place-items:center;width:3rem;height:3rem;border-radius:50%;background:var(--card);border:3px solid var(--p);font-weight:800;color:var(--p);font-size:.85rem}
+.chead b{display:block;font-size:1.08rem}
+.chead small{color:var(--soft)}
+.cmeta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.cmeta div{padding:10px 12px;text-align:center;font-size:.85rem;color:var(--soft)}
+.cmeta div+div{border-inline-start:1px solid var(--line)}
+.cmeta b{display:block;color:var(--ink);font-size:1rem}
+.cmeta code{font:700 1rem ui-monospace,monospace;letter-spacing:.08em;color:var(--p)}
+.cpl{list-style:none;margin:0;padding:8px 18px 16px}
+.cpl li{display:grid;grid-template-columns:5.5em minmax(0,1fr) 3em;gap:10px;align-items:center;padding:8px 0;font-size:.95rem}
+.cpl li+li{border-top:1px solid var(--line)}
+.cpl li.me{font-weight:700}
+.cpl li.me span:first-child::after{content:" (أنت)";font-weight:400;color:var(--soft);font-size:.85em}
+.cpl em{font-style:normal;color:var(--soft);font-size:.85rem;text-align:end}
+.cacts{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.soon{display:inline-block;font-size:.78rem;font-weight:700;background:var(--field2);color:var(--soft);border-radius:999px;padding:2px 10px;margin-inline-start:6px;vertical-align:middle}
+
+@media(max-width:760px){.daily .in,.jour .in,.comp .in{grid-template-columns:minmax(0,1fr)}}
+
 /* ===== التذييل ===== */
 footer{background:var(--field);color:var(--ink);font-size:.95rem;border-top:1px solid var(--line);padding-block:44px 28px!important}
 footer .in{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:24px}
@@ -313,7 +408,7 @@ body[data-dir=b] .ptimes li,body[data-dir=b] .pset{border-radius:6px}
 
 <nav class="site band" aria-label="التنقل الرئيسي"><div class="in">
   <a class="logo" href="./"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c3 5 3 9 0 12-3-3-3-7 0-12z" fill="var(--p)"/><circle cx="20" cy="26" r="11" fill="var(--p2)"/><circle cx="16" cy="23" r="3" fill="#fff" opacity=".5"/></svg><span class="nm"></span></a>
-  <div class="links"><a href="hifz.html">المصحف</a><a href="#hifz">احفظ</a><a href="#fahm">افهم</a><a href="#today">تحدّي اليوم</a><a href="#par">لوليّ الأمر</a></div>
+  <div class="links"><a href="hifz.html">المصحف</a><a href="#hifz">احفظ</a><a href="#fahm">افهم</a><a href="#today">خطة اليوم</a><a href="#journal">رحلتي</a><a href="#par">لوليّ الأمر</a></div>
   <div class="tools">
     <span class="tgrp" role="group" aria-label="حجم الخط"><button class="tool" id="fsDown" aria-label="تصغير الخط">أ−</button><button class="tool" id="fsUp" aria-label="تكبير الخط">أ+</button></span>
     <a class="tool one" href="#share" aria-label="شارك الموقع" title="شارك الموقع"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5.5" r="2.8" fill="currentColor"/><circle cx="6" cy="12" r="2.8" fill="currentColor"/><circle cx="18" cy="18.5" r="2.8" fill="currentColor"/><path d="M8.5 10.7l7-3.9M8.5 13.3l7 3.9" stroke="currentColor" stroke-width="2"/></svg></a>
@@ -360,6 +455,29 @@ body[data-dir=b] .ptimes li,body[data-dir=b] .pset{border-radius:6px}
   <p class="pnext" id="pNext" aria-live="polite"></p>
   <p class="pnote"><span id="pHow"></span> تُحسب المواقيت على جهازك، وقد تختلف دقيقة أو دقيقتين عن تقويم بلدك الرسمي، والعبرة بأذان مسجدك.</p>
 </div></div></section>
+
+<section class="daily band" id="daily" style="padding-bottom:0"><div class="in">
+  <article class="dcard" aria-labelledby="aydH">
+    <div class="dh"><h2 id="aydH"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--tint)"/><path d="M7 10q4.5-2 9 1v12q-4.5-3-9-1zM25 10q-4.5-2-9 1v12q4.5-3 9-1z" fill="var(--p)"/><circle cx="16" cy="7" r="2" fill="var(--p2)"/></svg>آية اليوم</h2><small id="aydDate"></small></div>
+    <p class="ayd" id="aydText"></p>
+    <p class="aydref" id="aydRef"></p>
+    <div class="tfs"><b>التفسير الميسّر</b><span id="aydTf"></span></div>
+    <div class="dacts">
+      <button class="chip" id="aydPlay"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>استمع إليها</button>
+      <a class="chip" id="aydOpen" href="#hifz">اقرأها في المصحف</a>
+      <button class="chip" id="aydShare">شاركها</button>
+    </div>
+    <p class="qres" id="aydMsg" role="status" style="font-weight:500;color:var(--soft)"></p>
+  </article>
+  <article class="dcard" aria-labelledby="qzH">
+    <div class="dh"><h2 id="qzH"><svg viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="var(--tint)"/><path d="M12 12.5a4 4 0 1 1 5.5 3.7c-1 .4-1.5 1.1-1.5 2.2v.8" stroke="var(--p)" stroke-width="2.6" fill="none" stroke-linecap="round"/><circle cx="16" cy="23" r="1.8" fill="var(--acc)"/></svg>اختبر حفظك</h2><small id="qzFrom"></small></div>
+    <p style="margin:0 0 6px;font-weight:700">ما الآية التي تلي:</p>
+    <p class="qq" id="qzAy"></p>
+    <div class="qopts" id="qzOpts"></div>
+    <p class="qres" id="qzRes" role="status"></p>
+    <div class="dacts"><button class="chip" id="qzNext">سؤال آخر</button><a class="chip" href="#hifz" id="qzMore">سمّع السورة كاملة</a></div>
+  </article>
+</div></section>
 
 <section class="band" id="hifz"><div class="in">
   <div class="shead">
@@ -411,21 +529,70 @@ body[data-dir=b] .ptimes li,body[data-dir=b] .pset{border-radius:6px}
 <section class="today band alt2" id="today"><div class="in">
   <div class="tmain">
     <div class="shead">
-      <span class="eyebrow"><b>3</b>تحدَّ</span>
-      <h2>تحدّي اليوم</h2>
-      <p class="lead">خمس دقائق تكفي. أكمل المهام الثلاث لتنضج ثمرة جديدة في شجرتك.</p>
+      <span class="eyebrow"><b>3</b>خطتك اليوم</span>
+      <h2>حفظ جديد، ومراجعة قريبة وبعيدة</h2>
+      <p class="lead">خمس دقائق تكفي. الحفظ الجديد يُنضج ثمرة في شجرتك، والمراجعة القريبة تثبّت ما حفظته هذا الأسبوع، والبعيدة تحفظ القديم من النسيان.</p>
     </div>
     <div class="streak" id="streak" aria-label="أيام هذا الأسبوع"></div>
     <p id="streakTxt"></p>
+    <div class="heat" id="heat">
+      <h3>خريطة المواظبة<small id="heatNote">مثال توضيحي</small></h3>
+      <div class="hgrid" id="hgrid" role="img" aria-label="الأيام التي قرأت فيها خلال 12 أسبوعاً"></div>
+      <div class="hkey"><span>أقل</span><i style="background:var(--field)"></i><i style="background:color-mix(in srgb,var(--p) 40%,var(--field))"></i><i style="background:color-mix(in srgb,var(--p) 70%,var(--field))"></i><i style="background:var(--p)"></i><span>أكثر</span></div>
+      <div class="hsum" id="hsum"></div>
+    </div>
   </div>
   <ul class="tasks" id="tasks"></ul>
   <div id="slotToday"></div>
 </div></section>
 
+<section class="jour band" id="journal"><div class="in">
+  <div>
+    <div class="shead" style="margin-bottom:14px">
+      <span class="eyebrow"><b>4</b>رحلتي</span>
+      <h2>دوّن رحلتك مع القرآن</h2>
+      <p class="lead">دفتر صغير لك: احمد الله على ما يسّر، وسجّل إنجازك، واكتب خاطرة أو فائدة وقفت عندها. تعود إليه فتفرح بما قطعت من الطريق.</p>
+    </div>
+    <form class="jform" id="jform">
+      <div class="jk" role="radiogroup" aria-label="نوع التدوينة"><button type="button" class="chip" data-jk="thk" aria-pressed="true">حمد وشكر</button><button type="button" class="chip" data-jk="ach" aria-pressed="false">إنجاز</button><button type="button" class="chip" data-jk="idea" aria-pressed="false">خاطرة</button></div>
+      <textarea id="jtext" placeholder="مثلاً: الحمد لله، أتممت اليوم حفظ سورة الملك" aria-label="تدوينتك"></textarea>
+      <button class="btn" type="submit">أضف إلى دفتري</button>
+      <p class="jnote">يُحفظ دفترك على جهازك، ولا يراه أحد غيرك.</p>
+    </form>
+  </div>
+  <div>
+    <p class="jex" id="jex">أمثلة توضيحية، وتظهر تدويناتك هنا حين تكتبها.</p>
+    <ol class="tl" id="tl"></ol>
+  </div>
+</div></section>
+
+<section class="comp band alt" id="compete"><div class="in">
+  <div>
+    <div class="shead" style="margin-bottom:0">
+      <span class="eyebrow"><b>5</b>تنافسوا</span>
+      <h2>﴿وَفِي ذَٰلِكَ فَلۡيَتَنَافَسِ ٱلۡمُتَنَافِسُونَ﴾</h2>
+      <p class="lead">أنشئ مسابقة خاصة لأصدقائك أو عائلتك أو حلقتك: اختر الهدف والمدة، وأرسل رمز الدعوة، وتابعوا تقدّمكم معاً.</p>
+    </div>
+    <ul class="ticks"><li>مسابقة خاصة بمن تدعوهم فقط، ولا ترتيب عاماً على الموقع</li><li>الهدف حفظ أو مراجعة أو قراءة، بجزء أو سور تختارونها</li><li>مشرف للمسابقة، كالأب أو المعلّم، يتابع ويشجّع</li></ul>
+    <div class="cacts"><span class="btn" aria-disabled="true">أنشئ مسابقة <span class="soon">قريباً</span></span><span class="btn o" aria-disabled="true">انضمّ برمز</span></div>
+  </div>
+  <div class="cbox">
+    <div class="chead"><span class="pc">29٪</span><div><b>حفظ جزء عمّ في رمضان</b><small>مثال توضيحي · تنتهي بعد 12 يوماً</small></div></div>
+    <div class="cmeta"><div>المشرف<b>أبو أحمد</b></div><div>المشاركون<b>5</b></div><div>رمز الدعوة<code>X49RVG</code></div></div>
+    <ol class="cpl">
+      <li><span>بلال</span><div class="bar"><i style="width:64%"></i></div><em>64٪</em></li>
+      <li><span>مصعب</span><div class="bar"><i style="width:41%"></i></div><em>41٪</em></li>
+      <li class="me"><span>عادل</span><div class="bar"><i style="width:29%"></i></div><em>29٪</em></li>
+      <li><span>أحمد</span><div class="bar"><i style="width:27%"></i></div><em>27٪</em></li>
+      <li><span>عبدالله</span><div class="bar"><i style="width:25%"></i></div><em>25٪</em></li>
+    </ol>
+  </div>
+</div></section>
+
 <section class="par band" id="par"><div class="in">
   <div>
     <div class="shead" style="margin-bottom:0">
-      <span class="eyebrow"><b>4</b>لوليّ الأمر</span>
+      <span class="eyebrow"><b>6</b>لوليّ الأمر</span>
       <h2>تابع دون أن تراقب</h2>
       <p class="lead">تقرير أسبوعي بسيط يصلك عن حفظ ابنك أو ابنتك: ما حُفظ، وما يحتاج مراجعة، وكم يوماً واظب.</p>
     </div>
@@ -619,7 +786,7 @@ const CFG={
   // الخادم: يُضبط في qa_cloud.js (QA_CLOUD.on)
 };
 const NAMES=[["اقرأ وارتقِ","iqrawartaqi","«اقرأ وارتقِ ورتّل كما كنت ترتّل في الدنيا، فإنّ منزلتك عند آخر آية تقرؤها»."],["أترجّة","otrujja","«مثلُ المؤمنِ الذي يقرأُ القرآنَ كمثلِ الأُترجّة، ريحُها طيّبٌ وطعمُها طيّب»."],["غَرْس","ghars","نغرس القرآن في القلوب صغاراً، فيكبر معنا."],["رَتِّل","rattil","﴿وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾"],["سَكِينة","sakina","حفظ هادئ وفهم مطمئن، لكل الأعمار."],["مِشكاة","mishkah","نور يُهتدى به في الحفظ والفهم."],["تدبّر وحفظ","hifzwatadabbur","نحفظ لنفهم، ونفهم لنعمل."]];
-const SUR=[[1,"الفاتحة",7],[114,"الناس",6],[113,"الفلق",5],[112,"الإخلاص",4],[111,"المسد",5],[110,"النصر",3],[109,"الكافرون",6],[108,"الكوثر",3],[107,"الماعون",7],[106,"قريش",4],[105,"الفيل",5],[104,"الهمزة",9],[103,"العصر",3],[102,"التكاثر",8],[101,"القارعة",11],[100,"العاديات",11],[99,"الزلزلة",8],[98,"البينة",8],[97,"القدر",5],[96,"العلق",19],[95,"التين",8],[94,"الشرح",8],[93,"الضحى",11],[92,"الليل",21],[91,"الشمس",15],[90,"البلد",20],[89,"الفجر",30],[88,"الغاشية",26],[87,"الأعلى",19],[86,"الطارق",17],[85,"البروج",22],[84,"الإنشقاق",25],[83,"المطففين",36],[82,"الإنفطار",19],[81,"التكوير",29],[80,"عبس",42],[79,"النازعات",46],[78,"النبإ",40]];
+const SUR=[[1,"الفاتحة",7],[2,"البقرة",286],[3,"آل عمران",200],[4,"النساء",176],[5,"المائدة",120],[6,"الأنعام",165],[7,"الأعراف",206],[8,"الأنفال",75],[9,"التوبة",129],[10,"يونس",109],[11,"هود",123],[12,"يوسف",111],[13,"الرعد",43],[14,"ابراهيم",52],[15,"الحجر",99],[16,"النحل",128],[17,"الإسراء",111],[18,"الكهف",110],[19,"مريم",98],[20,"طه",135],[21,"الأنبياء",112],[22,"الحج",78],[23,"المؤمنون",118],[24,"النور",64],[25,"الفرقان",77],[26,"الشعراء",227],[27,"النمل",93],[28,"القصص",88],[29,"العنكبوت",69],[30,"الروم",60],[31,"لقمان",34],[32,"السجدة",30],[33,"الأحزاب",73],[34,"سبإ",54],[35,"فاطر",45],[36,"يس",83],[37,"الصافات",182],[38,"ص",88],[39,"الزمر",75],[40,"غافر",85],[41,"فصلت",54],[42,"الشورى",53],[43,"الزخرف",89],[44,"الدخان",59],[45,"الجاثية",37],[46,"الأحقاف",35],[47,"محمد",38],[48,"الفتح",29],[49,"الحجرات",18],[50,"ق",45],[51,"الذاريات",60],[52,"الطور",49],[53,"النجم",62],[54,"القمر",55],[55,"الرحمن",78],[56,"الواقعة",96],[57,"الحديد",29],[58,"المجادلة",22],[59,"الحشر",24],[60,"الممتحنة",13],[61,"الصف",14],[62,"الجمعة",11],[63,"المنافقون",11],[64,"التغابن",18],[65,"الطلاق",12],[66,"التحريم",12],[67,"الملك",30],[68,"القلم",52],[69,"الحاقة",52],[70,"المعارج",44],[71,"نوح",28],[72,"الجن",28],[73,"المزمل",20],[74,"المدثر",56],[75,"القيامة",40],[76,"الانسان",31],[77,"المرسلات",50],[78,"النبإ",40],[79,"النازعات",46],[80,"عبس",42],[81,"التكوير",29],[82,"الإنفطار",19],[83,"المطففين",36],[84,"الإنشقاق",25],[85,"البروج",22],[86,"الطارق",17],[87,"الأعلى",19],[88,"الغاشية",26],[89,"الفجر",30],[90,"البلد",20],[91,"الشمس",15],[92,"الليل",21],[93,"الضحى",11],[94,"الشرح",8],[95,"التين",8],[96,"العلق",19],[97,"القدر",5],[98,"البينة",8],[99,"الزلزلة",8],[100,"العاديات",11],[101,"القارعة",11],[102,"التكاثر",8],[103,"العصر",3],[104,"الهمزة",9],[105,"الفيل",5],[106,"قريش",4],[107,"الماعون",7],[108,"الكوثر",3],[109,"الكافرون",6],[110,"النصر",3],[111,"المسد",5],[112,"الإخلاص",4],[113,"الفلق",5],[114,"الناس",6]];
 const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
 const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
 const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
@@ -716,11 +883,16 @@ function drawToday(P){
   $("#streakTxt").textContent=P.streak?(QA.count(P.streak,["يوم واحد","يومان متتاليان","أيام متتالية","يوماً متتالياً"])+(dToday?". أحسنت، واصل غداً!":". احفظ اليوم حتى لا تنقطع السلسلة.")):"ابدأ سلسلتك اليوم، فآية واحدة تكفي.";
   const sr=P.surahs.find(s=>s.n==P.surah)||P.surahs.find(s=>s.n==114);
   const next=P.surahs.slice().reverse().find(s=>s.m<s.c&&s.n>=78)||sr;   // أقرب سورة لم تكتمل من آخر المصحف
+  /* خطة اليوم: حفظ جديد، ومراجعة قريبة (ما حُفظ حديثاً)، ومراجعة بعيدة (المحفوظ القديم)، وفهم */
+  const ay=P.S.ay||{};let near=0,far=0;const nearS=new Set(),farS=new Set();
+  for(const k in ay){const x=ay[k];if(x.b&&x.due<=t){const n=+k.split(":")[0];if(x.b<=3){near++;nearS.add(n)}else{far++;farS.add(n)}}}
+  const sn=set=>{const a=[...set].map(n=>(P.surahs.find(s=>s.n==n)||{}).name).filter(Boolean);return a.length?(a.length>3?a.slice(0,3).join("، ")+" وغيرها":a.join("، ")):""};
+  const tag=(c,x)=>`<span class="tag ${c}">${x}</span><br>`;
   const tasks=[
-    {done:P.doneToday>=P.goal,t:`احفظ ${QA.count(P.goal,["آية جديدة","آيتين جديدتين","آيات جديدة","آية جديدة"])}`,s:P.any?`أتقنت اليوم ${QA.num(Math.min(P.doneToday,P.goal))} من ${QA.num(P.goal)}`:`ابدأ بسورة ${next.name}`,pts:`${QA.num(Math.min(P.doneToday,P.goal))}/${QA.num(P.goal)}`,href:`hifz.html?s=${(P.any?sr:next).n}#learn`},
-    P.due?{done:false,t:`راجع ${QA.count(P.due,["آية واحدة","آيتين","آيات","آية"])} حان موعدها`,s:"المراجعة في وقتها تمنع النسيان",pts:QA.num(P.due),href:"hifz.html#review"}
-      :{done:P.mem>0,t:P.mem?"لا مراجعة متأخرة اليوم":"سمّع ما حفظت بصوتك",s:P.mem?"أحسنت، كل ما حفظته في موعده":"يلوّن المصحف ما أتقنته",pts:P.mem?"✓":"🎙",href:P.mem?"hifz.html#review":"hifz.html#test"},
-    {done:(P.S.quiz||{})[sr.n]>=1,t:`افهم سورة ${sr.name}`,s:"اقرأ الشرح وأجب عن الأسئلة",pts:"افهم",href:`hifz.html?s=${sr.n}#understand`}
+    {done:P.doneToday>=P.goal,t:tag("","حفظ جديد")+`احفظ ${QA.count(P.goal,["آية جديدة","آيتين جديدتين","آيات جديدة","آية جديدة"])}`,s:P.any?`سورة ${sr.name}، أتقنت اليوم ${QA.num(Math.min(P.doneToday,P.goal))} من ${QA.num(P.goal)}`:`ابدأ بسورة ${next.name}`,pts:`${QA.num(Math.min(P.doneToday,P.goal))}/${QA.num(P.goal)}`,href:`hifz.html?s=${(P.any?sr:next).n}#learn`},
+    {done:P.mem>0&&!near,t:tag("near","مراجعة قريبة")+(near?`راجع ${QA.count(near,["آية واحدة","آيتين","آيات","آية"])} حفظتها حديثاً`:P.mem?"لا مراجعة قريبة اليوم":"تبدأ بعد أول حفظ"),s:near?sn(nearS):"ما حفظته في الأيام الأخيرة",pts:near?QA.num(near):"✓",href:"hifz.html#review"},
+    {done:P.mem>0&&!far,t:tag("far","مراجعة بعيدة")+(far?`راجع ${QA.count(far,["آية واحدة","آيتين","آيات","آية"])} من محفوظك القديم`:P.mem?"لا مراجعة بعيدة اليوم":"تبدأ حين يثبت حفظك"),s:far?sn(farS):"ما حفظته منذ أسابيع، حتى لا يُنسى",pts:far?QA.num(far):"✓",href:"hifz.html#review"},
+    {done:(P.S.quiz||{})[sr.n]>=1,t:tag("und","افهم")+`افهم سورة ${sr.name}`,s:"اقرأ الشرح وأجب عن الأسئلة",pts:"افهم",href:`hifz.html?s=${sr.n}#understand`}
   ];
   $("#tasks").innerHTML=tasks.map(x=>`<li class="${x.done?"done":""}"><a href="${x.href}"><span class="ck">${x.done?"✓":""}</span><div>${x.t}<small>${x.s}</small></div><span class="pts">${x.pts}</span></a></li>`).join("");
 }
@@ -937,6 +1109,79 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden)draw()});
 $("#nm").innerHTML=NAMES.map((n,i)=>`<option value="${i}">${n[0]}</option>`).join("");
 function setName(i){const n=NAMES[i]||NAMES[0];$("#nm").value=i;store.set("nm2",i);$$(".nm").forEach(e=>e.textContent=n[0]);$("#nmTag").textContent=n[2];$("#dom").textContent=`النطاق المقترح: ${n[1]}.com (لم يُتحقق من توفره بعد).`;document.title=n[0]+": احفظ القرآن وافهمه";setShare(n)}
 $("#nm").onchange=e=>setName(+e.target.value);
+/* ===== زاد اليوم، خريطة المواظبة، رحلتي (تعمل في المعاينة وفي الموقع) ===== */
+const HD={"ayd":[[2,255,"البقرة","ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلۡحَيُّ ٱلۡقَيُّومُۚ لَا تَأۡخُذُهُۥ سِنَةٞ وَلَا نَوۡمٞۚ لَّهُۥ مَا فِي ٱلسَّمَٰوَٰتِ وَمَا فِي ٱلۡأَرۡضِۗ مَن ذَا ٱلَّذِي يَشۡفَعُ عِندَهُۥٓ إِلَّا بِإِذۡنِهِۦۚ يَعۡلَمُ مَا بَيۡنَ أَيۡدِيهِمۡ وَمَا خَلۡفَهُمۡۖ وَلَا يُحِيطُونَ بِشَيۡءٖ مِّنۡ عِلۡمِهِۦٓ إِلَّا بِمَا شَآءَۚ وَسِعَ كُرۡسِيُّهُ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَۖ وَلَا يَـُٔودُهُۥ حِفۡظُهُمَاۚ وَهُوَ ٱلۡعَلِيُّ ٱلۡعَظِيمُ","الله الذي لا يستحق الألوهية والعبودية إلا هو، الحيُّ الذي له جميع معاني الحياة الكاملة كما يليق بجلاله، القائم على كل شيء، لا تأخذه سِنَة أي: نعاس، ولا نوم، كل ما في السماوات وما في الأرض ملك له، ولا يتجاسر أحد أن يشفع عنده إلا بإذنه، محيط علمه بجميع الكائنات ماضيها وحاضرها ومستقبلها، يعلم ما بين أيدي الخلائق من الأمور المستقبلة، وما خلفهم من الأمور الماضية، ولا يَطَّلعُ أحد من الخلق على شيء من علمه إلا بما أعلمه الله وأطلعه عليه. وسع كرسيه السماوات والأرض، والكرسي: هو موضع قدمي الرب -جل جلاله- ولا يعلم كيفيته إلا الله سبحانه، ولا يثقله سبحانه حفظهما، وهو العلي بذاته وصفاته على جميع مخلوقاته، الجامع لجميع صفات العظمة والكبرياء. وهذه الآية أعظم آية في القرآن، وتسمى: (آية الكرسي)."],[2,186,"البقرة","وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌۖ أُجِيبُ دَعۡوَةَ ٱلدَّاعِ إِذَا دَعَانِۖ فَلۡيَسۡتَجِيبُواْ لِي وَلۡيُؤۡمِنُواْ بِي لَعَلَّهُمۡ يَرۡشُدُونَ","وإذا سألك -أيها النبي- عبادي عني فقل لهم: إني قريب منهم، أُجيب دعوة الداعي إذا دعاني، فليطيعوني فيما أمرتهم به ونهيتهم عنه، وليؤمنوا بي، لعلهم يهتدون إلى مصالح دينهم ودنياهم. وفي هذه الآية إخبار منه سبحانه عن قربه من عباده، القرب اللائق بجلاله."],[2,152,"البقرة","فَٱذۡكُرُونِيٓ أَذۡكُرۡكُمۡ وَٱشۡكُرُواْ لِي وَلَا تَكۡفُرُونِ","أمر تعالى المؤمنين بذكره، ووعد عليه أفضل الجزاء، وهو الثناء في الملأ الأعلى على مَنْ ذكره، وخصوني -أيها المؤمنون- بالشكر قولا وعملا ولا تجحدوا نعمي عليكم."],[2,201,"البقرة","وَمِنۡهُم مَّن يَقُولُ رَبَّنَآ ءَاتِنَا فِي ٱلدُّنۡيَا حَسَنَةٗ وَفِي ٱلۡأٓخِرَةِ حَسَنَةٗ وَقِنَا عَذَابَ ٱلنَّارِ","ومن الناس فريق مؤمن يقول في دعائه: ربنا آتنا في الدنيا عافية ورزقًا وعلمًا نافعًا، وعملا صالحًا، وغير ذلك من أمور الدين والدنيا، وفي الآخرة الجنة، واصرف عنَّا عذاب النار. وهذا الدعاء من أجمع الأدعية، ولهذا كان أكثر دعاء النبي صلى الله عليه وسلم، كما ثبت في الصحيحين."],[2,286,"البقرة","لَا يُكَلِّفُ ٱللَّهُ نَفۡسًا إِلَّا وُسۡعَهَاۚ لَهَا مَا كَسَبَتۡ وَعَلَيۡهَا مَا ٱكۡتَسَبَتۡۗ رَبَّنَا لَا تُؤَاخِذۡنَآ إِن نَّسِينَآ أَوۡ أَخۡطَأۡنَاۚ رَبَّنَا وَلَا تَحۡمِلۡ عَلَيۡنَآ إِصۡرٗا كَمَا حَمَلۡتَهُۥ عَلَى ٱلَّذِينَ مِن قَبۡلِنَاۚ رَبَّنَا وَلَا تُحَمِّلۡنَا مَا لَا طَاقَةَ لَنَا بِهِۦۖ وَٱعۡفُ عَنَّا وَٱغۡفِرۡ لَنَا وَٱرۡحَمۡنَآۚ أَنتَ مَوۡلَىٰنَا فَٱنصُرۡنَا عَلَى ٱلۡقَوۡمِ ٱلۡكَٰفِرِينَ","دين الله يسر لا مشقة فيه، فلا يطلب الله مِن عباده ما لا يطيقونه، فمن فعل خيرًا نال خيرًا، ومن فعل شرّاً نال شرّاً. ربنا لا تعاقبنا إن نسينا شيئًا مما افترضته علينا، أو أخطأنا في فِعْل شيء نهيتنا عن فعله، ربَّنا ولا تكلفنا من الأعمال الشاقة ما كلفته مَن قبلنا من العصاة عقوبة لهم، ربنا ولا تُحَمِّلْنَا ما لا نستطيعه من التكاليف والمصائب، وامح ذنوبنا، واستر عيوبنا، وأحسن إلينا، أنت مالك أمرنا ومدبره، فانصرنا على مَن جحدوا دينك وأنكروا وحدانيتك، وكذَّبوا نبيك محمدًا صلى الله عليه وسلم، واجعل العاقبة لنا عليهم في الدنيا والآخرة."],[3,8,"آل عمران","رَبَّنَا لَا تُزِغۡ قُلُوبَنَا بَعۡدَ إِذۡ هَدَيۡتَنَا وَهَبۡ لَنَا مِن لَّدُنكَ رَحۡمَةًۚ إِنَّكَ أَنتَ ٱلۡوَهَّابُ","ويقولون: يا ربنا لا تَصْرِف قلوبنا عن الإيمان بك بعد أن مننت علينا بالهداية لدينك، وامنحنا من فضلك رحمة واسعة، إنك أنت الوهاب: كثير الفضل والعطاء، تعطي مَن تشاء بغير حساب."],[3,103,"آل عمران","وَٱعۡتَصِمُواْ بِحَبۡلِ ٱللَّهِ جَمِيعٗا وَلَا تَفَرَّقُواْۚ وَٱذۡكُرُواْ نِعۡمَتَ ٱللَّهِ عَلَيۡكُمۡ إِذۡ كُنتُمۡ أَعۡدَآءٗ فَأَلَّفَ بَيۡنَ قُلُوبِكُمۡ فَأَصۡبَحۡتُم بِنِعۡمَتِهِۦٓ إِخۡوَٰنٗا وَكُنتُمۡ عَلَىٰ شَفَا حُفۡرَةٖ مِّنَ ٱلنَّارِ فَأَنقَذَكُم مِّنۡهَاۗ كَذَٰلِكَ يُبَيِّنُ ٱللَّهُ لَكُمۡ ءَايَٰتِهِۦ لَعَلَّكُمۡ تَهۡتَدُونَ","وتمسَّكوا جميعًا بكتاب ربكم وهدي نبيكم، ولا تفعلوا ما يؤدي إلى فرقتكم. واذكروا نعمة جليلة أنعم الله بها عليكم: إذ كنتم -أيها المؤمنون- قبل الإسلام أعداء، فجمع الله قلوبكم على محبته ومحبة رسوله، وألقى في قلوبكم محبة بعضكم لبعض، فأصبحتم -بفضله- إخوانا متحابين، وكنتم على حافة نار جهنم، فهداكم الله بالإسلام ونجَّاكم من النار. وكما بيَّن الله لكم معالم الإيمان الصحيح فكذلك يبيِّن لكم كل ما فيه صلاحكم؛ لتهتدوا إلى سبيل الرشاد، وتسلكوها، فلا تضلوا عنها."],[3,139,"آل عمران","وَلَا تَهِنُواْ وَلَا تَحۡزَنُواْ وَأَنتُمُ ٱلۡأَعۡلَوۡنَ إِن كُنتُم مُّؤۡمِنِينَ","ولا تضْعُفوا -أيها المؤمنون- عن قتال عدوكم، ولا تحزنوا لما أصابكم في \"أُحد\"، وأنتم الغالبون والعاقبة لكم، إن كنتم مصدقين بالله ورسوله متَّبعين شرعه."],[7,23,"الأعراف","قَالَا رَبَّنَا ظَلَمۡنَآ أَنفُسَنَا وَإِن لَّمۡ تَغۡفِرۡ لَنَا وَتَرۡحَمۡنَا لَنَكُونَنَّ مِنَ ٱلۡخَٰسِرِينَ","قال آدم وحواء: ربنا ظلمنا أنفسنا بالأكل من الشجرة، وإن لم تغفر لنا وترحمنا لنكونن ممن أضاعوا حظَّهم في دنياهم وأخراهم. (وهذه الكلمات هي التي تلقاها آدم من ربه، فدعا بها فتاب الله عليه)."],[11,88,"هود","قَالَ يَٰقَوۡمِ أَرَءَيۡتُمۡ إِن كُنتُ عَلَىٰ بَيِّنَةٖ مِّن رَّبِّي وَرَزَقَنِي مِنۡهُ رِزۡقًا حَسَنٗاۚ وَمَآ أُرِيدُ أَنۡ أُخَالِفَكُمۡ إِلَىٰ مَآ أَنۡهَىٰكُمۡ عَنۡهُۚ إِنۡ أُرِيدُ إِلَّا ٱلۡإِصۡلَٰحَ مَا ٱسۡتَطَعۡتُۚ وَمَا تَوۡفِيقِيٓ إِلَّا بِٱللَّهِۚ عَلَيۡهِ تَوَكَّلۡتُ وَإِلَيۡهِ أُنِيبُ","قال شعيب: يا قوم أرأيتم إن كنت على طريق واضح من ربي فيما أدعوكم إليه من إخلاص العبادة له، وفيما أنهاكم عنه من إفساد المال، ورزقني منه رزقًا واسعًا حلالا طيبًا؟ وما أريد أن أخالفكم فأرتكب أمرًا نهيتكم عنه، وما أريد فيما آمركم به وأنهاكم عنه إلا إصلاحكم قَدْر طاقتي واستطاعتي، وما توفيقي -في إصابة الحق ومحاولة إصلاحكم- إلا بالله، على الله وحده توكلت وإليه أرجع بالتوبة والإنابة."],[12,87,"يوسف","يَٰبَنِيَّ ٱذۡهَبُواْ فَتَحَسَّسُواْ مِن يُوسُفَ وَأَخِيهِ وَلَا تَاْيۡـَٔسُواْ مِن رَّوۡحِ ٱللَّهِۖ إِنَّهُۥ لَا يَاْيۡـَٔسُ مِن رَّوۡحِ ٱللَّهِ إِلَّا ٱلۡقَوۡمُ ٱلۡكَٰفِرُونَ","قال يعقوب: يا أبنائي عودوا إلى \"مصر\" فاستقصوا أخبار يوسف وأخيه، ولا تقطعوا رجاءكم من رحمة الله، إنه لا يقطع الرجاء من رحمة الله إلا الجاحدون لقدرته، الكافرون به."],[13,28,"الرعد","ٱلَّذِينَ ءَامَنُواْ وَتَطۡمَئِنُّ قُلُوبُهُم بِذِكۡرِ ٱللَّهِۗ أَلَا بِذِكۡرِ ٱللَّهِ تَطۡمَئِنُّ ٱلۡقُلُوبُ","ويهدي الذين تسكن قلوبهم بتوحيد الله وذكره فتطمئن، ألا بطاعة الله وذكره وثوابه تسكن القلوب وتستأنس."],[14,7,"ابراهيم","وَإِذۡ تَأَذَّنَ رَبُّكُمۡ لَئِن شَكَرۡتُمۡ لَأَزِيدَنَّكُمۡۖ وَلَئِن كَفَرۡتُمۡ إِنَّ عَذَابِي لَشَدِيدٞ","وقال لهم موسى: واذكروا حين أعلم ربكم إعلامًا مؤكَّدًا: لئن شكرتموه على نعمه ليزيدنكم من فضله، ولئن جحدتم نعمة الله ليعذبنَّكم عذابًا شديدًا."],[14,24,"ابراهيم","أَلَمۡ تَرَ كَيۡفَ ضَرَبَ ٱللَّهُ مَثَلٗا كَلِمَةٗ طَيِّبَةٗ كَشَجَرَةٖ طَيِّبَةٍ أَصۡلُهَا ثَابِتٞ وَفَرۡعُهَا فِي ٱلسَّمَآءِ","ألم تعلم -أيها الرسول- كيف ضرب الله مثلا لكلمة التوحيد (لا إله إلا الله) بشجرة عظيمة، وهي النخلة، أصلها متمكن في الأرض، وأعلاها مرتفع علوًّا نحو السماء؟"],[16,18,"النحل","وَإِن تَعُدُّواْ نِعۡمَةَ ٱللَّهِ لَا تُحۡصُوهَآۗ إِنَّ ٱللَّهَ لَغَفُورٞ رَّحِيمٞ","وإن تحاولوا حَصْرَ نِعَم الله عليكم لا تَفُوا بحَصْرها؛ لكثرتها وتنوعها. إن الله لَغفور لكم رحيم بكم؛ إذ يتجاوز عن تقصيركم في أداء شكر النعم، ولا يقطعها عنكم لتفريطكم، ولا يعاجلكم بالعقوبة."],[16,97,"النحل","مَنۡ عَمِلَ صَٰلِحٗا مِّن ذَكَرٍ أَوۡ أُنثَىٰ وَهُوَ مُؤۡمِنٞ فَلَنُحۡيِيَنَّهُۥ حَيَوٰةٗ طَيِّبَةٗۖ وَلَنَجۡزِيَنَّهُمۡ أَجۡرَهُم بِأَحۡسَنِ مَا كَانُواْ يَعۡمَلُونَ","مَن عمل عملا صالحًا ذكرًا كان أم أنثى، وهو مؤمن بالله ورسوله، فلنحيينه في الدنيا حياة سعيدة مطمئنة، ولو كان قليل المال، ولنجزينَّهم في الآخرة ثوابهم بأحسن ما عملوا في الدنيا."],[17,9,"الإسراء","إِنَّ هَٰذَا ٱلۡقُرۡءَانَ يَهۡدِي لِلَّتِي هِيَ أَقۡوَمُ وَيُبَشِّرُ ٱلۡمُؤۡمِنِينَ ٱلَّذِينَ يَعۡمَلُونَ ٱلصَّـٰلِحَٰتِ أَنَّ لَهُمۡ أَجۡرٗا كَبِيرٗا","إن هذا القرآن الذي أنزلناه على عبدنا محمد يرشد الناس إلى أحسن الطرق، وهي ملة الإسلام، ويبشر المؤمنين الذين يعملون بما أمرهم الله به، وينتهون عمَّا نهاهم عنه، بأن لهم ثوابًا عظيمًا، وأن الذين لا يصدقون بالدار الآخرة وما فيها من الجزاء أعددنا لهم عذابًا موجعًا في النار."],[17,23,"الإسراء","۞وَقَضَىٰ رَبُّكَ أَلَّا تَعۡبُدُوٓاْ إِلَّآ إِيَّاهُ وَبِٱلۡوَٰلِدَيۡنِ إِحۡسَٰنًاۚ إِمَّا يَبۡلُغَنَّ عِندَكَ ٱلۡكِبَرَ أَحَدُهُمَآ أَوۡ كِلَاهُمَا فَلَا تَقُل لَّهُمَآ أُفّٖ وَلَا تَنۡهَرۡهُمَا وَقُل لَّهُمَا قَوۡلٗا كَرِيمٗا","وأَمَر ربك -أيها الإنسان- وألزم وأوجب أن يفرد سبحانه وتعالى وحده بالعبادة، وأمر بالإحسان إلى الأب والأم، وبخاصة حالةُ الشيخوخة، فلا تضجر ولا تستثقل شيئًا تراه من أحدهما أو منهما، ولا تسمعهما قولا سيئًا، حتى ولا التأفيف الذي هو أدنى مراتب القول السيئ، ولا يصدر منك إليهما فعل قبيح، ولكن ارفق بهما، وقل لهما -دائما- قولا لينًا لطيفًا."],[18,10,"الكهف","إِذۡ أَوَى ٱلۡفِتۡيَةُ إِلَى ٱلۡكَهۡفِ فَقَالُواْ رَبَّنَآ ءَاتِنَا مِن لَّدُنكَ رَحۡمَةٗ وَهَيِّئۡ لَنَا مِنۡ أَمۡرِنَا رَشَدٗا","اذكر -أيها الرسول- حين لجأ الشبَّان المؤمنون إلى الكهف؛ خشية من فتنة قومهم لهم، وإرغامهم على عبادة الأصنام، فقالوا: ربنا أعطنا مِن عندك رحمة، تثبتنا بها، وتحفظنا من الشر، ويسِّر لنا الطريق الصواب الذي يوصلنا إلى العمل الذي تحب، فنكون راشدين غير ضالين."],[20,114,"طه","فَتَعَٰلَى ٱللَّهُ ٱلۡمَلِكُ ٱلۡحَقُّۗ وَلَا تَعۡجَلۡ بِٱلۡقُرۡءَانِ مِن قَبۡلِ أَن يُقۡضَىٰٓ إِلَيۡكَ وَحۡيُهُۥۖ وَقُل رَّبِّ زِدۡنِي عِلۡمٗا","فتنزَّه الله - سبحانه - وارتفع، وتقدَّس عن كل نقص، الملك الذي قهر سلطانه كل ملك وجبار، المتصرف بكل شيء، الذي هو حق، ووعده حق، ووعيده حق، وكل شيء منه حق. ولا تعجل - أيها الرسول - بمسابقة جبريل في تَلَقِّي القرآن قبل أن يَفْرَغ منه، وقل: ربِّ زدني علمًا إلى ما علمتني."],[21,87,"الأنبياء","وَذَا ٱلنُّونِ إِذ ذَّهَبَ مُغَٰضِبٗا فَظَنَّ أَن لَّن نَّقۡدِرَ عَلَيۡهِ فَنَادَىٰ فِي ٱلظُّلُمَٰتِ أَن لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبۡحَٰنَكَ إِنِّي كُنتُ مِنَ ٱلظَّـٰلِمِينَ","واذكر قصة صاحب الحوت، وهو يونس بن مَتَّى عليه السلام، أرسله الله إلى قومه فدعاهم فلم يؤمنوا، فتوعَّدهم بالعذاب فلم ينيبوا، ولم يصبر عليهم كما أمره الله، وخرج مِن بينهم غاضبًا عليهم، ضائقًا صدره بعصيانهم، وظن أن الله لن يضيِّق عليه ويؤاخذه بهذه المخالفة، فابتلاه الله بشدة الضيق والحبس، والتقمه الحوت في البحر، فنادى ربه في ظلمات الليل والبحر وبطن الحوت تائبًا معترفًا بظلمه؛ لتركه الصبر على قومه، قائلا: لا إله إلا أنت سبحانك، إني كنت من الظالمين."],[23,1,"المؤمنون","قَدۡ أَفۡلَحَ ٱلۡمُؤۡمِنُونَ","قد فاز المصدِّقون بالله وبرسوله العاملون بشرعه."],[25,63,"الفرقان","وَعِبَادُ ٱلرَّحۡمَٰنِ ٱلَّذِينَ يَمۡشُونَ عَلَى ٱلۡأَرۡضِ هَوۡنٗا وَإِذَا خَاطَبَهُمُ ٱلۡجَٰهِلُونَ قَالُواْ سَلَٰمٗا","وعباد الرحمن الصالحون يمشون على الأرض بسكينة متواضعين، وإذا خاطبهم الجهلة السفهاء بالأذى أجابوهم بالمعروف من القول، وخاطبوهم خطابًا يَسْلَمون فيه من الإثم، ومن مقابلة الجاهل بجهله."],[28,24,"القصص","فَسَقَىٰ لَهُمَا ثُمَّ تَوَلَّىٰٓ إِلَى ٱلظِّلِّ فَقَالَ رَبِّ إِنِّي لِمَآ أَنزَلۡتَ إِلَيَّ مِنۡ خَيۡرٖ فَقِيرٞ","فسقى موسى للمرأتين ماشيتهما، ثم تولى إلى ظل شجرة فاستظلَّ بها وقال: رب إني مفتقر إلى ما تسوقه إليَّ مِن أي خير كان، كالطعام. وكان قد اشتد به الجوع."],[29,69,"العنكبوت","وَٱلَّذِينَ جَٰهَدُواْ فِينَا لَنَهۡدِيَنَّهُمۡ سُبُلَنَاۚ وَإِنَّ ٱللَّهَ لَمَعَ ٱلۡمُحۡسِنِينَ","والمؤمنون الذين جاهدوا أعداء الله، والنفس، والشيطان، وصبروا على الفتن والأذى في سبيل الله، سيهديهم الله سبل الخير، ويثبتهم على الصراط المستقيم، ومَن هذه صفته فهو محسن إلى نفسه وإلى غيره. وإن الله سبحانه وتعالى لمع مَن أحسن مِن خَلْقِه بالنصرة والتأييد والحفظ والهداية."],[31,17,"لقمان","يَٰبُنَيَّ أَقِمِ ٱلصَّلَوٰةَ وَأۡمُرۡ بِٱلۡمَعۡرُوفِ وَٱنۡهَ عَنِ ٱلۡمُنكَرِ وَٱصۡبِرۡ عَلَىٰ مَآ أَصَابَكَۖ إِنَّ ذَٰلِكَ مِنۡ عَزۡمِ ٱلۡأُمُورِ","يا بنيَّ أقم الصلاة تامة بأركانها وشروطها وواجباتها، وأْمر بالمعروف، وانْه عن المنكر بلطفٍ ولينٍ وحكمة بحسب جهدك، وتحمَّل ما يصيبك من الأذى مقابل أمرك بالمعروف ونهيك عن المنكر، واعلم أن هذه الوصايا مما أمر الله به من الأمور التي ينبغي الحرص عليها."],[33,41,"الأحزاب","يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱذۡكُرُواْ ٱللَّهَ ذِكۡرٗا كَثِيرٗا","يا أيها الذين صَدَّقوا الله ورسوله وعملوا بشرعه، اذكروا الله بقلوبكم وألسنتكم وجوارحكم ذِكْرًا كثيرًا، واشغلوا أوقاتكم بذكر الله تعالى عند الصباح والمساء، وأدبار الصلوات المفروضات، وعند العوارض والأسباب، فإن ذلك عبادة مشروعة، تدعو إلى محبة الله، وكف اللسان عن الآثام، وتعين على كل خير."],[39,53,"الزمر","۞قُلۡ يَٰعِبَادِيَ ٱلَّذِينَ أَسۡرَفُواْ عَلَىٰٓ أَنفُسِهِمۡ لَا تَقۡنَطُواْ مِن رَّحۡمَةِ ٱللَّهِۚ إِنَّ ٱللَّهَ يَغۡفِرُ ٱلذُّنُوبَ جَمِيعًاۚ إِنَّهُۥ هُوَ ٱلۡغَفُورُ ٱلرَّحِيمُ","قل -أيها الرسول- لعبادي الذين تمادَوا في المعاصي، وأسرفوا على أنفسهم بإتيان ما تدعوهم إليه نفوسهم من الذنوب: لا تَيْئسوا من رحمة الله؛ لكثرة ذنوبكم، إن الله يغفر الذنوب جميعًا لمن تاب منها ورجع عنها مهما كانت، إنه هو الغفور لذنوب التائبين من عباده، الرحيم بهم."],[40,60,"غافر","وَقَالَ رَبُّكُمُ ٱدۡعُونِيٓ أَسۡتَجِبۡ لَكُمۡۚ إِنَّ ٱلَّذِينَ يَسۡتَكۡبِرُونَ عَنۡ عِبَادَتِي سَيَدۡخُلُونَ جَهَنَّمَ دَاخِرِينَ","وقال ربكم- أيها العباد-: ادعوني وحدي وخصُّوني بالعبادة أستجب لكم، إن الذين يتكبرون عن إفرادي بالعبودية والألوهية، سيدخلون جهنم صاغرين حقيرين."],[41,34,"فصلت","وَلَا تَسۡتَوِي ٱلۡحَسَنَةُ وَلَا ٱلسَّيِّئَةُۚ ٱدۡفَعۡ بِٱلَّتِي هِيَ أَحۡسَنُ فَإِذَا ٱلَّذِي بَيۡنَكَ وَبَيۡنَهُۥ عَدَٰوَةٞ كَأَنَّهُۥ وَلِيٌّ حَمِيمٞ","ولا تستوي حسنة الذين آمنوا بالله، واستقاموا على شرعه، وأحسنوا إلى خلقه، وسيئة الذين كفروا به وخالفوا أمره، وأساؤوا إلى خلقه. ادفع بعفوك وحلمك وإحسانك مَن أساء إليك، وقابل إساءته لك بالإحسان إليه، فبذلك يصير المسيء إليك الذي بينك وبينه عداوة كأنه قريب لك شفيق عليك. وما يُوفَّق لهذه الخصلة الحميدة إلا الذين صبروا أنفسهم على ما تكره، وأجبروها على ما يحبه الله، وما يُوفَّق لها إلا ذو نصيب وافر من السعادة في الدنيا والآخرة."],[47,7,"محمد","يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓاْ إِن تَنصُرُواْ ٱللَّهَ يَنصُرۡكُمۡ وَيُثَبِّتۡ أَقۡدَامَكُمۡ","يا أيها الذين صدَّقوا الله ورسوله وعملوا بشرعه، إن تنصروا دين الله بالجهاد في سبيله، والحكم بكتابه، وامتثال أوامره، واجتناب نواهيه، ينصركم الله على أعدائكم، ويثبت أقدامكم عند القتال."],[49,13,"الحجرات","يَـٰٓأَيُّهَا ٱلنَّاسُ إِنَّا خَلَقۡنَٰكُم مِّن ذَكَرٖ وَأُنثَىٰ وَجَعَلۡنَٰكُمۡ شُعُوبٗا وَقَبَآئِلَ لِتَعَارَفُوٓاْۚ إِنَّ أَكۡرَمَكُمۡ عِندَ ٱللَّهِ أَتۡقَىٰكُمۡۚ إِنَّ ٱللَّهَ عَلِيمٌ خَبِيرٞ","يا أيها الناس إنَّا خلقناكم من أب واحد هو آدم، وأُم واحدة هي حواء، فلا تفاضل بينكم في النسب، وجعلناكم بالتناسل شعوبًا وقبائل متعددة؛ ليعرف بعضكم بعضًا، إن أكرمكم عند الله أشدكم اتقاءً له. إن الله عليم بالمتقين، خبير بهم."],[50,16,"ق","وَلَقَدۡ خَلَقۡنَا ٱلۡإِنسَٰنَ وَنَعۡلَمُ مَا تُوَسۡوِسُ بِهِۦ نَفۡسُهُۥۖ وَنَحۡنُ أَقۡرَبُ إِلَيۡهِ مِنۡ حَبۡلِ ٱلۡوَرِيدِ","ولقد خلقنا الإنسان، ونعلم ما تُحَدِّث به نفسه، ونحن أقرب إليه من حبل الوريد (وهو عِرْق في العنق متصل بالقلب)."],[55,13,"الرحمن","فَبِأَيِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ","فبأي نِعَم ربكما الدينية والدنيوية- يا معشر الجن والإنس- تكذِّبان؟ وما أحسن جواب الجن حين تلا عليهم النبي صلى الله عليه وسلم هذه السورة، فكلما مر بهذه الآية، قالوا: \"ولا بشيء من آلائك ربَّنا نكذب، فلك الحمد\"، وهكذا ينبغي للعبد إذا تليت عليه نعم الله وآلاؤه، أن يُقرَّ بها، ويشكر الله ويحمده عليها."],[57,4,"الحديد","هُوَ ٱلَّذِي خَلَقَ ٱلسَّمَٰوَٰتِ وَٱلۡأَرۡضَ فِي سِتَّةِ أَيَّامٖ ثُمَّ ٱسۡتَوَىٰ عَلَى ٱلۡعَرۡشِۖ يَعۡلَمُ مَا يَلِجُ فِي ٱلۡأَرۡضِ وَمَا يَخۡرُجُ مِنۡهَا وَمَا يَنزِلُ مِنَ ٱلسَّمَآءِ وَمَا يَعۡرُجُ فِيهَاۖ وَهُوَ مَعَكُمۡ أَيۡنَ مَا كُنتُمۡۚ وَٱللَّهُ بِمَا تَعۡمَلُونَ بَصِيرٞ","هو الذي خلق السموات والأرض وما بينهما في ستة أيام، ثم استوى -أي علا وارتفع- على عرشه فوق جميع خلقه استواء يليق بجلاله، يعلم ما يدخل في الأرض من حب ومطر وغير ذلك، وما يخرج منها من نبات وزرع وثمار، وما ينزل من السماء من مطر وغيره، وما يعرج فيها من الملائكة والأعمال، وهو سبحانه معكم بعلمه أينما كنتم، والله بصير بأعمالكم التي تعملونها، وسيجازيكم عليها."],[59,18,"الحشر","يَـٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُواْ ٱتَّقُواْ ٱللَّهَ وَلۡتَنظُرۡ نَفۡسٞ مَّا قَدَّمَتۡ لِغَدٖۖ وَٱتَّقُواْ ٱللَّهَۚ إِنَّ ٱللَّهَ خَبِيرُۢ بِمَا تَعۡمَلُونَ","يا أيها الذين صدَّقوا الله ورسوله وعملوا بشرعه، خافوا الله، واحذروا عقابه بفعل ما أمركم به وترك ما نهاكم عنه، ولتتدبر كل نفس ما قدمت من الأعمال ليوم القيامة، وخافوا الله في كل ما تأتون وما تَذَرون، إن الله سبحانه خبير بما تعملون، لا يخفى عليه شيء من أعمالكم، وهو مجازيكم عليها."],[64,16,"التغابن","فَٱتَّقُواْ ٱللَّهَ مَا ٱسۡتَطَعۡتُمۡ وَٱسۡمَعُواْ وَأَطِيعُواْ وَأَنفِقُواْ خَيۡرٗا لِّأَنفُسِكُمۡۗ وَمَن يُوقَ شُحَّ نَفۡسِهِۦ فَأُوْلَـٰٓئِكَ هُمُ ٱلۡمُفۡلِحُونَ","فابذلوا- أيها المؤمنون- في تقوى الله جهدكم وطاقتكم، واسمعوا لرسول الله صلى الله عليه وسلم سماع تدبُّر وتفكر، وأطيعوا أوامره واجتنبوا نواهيه، وأنفقوا مما رزقكم الله يكن خيرًا لكم. ومن سَلِم من البخل ومَنْعِ الفضل من المال، فأولئك هم الظافرون بكل خير، الفائزون بكل مطلب."],[65,3,"الطلاق","وَيَرۡزُقۡهُ مِنۡ حَيۡثُ لَا يَحۡتَسِبُۚ وَمَن يَتَوَكَّلۡ عَلَى ٱللَّهِ فَهُوَ حَسۡبُهُۥٓۚ إِنَّ ٱللَّهَ بَٰلِغُ أَمۡرِهِۦۚ قَدۡ جَعَلَ ٱللَّهُ لِكُلِّ شَيۡءٖ قَدۡرٗا","فإذا قاربت المطلقات نهاية عدتهن فراجعوهن مع حسن المعاشرة، والإنفاق عليهن، أو فارقوهن مع إيفاء حقهن، دون المضارَّة لهن، وأشهدوا على الرجعة أو المفارقة رجلين عدلين منكم، وأدُّوا- أيها الشهود- الشهادة خالصة لله لا لشيء آخر، ذلك الذي أمركم الله به يوعظ به مَن كان يؤمن بالله واليوم الآخر. ومن يخف الله فيعمل بما أمره به، ويجتنب ما نهاه عنه، يجعل له مخرجًا من كل ضيق، وييسِّر له أسباب الرزق من حيث لا يخطر على باله، ولا يكون في حسبانه. ومن يتوكل على الله فهو كافيه ما أهمَّه في جميع أموره. إن الله بالغ أمره، لا يفوته شيء، ولا يعجزه مطلوب، قد جعل الله لكل شيء أجلا ينتهي إليه، وتقديرًا لا يجاوزه."],[73,4,"المزمل","أَوۡ زِدۡ عَلَيۡهِ وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا","يا أيها المتغطي بثيابه، قم للصلاة في الليل إلا يسيرًا منه. قم نصف الليل أو انقص من النصف قليلا حتى تَصِلَ إلى الثلث، أو زد على النصف حتى تصل إلى الثلثين، واقرأ القرآن بتُؤَدَة وتمهُّلٍ مبيِّنًا الحروف والوقوف."],[93,5,"الضحى","وَلَسَوۡفَ يُعۡطِيكَ رَبُّكَ فَتَرۡضَىٰٓ","ولَلدَّار الآخرة خير لك من دار الدنيا، ولسوف يعطيك ربك -أيها النبي- مِن أنواع الإنعام في الآخرة، فترضى بذلك."],[94,6,"الشرح","إِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرٗا","فلا يثنك أذى أعدائك عن نشر الرسالة؛ فإن مع الضيق فرجًا، إن مع الضيق فرجًا."],[96,1,"العلق","ٱقۡرَأۡ بِٱسۡمِ رَبِّكَ ٱلَّذِي خَلَقَ","اقرأ -أيها النبي- ما أُنزل إليك من القرآن مُفْتَتِحًا باسم ربك المتفرد بالخلق، الذي خلق كل إنسان من قطعة دم غليظ أحمر. اقرأ -أيها النبي- ما أُنزل إليك، وإن ربك لكثير الإحسان واسع الجود، الذي علَّم خلقه الكتابة بالقلم، علَّم الإنسان ما لم يكن يعلم، ونقله من ظلمة الجهل إلى نور العلم."],[99,7,"الزلزلة","فَمَن يَعۡمَلۡ مِثۡقَالَ ذَرَّةٍ خَيۡرٗا يَرَهُۥ","فمن يعمل وزن نملة صغيرة خيرًا، ير ثوابه في الآخرة، ومن يعمل وزن نملة صغيرة شرًا، ير عقابه في الآخرة."],[103,3,"العصر","إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ","إلا الذين آمنوا بالله وعملوا عملا صالحًا، وأوصى بعضهم بعضًا بالاستمساك بالحق، والعمل بطاعة الله، والصبر على ذلك."],[108,1,"الكوثر","إِنَّآ أَعۡطَيۡنَٰكَ ٱلۡكَوۡثَرَ","إنا أعطيناك -أيها النبي- الخير الكثير في الدنيا والآخرة، ومن ذلك نهر الكوثر في الجنة الذي حافتاه خيام اللؤلؤ المجوَّف، وطينه المسك."],[110,3,"النصر","فَسَبِّحۡ بِحَمۡدِ رَبِّكَ وَٱسۡتَغۡفِرۡهُۚ إِنَّهُۥ كَانَ تَوَّابَۢا","إذا وقع ذلك فتهيأ للقاء ربك بالإكثار من التسبيح بحمده والإكثار من استغفاره، إنه كان توابًا على المسبحين والمستغفرين، يتوب عليهم ويرحمهم ويقبل توبتهم."],[112,1,"الإخلاص","قُلۡ هُوَ ٱللَّهُ أَحَدٌ","قل -أيها الرسول-: هو الله المتفرد بالألوهية والربوبية والأسماء والصفات، لا يشاركه أحد فيها."]],"short":{"1":["الفاتحة",["بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ","ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ","ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ","مَٰلِكِ يَوۡمِ ٱلدِّينِ","إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ","ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ","صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ"]],"103":["العصر",["وَٱلۡعَصۡرِ","إِنَّ ٱلۡإِنسَٰنَ لَفِي خُسۡرٍ","إِلَّا ٱلَّذِينَ ءَامَنُواْ وَعَمِلُواْ ٱلصَّـٰلِحَٰتِ وَتَوَاصَوۡاْ بِٱلۡحَقِّ وَتَوَاصَوۡاْ بِٱلصَّبۡرِ"]],"105":["الفيل",["أَلَمۡ تَرَ كَيۡفَ فَعَلَ رَبُّكَ بِأَصۡحَٰبِ ٱلۡفِيلِ","أَلَمۡ يَجۡعَلۡ كَيۡدَهُمۡ فِي تَضۡلِيلٖ","وَأَرۡسَلَ عَلَيۡهِمۡ طَيۡرًا أَبَابِيلَ","تَرۡمِيهِم بِحِجَارَةٖ مِّن سِجِّيلٖ","فَجَعَلَهُمۡ كَعَصۡفٖ مَّأۡكُولِۭ"]],"106":["قريش",["لِإِيلَٰفِ قُرَيۡشٍ","إِۦلَٰفِهِمۡ رِحۡلَةَ ٱلشِّتَآءِ وَٱلصَّيۡفِ","فَلۡيَعۡبُدُواْ رَبَّ هَٰذَا ٱلۡبَيۡتِ","ٱلَّذِيٓ أَطۡعَمَهُم مِّن جُوعٖ وَءَامَنَهُم مِّنۡ خَوۡفِۭ"]],"107":["الماعون",["أَرَءَيۡتَ ٱلَّذِي يُكَذِّبُ بِٱلدِّينِ","فَذَٰلِكَ ٱلَّذِي يَدُعُّ ٱلۡيَتِيمَ","وَلَا يَحُضُّ عَلَىٰ طَعَامِ ٱلۡمِسۡكِينِ","فَوَيۡلٞ لِّلۡمُصَلِّينَ","ٱلَّذِينَ هُمۡ عَن صَلَاتِهِمۡ سَاهُونَ","ٱلَّذِينَ هُمۡ يُرَآءُونَ","وَيَمۡنَعُونَ ٱلۡمَاعُونَ"]],"108":["الكوثر",["إِنَّآ أَعۡطَيۡنَٰكَ ٱلۡكَوۡثَرَ","فَصَلِّ لِرَبِّكَ وَٱنۡحَرۡ","إِنَّ شَانِئَكَ هُوَ ٱلۡأَبۡتَرُ"]],"109":["الكافرون",["قُلۡ يَـٰٓأَيُّهَا ٱلۡكَٰفِرُونَ","لَآ أَعۡبُدُ مَا تَعۡبُدُونَ","وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ","وَلَآ أَنَا۠ عَابِدٞ مَّا عَبَدتُّمۡ","وَلَآ أَنتُمۡ عَٰبِدُونَ مَآ أَعۡبُدُ","لَكُمۡ دِينُكُمۡ وَلِيَ دِينِ"]],"110":["النصر",["إِذَا جَآءَ نَصۡرُ ٱللَّهِ وَٱلۡفَتۡحُ","وَرَأَيۡتَ ٱلنَّاسَ يَدۡخُلُونَ فِي دِينِ ٱللَّهِ أَفۡوَاجٗا","فَسَبِّحۡ بِحَمۡدِ رَبِّكَ وَٱسۡتَغۡفِرۡهُۚ إِنَّهُۥ كَانَ تَوَّابَۢا"]],"111":["المسد",["تَبَّتۡ يَدَآ أَبِي لَهَبٖ وَتَبَّ","مَآ أَغۡنَىٰ عَنۡهُ مَالُهُۥ وَمَا كَسَبَ","سَيَصۡلَىٰ نَارٗا ذَاتَ لَهَبٖ","وَٱمۡرَأَتُهُۥ حَمَّالَةَ ٱلۡحَطَبِ","فِي جِيدِهَا حَبۡلٞ مِّن مَّسَدِۭ"]],"112":["الإخلاص",["قُلۡ هُوَ ٱللَّهُ أَحَدٌ","ٱللَّهُ ٱلصَّمَدُ","لَمۡ يَلِدۡ وَلَمۡ يُولَدۡ","وَلَمۡ يَكُن لَّهُۥ كُفُوًا أَحَدُۢ"]],"113":["الفلق",["قُلۡ أَعُوذُ بِرَبِّ ٱلۡفَلَقِ","مِن شَرِّ مَا خَلَقَ","وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ","وَمِن شَرِّ ٱلنَّفَّـٰثَٰتِ فِي ٱلۡعُقَدِ","وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ"]],"114":["الناس",["قُلۡ أَعُوذُ بِرَبِّ ٱلنَّاسِ","مَلِكِ ٱلنَّاسِ","إِلَٰهِ ٱلنَّاسِ","مِن شَرِّ ٱلۡوَسۡوَاسِ ٱلۡخَنَّاسِ","ٱلَّذِي يُوَسۡوِسُ فِي صُدُورِ ٱلنَّاسِ","مِنَ ٱلۡجِنَّةِ وَٱلنَّاسِ"]]}};
+const QX=window.QA||null,PID=QX?(QX.J("qa-profile",null)?.id||""):"";
+const tday=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(3,"0");
+const P1=QX?QX.prog(PID):null,NU=QX?"latn":"arab";
+/* آية اليوم: آية ثابتة لليوم كله، تتغيّر كل يوم */
+{const T=tday(),[s,a,nm,v,tf]=HD.ayd[T%HD.ayd.length];
+ $("#aydText").innerHTML=`${esc(v)} <span class="am">${num(a)}</span>`;$("#aydRef").textContent=`سورة ${nm}، الآية ${num(a)}`;$("#aydTf").textContent=tf;
+ try{$("#aydDate").textContent=new Intl.DateTimeFormat("ar-u-ca-islamic-umalqura-nu-"+NU,{day:"numeric",month:"long"}).format(new Date())}catch(e){}
+ $("#aydOpen").href=QX?`hifz.html?s=${s}&a=${a}#learn`:"#hifz";
+ const au=new Audio();let on=false;
+ $("#aydPlay").onclick=()=>{if(on){au.pause();on=false;$("#aydPlay").lastChild.textContent="استمع إليها";return}
+   au.src=`https://everyayah.com/data/Alafasy_128kbps/${pad(s)}${pad(a)}.mp3`;au.play().then(()=>{on=true;$("#aydPlay").lastChild.textContent="أوقف";$("#aydMsg").textContent=""}).catch(()=>{$("#aydMsg").textContent="تعذّر تشغيل التلاوة هنا، وتعمل في الموقع."})};
+ au.onended=()=>{on=false;$("#aydPlay").lastChild.textContent="استمع إليها"};
+ $("#aydShare").onclick=async()=>{const txt=`﴿${v}﴾ [${nm}: ${a}]\n${tf}`+(QX?"\n"+QX.CFG.siteUrl:"");
+   if(navigator.share){navigator.share({text:txt}).catch(()=>{});return}
+   try{await navigator.clipboard.writeText(txt);$("#aydMsg").textContent="نُسخت الآية وتفسيرها، الصقها حيث تشاء."}catch(e){$("#aydMsg").textContent="لم يتيسّر النسخ هنا."}}}
+/* اختبر حفظك: ما الآية التالية؟ من السور التي بدأ المتعلّم حفظها، وإلا من قصار السور */
+{const shuf=a=>{for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+ const mine=P1&&P1.any?P1.surahs.filter(x=>x.m>=2).map(x=>x.n):[];
+ const cache={};
+ const getS=async n=>{if(HD.short[n])return HD.short[n];if(cache[n])return cache[n];const r=await fetch(`q/${pad(n)}.json`);const d=await r.json();return cache[n]=[d.name,d.v]};
+ async function ask(){
+   let pool=mine.length?mine:Object.keys(HD.short).map(Number).filter(n=>HD.short[n][1].length>=4);
+   let n=pool[Math.floor(Math.random()*pool.length)],S;
+   try{S=await getS(n)}catch(e){pool=Object.keys(HD.short).map(Number);n=pool[Math.floor(Math.random()*pool.length)];S=HD.short[n]}
+   const [nm,V]=S;let ok=[];
+   if(mine.length&&QX){const ay=P1.S.ay||{};for(let i=1;i<V.length;i++)if(ay[n+":"+i]?.mem&&ay[n+":"+(i+1)]?.mem)ok.push(i)}
+   if(!ok.length)ok=[...V.keys()].slice(1).map(i=>i);   // i = رقم الآية المعروضة (من 1)
+   const i=ok[Math.floor(Math.random()*ok.length)]||1;
+   const right=V[i],others=shuf(V.map((x,k)=>k).filter(k=>k!==i&&k!==i-1&&V[k]!==right)).slice(0,2).map(k=>V[k]);
+   $("#qzFrom").textContent=`سورة ${nm}`+(mine.length?"، مما حفظت":"");
+   $("#qzAy").innerHTML=`${esc(V[i-1])} <span class="am">${num(i)}</span>`;
+   $("#qzRes").textContent="";$("#qzRes").className="qres";
+   $("#qzMore").href=QX?`hifz.html?s=${n}#test`:"#hifz";
+   const opts=shuf([right,...others]);
+   $("#qzOpts").innerHTML=opts.map(o=>`<button data-r="${o===right?1:0}">${esc(o)}</button>`).join("");
+   $$("#qzOpts button").forEach(b=>b.onclick=()=>{const good=b.dataset.r=="1";b.classList.add(good?"right":"wrong");
+     if(good){$$("#qzOpts button").forEach(x=>x.disabled=true);$("#qzRes").textContent="أحسنت! بارك الله في حفظك.";$("#qzRes").className="qres ok"}
+     else{b.disabled=true;$("#qzRes").textContent="ليست هذه، حاول مرة أخرى.";$("#qzRes").className="qres no"}})}
+ $("#qzNext").onclick=ask;ask()}
+/* خريطة المواظبة: 12 أسبوعاً؛ في الموقع من أيام الحفظ والمراجعة المسجّلة على الجهاز */
+function drawHeat(){
+  const T=tday(),W=12,start=T-((new Date(T*864e5).getUTCDay()+1)%7)-7*(W-1);   // الأسبوع يبدأ بالسبت
+  let L={},demo=!(P1&&P1.any);
+  if(!demo){const IV=[0,1,2,4,7,15,30],ay=P1.S.ay||{},key="qa-days"+(PID?":"+PID:"");let D={};try{D=JSON.parse(localStorage.getItem(key))||{}}catch(e){}
+    for(const k in ay){const x=ay[k];if(x.b>0){const d=x.due-IV[x.b];if(d>T-120&&d<=T)D[d]=Math.max(D[d]||0,1)}}
+    for(const k in ay){const x=ay[k];if(x.b>0){const d=x.due-IV[x.b];L[d]=(L[d]||0)+1}}
+    if(P1.streak)for(let d=P1.last-P1.streak+1;d<=P1.last;d++)D[d]=D[d]||1;
+    for(const d in D)if(!L[d])L[d]=1;
+    try{localStorage.setItem(key,JSON.stringify(Object.fromEntries(Object.entries(D).filter(([d])=>+d>T-120))))}catch(e){}}
+  else{let s=11;const R=()=>(s=s*16807%2147483647)/2147483647;for(let d=start;d<=T;d++){const r=R();if(r>.3||d>T-5)L[d]=r>.85?12:r>.6?6:2}}
+  let h="",days=0,best=0,run=0;
+  for(let d=start;d<start+7*W;d++){const v=L[d]||0,lv=v>=10?3:v>=4?2:v>0?1:0;if(d<=T){if(v){days++;run++;best=Math.max(best,run)}else run=0}
+    h+=`<i class="${d>T?"fut":"l"+lv}${d==T?" now":""}"></i>`}
+  $("#hgrid").innerHTML=h;
+  $("#heatNote").textContent=demo?"مثال توضيحي":"آخر 12 أسبوعاً";
+  $("#hsum").innerHTML=`<span><b>${num(days)}</b> يوماً قرأت فيها</span><span>أطول سلسلة: <b>${num(best)}</b></span>`;
+}
+drawHeat();
+/* رحلتي: دفتر على الجهاز */
+{const key="qa-journal"+(PID?":"+PID:""),KN={thk:"حمد وشكر",ach:"إنجاز",idea:"خاطرة"};let kind="thk";
+ const get=()=>{try{return JSON.parse(localStorage.getItem(key))||[]}catch(e){return[]}},put=a=>{try{localStorage.setItem(key,JSON.stringify(a))}catch(e){}};
+ const EX=[{k:"thk",t:"الحمد لله الذي يسّر لي حفظ سورة الملك، اللهم اجعله حجة لي لا عليّ.",d:Date.now()-2*864e5},{k:"ach",t:"واظبت على وردي 30 يوماً متتالية دون انقطاع.",d:Date.now()-9*864e5},{k:"idea",t:"وقفت عند ﴿فَإِنَّ مَعَ ٱلۡعُسۡرِ يُسۡرًا﴾: ما من ضيق إلا وبعده فرج.",d:Date.now()-20*864e5}];
+ const fmt=d=>{try{return new Intl.DateTimeFormat("ar-u-nu-"+NU,{day:"numeric",month:"long"}).format(new Date(d))}catch(e){return""}};
+ function draw(){const a=get(),ex=!a.length,L=ex?EX:a.slice().reverse();$("#jex").hidden=!ex;
+   $("#tl").innerHTML=L.slice(0,6).map((x,i)=>`<li class="${x.k}"><div class="jc"><header><span>${KN[x.k]}</span><time>${fmt(x.d)}</time></header><p>${esc(x.t)}</p>${ex?"":`<button class="jdel" data-i="${a.length-1-i}">حذف</button>`}</div></li>`).join("")}
+ $$("[data-jk]").forEach(b=>b.onclick=()=>{kind=b.dataset.jk;$$("[data-jk]").forEach(x=>x.setAttribute("aria-pressed",x===b))});
+ $("#jform").onsubmit=e=>{e.preventDefault();const v=$("#jtext").value.trim();if(!v){$("#jtext").focus();return}const a=get();a.push({k:kind,t:v,d:Date.now()});put(a);$("#jtext").value="";draw()};
+ $("#tl").onclick=e=>{const b=e.target.closest(".jdel");if(!b)return;if(b.dataset.c){const a=get();a.splice(+b.dataset.i,1);put(a);draw()}else{b.dataset.c=1;b.textContent="اضغط مرة أخرى للحذف"}};
+ draw()}
 /* الاتجاهان: أ الشجرة في الواجهة والمصحف في «احفظ»، ب المصحف في الواجهة والشجرة في «تحدّي اليوم» */
 function setDir(d){document.body.dataset.dir=d;store.set("dir",d);$("#dA").setAttribute("aria-pressed",d=="a");$("#dB").setAttribute("aria-pressed",d=="b");const T=$("#tree"),M=$("#mus");if(d=="a"){$("#heroPic").append(T);$("#slotHifz").append(M)}else{$("#heroPic").append(M);$("#slotToday").append(T)}}
 $("#pvHide").onclick=()=>{$(".pv").hidden=true;store.set("pvHide",1)};if(store.get("pvHide"))$(".pv").hidden=true;

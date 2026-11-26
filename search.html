@@ -1,0 +1,400 @@
+<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>البحث في القرآن</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Baloo+Bhaijaan+2:wght@600;800&family=IBM+Plex+Sans+Arabic:wght@400;500;700&family=Reem+Kufi:wght@500;700&display=swap" rel="stylesheet">
+<script>try{const t=localStorage.getItem("theme");if(t)document.documentElement.dataset.theme=t;const f=[.9,1,1.12,1.25,1.4][+(localStorage.getItem("fs")??1)];if(f)document.documentElement.style.setProperty("--fs",f)}catch(e){}</script>
+</head><body><style>
+/* ===== الألوان: غيّر القيم هنا فقط بعد اعتماد الاسم =====
+   كل لون له قيمتان: (الوضع النهاري، الوضع الليلي)
+   --p اللون الرئيسي · --p2 الثانوي · --acc لون التنبيه والميكروفون
+   --field خلفية الأقسام الملوّنة · --field2 خلفية فاتحة ثانية */
+:root{
+  --bg:light-dark(#ffffff,#0f1712);--ink:light-dark(#14231a,#eef4ef);--soft:light-dark(#4b5d51,#a9bcae);--line:light-dark(#e1e9e3,#2a3a30);
+  --p:light-dark(#1f8f4e,#4cc47c);--p2:light-dark(#ffc83d,#e7b234);--acc:light-dark(#f2603f,#ff8466);
+  --field:light-dark(#eef8f1,#132018);--field2:light-dark(#fff8e3,#211e12);--card:light-dark(#ffffff,#18231c);--tint:light-dark(#e2f4e8,#1c3024);
+  --onp:light-dark(#ffffff,#0f1712);
+  --dfont:"Baloo Bhaijaan 2","IBM Plex Sans Arabic",sans-serif;--r:22px;--fs:1;
+  color-scheme:light}
+body[data-dir=b]{
+  --bg:light-dark(#ffffff,#0c1411);--ink:light-dark(#161b19,#ecf1ee);--soft:light-dark(#56615c,#a3b2ab);--line:light-dark(#e3e7e4,#26332d);
+  --p:light-dark(#0b6b50,#3fb08c);--p2:light-dark(#c9a55a,#c9a55a);--acc:light-dark(#c2362b,#ff7a6b);
+  --field:light-dark(#f1f7f4,#111d18);--field2:light-dark(#faf7ef,#17191a);--card:light-dark(#ffffff,#121c18);--tint:light-dark(#e3f0ea,#16291f);
+  --onp:light-dark(#ffffff,#0c1411);
+  --dfont:"Reem Kufi","IBM Plex Sans Arabic",sans-serif;--r:8px}
+:root[data-theme=dark]{color-scheme:dark}
+/* ===== الأساس ===== */
+html{font-size:calc(100% * var(--fs))}
+*{box-sizing:border-box;min-width:0}
+body{direction:rtl;background:var(--bg);color:var(--ink);font:1rem/1.7 "IBM Plex Sans Arabic",system-ui,sans-serif;overflow-x:clip;margin:0;transition:background .25s,color .25s}
+.band{padding-block:clamp(44px,6vw,84px);padding-left:max(5vw,16px,env(safe-area-inset-left,0px));padding-right:max(5vw,16px,env(safe-area-inset-right,0px))}
+.in{max-width:1160px;margin-inline:auto}
+h1,h2,h3{font-family:var(--dfont);line-height:1.2;margin:0;letter-spacing:0}
+h2{font-size:clamp(1.65rem,1.2rem + 1.6vw,2.3rem)}
+h3{font-size:1.2rem}
+p{margin:0 0 .6em}
+a{color:inherit}
+.q{font-family:"Amiri Quran",serif;font-size:clamp(1.5rem,1.2rem + 1vw,1.9rem);line-height:2.1}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:3rem;padding:0 1.4rem;border-radius:999px;border:2px solid var(--p);background:var(--p);color:var(--onp);font:700 1.05rem/1 "IBM Plex Sans Arabic",sans-serif;text-decoration:none;cursor:pointer}
+.btn.o{background:transparent;color:var(--p)}
+.btn:hover{filter:brightness(1.08)}
+:is(.btn,.chip,.tool,.qz button,a):focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+body[data-dir=b] .btn{border-radius:6px}
+/* رأس كل قسم: شارة، عنوان، تمهيد */
+.shead{max-width:40em;margin-bottom:clamp(22px,3vw,36px)}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:.92rem;color:var(--p);background:var(--tint);border-radius:999px;padding:4px 14px 4px 6px;margin-bottom:12px}
+.eyebrow b{display:grid;place-items:center;width:1.7em;height:1.7em;border-radius:50%;background:var(--p);color:var(--onp);font-size:.85rem}
+body[data-dir=b] .eyebrow,body[data-dir=b] .eyebrow b{border-radius:4px}
+.lead{color:var(--soft);font-size:1.08rem;margin-top:10px}
+.alt{background:var(--field)}
+.alt2{background:var(--field2)}
+
+/* ===== شريط التنقل ===== */
+.site{position:sticky;top:0;z-index:5;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);padding-block:10px!important}
+.site .in{display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font-family:var(--dfont);font-size:1.55rem;font-weight:800;text-decoration:none;white-space:nowrap}
+.logo svg{width:36px;height:36px;flex:none}
+.links{display:flex;gap:4px;margin-inline-start:auto;font-weight:500}
+.links a{text-decoration:none;color:var(--soft);padding:6px 12px;border-radius:999px}
+.links a:hover{color:var(--p);background:var(--tint)}
+.tools{display:flex;align-items:center;gap:6px;margin-inline-start:8px}
+.links+.tools{margin-inline-start:8px}
+.tgrp{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.tool{display:grid;place-items:center;min-width:44px;height:44px;padding:0 8px;background:var(--card);border:0;color:var(--ink);font:700 1rem "IBM Plex Sans Arabic",sans-serif;cursor:pointer}
+.tool:hover{background:var(--tint)}
+.tool:disabled{opacity:.35;cursor:default;background:var(--card)}
+.tool svg{width:20px;height:20px}
+.tool.one{border:1.5px solid var(--line);border-radius:999px}
+.tgrp .tool+.tool{border-inline-start:1.5px solid var(--line)}
+.tool{white-space:nowrap}
+body[data-dir=b] .tgrp,body[data-dir=b] .tool.one{border-radius:6px}
+.site .btn{min-height:44px;padding:0 1.1rem}
+.ic-sun{display:none}
+:root[data-theme=dark] .ic-sun{display:block}:root[data-theme=dark] .ic-moon{display:none}
+
+
+/* ===== صفحة البحث ===== */
+[hidden]{display:none!important}
+main.band{padding-block:clamp(24px,4vw,48px)}
+main .in{max-width:900px}
+h1{font-size:clamp(1.6rem,1.2rem + 1.6vw,2.4rem);margin-bottom:6px}
+.muted{color:var(--soft)}
+.sbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,3vw,26px);box-shadow:0 10px 30px color-mix(in srgb,var(--ink) 6%,transparent);margin:16px 0 20px}
+.srow{display:flex;gap:10px}
+.srow input{flex:1;min-width:0;font:1.2rem "IBM Plex Sans Arabic",sans-serif;color:var(--ink);background:var(--bg);border:2px solid var(--line);border-radius:14px;padding:10px 14px;min-height:54px}
+.srow input:focus{outline:2px solid var(--p);border-color:var(--p)}
+.opts{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-top:14px}
+.seg2{display:flex;flex-wrap:wrap;gap:8px}
+.seg2 input{position:absolute;opacity:0;pointer-events:none}
+.seg2 span{display:inline-flex;align-items:center;min-height:44px;padding:0 1rem;border:2px solid var(--line);border-radius:999px;cursor:pointer;font-weight:700;font-size:.95rem}
+.seg2 input:checked+span{border-color:var(--p);background:var(--p);color:var(--onp)}
+.seg2 input:focus-visible+span{outline:3px solid var(--acc);outline-offset:2px}
+body[data-dir=b] .seg2 span{border-radius:6px}
+.opts select{font:1rem "IBM Plex Sans Arabic",sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:6px 10px;min-height:44px;max-width:100%}
+.ex{margin-top:14px;font-size:.95rem}
+.ex button{background:var(--field);border:0;border-radius:999px;padding:6px 14px;margin:4px 2px;font:inherit;color:var(--ink);cursor:pointer;min-height:38px}
+.ex button:hover{background:var(--tint)}
+.sum{background:var(--field2);border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.sum b{color:var(--p)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.chips button{background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:4px 12px;font:.9rem "IBM Plex Sans Arabic",sans-serif;color:var(--ink);cursor:pointer;min-height:36px}
+.chips button[aria-pressed=true]{background:var(--p);border-color:var(--p);color:var(--onp)}
+.chips button i{font-style:normal;color:var(--soft);margin-inline-start:4px}
+.chips button[aria-pressed=true] i{color:inherit;opacity:.85}
+.res{list-style:none;padding:0;margin:0;display:grid;gap:12px}
+.res li{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px}
+.res .hd{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;font-size:.95rem}
+.res .hd b{font-family:var(--dfont);color:var(--p);font-size:1.05rem}
+.res .hd .go{margin-inline-start:auto;font-weight:700;color:var(--p);text-decoration:none;display:inline-flex;align-items:center;min-height:40px}
+.res .hd .go:hover{text-decoration:underline}
+.res .hd .soon{margin-inline-start:auto;font-size:.85rem;color:var(--soft)}
+.ay{font-family:"Amiri Quran",serif;font-size:calc(1.55rem * var(--fs,1));line-height:2.2;margin:6px 0 0;word-spacing:.08em}
+.ay mark{background:color-mix(in srgb,var(--p2) 55%,transparent);color:inherit;border-radius:6px;padding:0 2px}
+.ay .n{color:var(--p);font-size:.85em;white-space:nowrap}
+.more{display:flex;justify-content:center;margin-top:16px}
+.note{font-size:.85rem;color:var(--soft);margin-top:28px;line-height:1.8}
+.load{display:flex;align-items:center;gap:10px;color:var(--soft)}
+.load::before{content:"";width:18px;height:18px;border:3px solid var(--line);border-top-color:var(--p);border-radius:50%;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(1turn)}}
+@media(prefers-reduced-motion:reduce){.load::before{animation:none}}
+@media(max-width:760px){.site .links{display:none}.site .tools{margin-inline-start:auto}}
+@media(max-width:640px){.site .btn{display:none}.logo{font-size:1.3rem}.srow{flex-direction:column}.srow .btn{width:100%}}
+</style>
+
+<nav class="site band" aria-label="التنقل الرئيسي"><div class="in">
+  <a class="logo" href="./"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M20 4c3 5 3 9 0 12-3-3-3-7 0-12z" fill="var(--p)"/><circle cx="20" cy="26" r="11" fill="var(--p2)"/><circle cx="16" cy="23" r="3" fill="#fff" opacity=".5"/></svg><span class="nm"></span></a>
+  <div class="links"><a href="./">الرئيسية</a><a href="hifz.html">المصحف</a><a href="search.html" aria-current="page">البحث</a></div>
+  <div class="tools">
+    <span class="tgrp" role="group" aria-label="حجم الخط"><button class="tool" id="fsDown" aria-label="تصغير الخط">أ−</button><button class="tool" id="fsUp" aria-label="تكبير الخط">أ+</button></span>
+    <button class="tool one" id="theme" aria-pressed="false" aria-label="الوضع الليلي"><svg class="ic-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="currentColor"/></svg><svg class="ic-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M4.9 4.9l2.1 2.1M17 17l2.1 2.1M4.9 19.1 7 17M17 7l2.1-2.1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+  </div>
+  <a class="btn" href="hifz.html">افتح المصحف</a>
+</div></nav>
+
+<main class="band"><div class="in">
+  <h1>ابحث عن كلمة في القرآن</h1>
+  <p class="muted" style="margin:0">اكتب الكلمة بلا تشكيل، ويجدها البحث في القرآن كله أيّاً كان رسمها، فلا فرق بين «أ» و«ا» ولا بين «ة» و«ه».</p>
+  <form class="sbox" id="f" role="search">
+    <div class="srow">
+      <input id="q" type="search" autocomplete="off" placeholder="مثلاً: الصبر" aria-label="الكلمة التي تبحث عنها" enterkeyhint="search">
+      <button class="btn" type="submit">ابحث</button>
+    </div>
+    <div class="opts">
+      <div class="seg2" role="radiogroup" aria-label="طريقة المطابقة">
+        <label><input type="radio" name="m" value="p" checked><span>ضمن الكلمة</span></label>
+        <label><input type="radio" name="m" value="w"><span>الكلمة كاملة</span></label>
+      </div>
+      <label>في <select id="sur" aria-label="السورة"><option value="0">القرآن كله</option></select></label>
+    </div>
+    <div class="ex muted">جرّب: <button type="button">الصبر</button><button type="button">الجنة</button><button type="button">رحمة</button><button type="button">موسى</button><button type="button">يا أيها الذين آمنوا</button></div>
+  </form>
+  <div id="out" aria-live="polite"></div>
+  <p class="note">النص القرآني في النتائج بالرسم العثماني كما في المصحف (رواية حفص عن عاصم). والبحث يجري على النص بالرسم الإملائي، لذا تكتب «الصلاة» فتجد «ٱلصَّلَوٰةَ».</p>
+</div></main>
+
+<script>
+/* الربط بالخادم (Supabase): الدخول، ونسخ التقدّم إلى الحساب ومزامنته بين الأجهزة، ونموذج الأفكار.
+   مشترك بين الصفحات الثلاث. إن كان الإعداد فارغاً يعمل الموقع كله على الجهاز كما كان.
+   المفتاح هنا هو المفتاح العام (anon/publishable) وحده، والحماية في قواعد RLS على الخادم. */
+window.QA_CLOUD=(()=>{
+const CFG={url:'https://igvjhyskbejhqpdcawic.supabase.co',key:'sb_publishable_scmaRFsCydWPc8Ysp3Zhiw_lL5hBBz9'};
+const on=!!(CFG.url&&!CFG.url.startsWith('/*')&&CFG.key&&!CFG.key.startsWith('/*'));
+const LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.3/dist/umd/supabase.js';
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
+const CACHE='qa-cache',SYNCED='qa-synced';
+const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
+/* هل على هذا الجهاز جلسة دخول؟ (دون تحميل المكتبة) */
+function hasSession(){if(!on)return false;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-.*-auth-token$/.test(k))return true}}catch(e){}return false}
+let _c=null;
+function client(){
+  if(!on)return Promise.reject(new Error('off'));
+  return _c||(_c=new Promise((res,rej)=>{
+    const go=()=>res(window.supabase.createClient(CFG.url,CFG.key,{auth:{flowType:'implicit',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}}));
+    if(window.supabase&&window.supabase.createClient)return go();
+    const s=document.createElement('script');s.src=LIB;s.onload=go;s.onerror=()=>{_c=null;rej(new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت ثم أعد المحاولة.'))};document.head.append(s)}));
+}
+
+/* ===== دمج تقدّمين: لا يضيع حفظ من أي جهاز ===== */
+function canon(o){if(Array.isArray(o))return'['+o.map(canon).join(',')+']';if(o&&typeof o=='object')return'{'+Object.keys(o).sort().map(k=>JSON.stringify(k)+':'+canon(o[k])).join(',')+'}';return JSON.stringify(o)}
+function better(a,b){if(!a)return b;if(!b)return a;
+  if(!!a.mem!=!!b.mem)return a.mem?a:b;if((a.due||0)!=(b.due||0))return(a.due||0)>(b.due||0)?a:b;
+  if((a.b||0)!=(b.b||0))return(a.b||0)>(b.b||0)?a:b;return(a.err||0)<=(b.err||0)?a:b}
+function merge(L,R){L=L||{};R=R||{};const M=Object.assign({},R,L);
+  const ay={},A=L.ay||{},B=R.ay||{};for(const k of new Set([...Object.keys(A),...Object.keys(B)]))ay[k]=better(A[k],B[k]);M.ay=ay;
+  const q={},qa=L.quiz||{},qb=R.quiz||{};for(const k of new Set([...Object.keys(qa),...Object.keys(qb)]))q[k]=Math.max(+qa[k]||0,+qb[k]||0);if(L.quiz||R.quiz)M.quiz=q;
+  if(L.badges||R.badges)M.badges=Object.assign({},R.badges||{},L.badges||{});
+  if('pts'in L||'pts'in R)M.pts=Math.max(+L.pts||0,+R.pts||0);
+  if('last'in L||'last'in R){const ll=+L.last||0,rl=+R.last||0;if(rl>ll){M.last=rl;M.streak=R.streak||0}else if(rl==ll)M.streak=Math.max(+L.streak||0,+R.streak||0)}
+  if('doneDay'in L||'doneDay'in R){const ld=+L.doneDay||0,rd=+R.doneDay||0;if(rd>ld){M.doneDay=rd;M.doneCount=R.doneCount||0}else if(rd==ld)M.doneCount=Math.max(+L.doneCount||0,+R.doneCount||0)}
+  for(const k of Object.keys(M))if(M[k]===undefined)delete M[k];
+  return M}
+
+/* ===== بيانات الحساب المحفوظة مؤقتاً على الجهاز (لتعمل الصفحات فوراً) ===== */
+async function refresh(){
+  const sb=await client();const {data:{session}}=await sb.auth.getSession();
+  if(!session){ls.del(CACHE);return null}
+  const uid=session.user.id;
+  const [p,k,l]=await Promise.all([sb.from('profiles').select('*').eq('id',uid).maybeSingle(),sb.from('children').select('*').order('created_at'),sb.rpc('my_links')]);
+  if(p.error)throw p.error;
+  const user=p.data?{...p.data,id:uid}:{id:uid,email:session.user.email,name:(session.user.user_metadata?.name)||session.user.email.split('@')[0],role:session.user.user_metadata?.role||'learner',country:'',age:null,pendingProfile:true};
+  const kids=(k.data||[]).map(x=>({id:x.id,name:x.name,age:x.age,kind:'local'}));
+  const links=(l.data||[]);
+  const c={user,kids,links,at:Date.now()};ls.set(CACHE,JSON.stringify(c));return c}
+function cache(){return hasSession()?J(CACHE,null):null}
+
+/* ===== المزامنة ===== */
+const pushT={};
+async function pushNow(pid){
+  const c=cache();if(!c)return;const sb=await client();
+  const st=J(progKey(pid),null);if(!st)return;
+  const {error}=await sb.from('progress').upsert({owner_id:c.user.id,profile:pid||'',state:st,updated_at:new Date().toISOString()});
+  if(!error)ls.set(SYNCED,String(Date.now()))}
+/* يُستدعى بعد كل حفظ في المصحف: يرفع بعد ثوانٍ قليلة من آخر تغيير */
+function push(pid){if(!hasSession())return;pid=pid||'';
+  const c=J(CACHE,null);if(pid&&!(c&&c.kids.some(k=>k.id==pid)))return; // ملف حساب مربوط: للقراءة فقط
+  clearTimeout(pushT[pid]);pushT[pid]=setTimeout(()=>pushNow(pid).catch(()=>{}),4000)}
+function flush(){for(const pid in pushT){clearTimeout(pushT[pid]);delete pushT[pid];pushNow(pid).catch(()=>{})}}
+/* يجلب تقدّم الحساب ويدمجه مع الجهاز ويرفع الناتج. يُرجع true إن تغيّر شيء على هذا الجهاز. */
+async function sync(){
+  if(!hasSession())return false;const sb=await client();const c=await refresh();if(!c)return false;
+  const mine=['',...c.kids.map(k=>k.id)];let changed=false;
+  const {data,error}=await sb.from('progress').select('owner_id,profile,state,updated_at');if(error)throw error;
+  const rows=data||[];
+  for(const pid of mine){
+    const row=rows.find(r=>r.owner_id==c.user.id&&r.profile==pid),loc=J(progKey(pid),null);
+    if(!row&&!loc)continue;
+    const m=merge(loc||{},row?row.state:{});
+    if(canon(m)!=canon(loc||{})){ls.set(progKey(pid),JSON.stringify(m));changed=true}
+    if(!row||canon(m)!=canon(row.state))await sb.from('progress').upsert({owner_id:c.user.id,profile:pid,state:m,updated_at:new Date().toISOString()});
+  }
+  /* تقدّم الأبناء المربوطين بموافقتهم: نسخة للعرض فقط */
+  for(const l of c.links)if(l.side=='parent'&&l.status=='approved'){
+    const row=rows.find(r=>r.owner_id==l.other_id&&r.profile=='');const key=progKey(l.other_id);
+    if(row&&canon(row.state)!=canon(J(key,{}))){ls.set(key,JSON.stringify(row.state));changed=true}}
+  ls.set(SYNCED,String(Date.now()));return changed}
+
+/* نموذج «شاركنا فكرتك» */
+async function sendIdea(d){if(!on)return false;
+  const r=await fetch(CFG.url+'/rest/v1/ideas',{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({kind:String(d.kind||'').slice(0,30),body:String(d.text||'').slice(0,3000),name:String(d.name||'').slice(0,80)||null,email:String(d.email||'').slice(0,120)||null,site:String(d.site||'').slice(0,60)})});
+  return r.ok}
+
+if(on&&typeof addEventListener=='function'){addEventListener('pagehide',flush);document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden')flush()})}
+return{on,CFG,client,hasSession,refresh,cache,sync,push,flush,merge,canon,sendIdea,lastSync:()=>+(ls.get(SYNCED)||0)};
+})();
+
+/* مشترك بين الرئيسية وصفحة الحساب: الإعدادات، قراءة التقدّم المحفوظ على الجهاز، والجلسة */
+window.QA=(()=>{
+const CFG={
+  // رابط الموقع الذي يُرسل في المشاركة ورسائل البريد. يُستبدل بالنطاق بعد شرائه.
+  siteUrl:'https://drabdulhafizjumah-crypto.github.io/quran-hifz/',
+  // خدمة استقبال «شاركنا فكرتك» (مثل Formspree). فارغ = النموذج لا يرسل بعد ويحفظ الفكرة على الجهاز.
+  ideasEndpoint:'',
+  // 'demo' = حسابات تجريبية في المتصفح. عند تفعيل Supabase تصبح 'supabase' مع url و anonKey.
+  // الخادم: يُضبط في qa_cloud.js (QA_CLOUD.on)
+};
+const NAMES=[["اقرأ وارتقِ","iqrawartaqi","«اقرأ وارتقِ ورتّل كما كنت ترتّل في الدنيا، فإنّ منزلتك عند آخر آية تقرؤها»."],["أترجّة","otrujja","«مثلُ المؤمنِ الذي يقرأُ القرآنَ كمثلِ الأُترجّة، ريحُها طيّبٌ وطعمُها طيّب»."],["غَرْس","ghars","نغرس القرآن في القلوب صغاراً، فيكبر معنا."],["رَتِّل","rattil","﴿وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾"],["سَكِينة","sakina","حفظ هادئ وفهم مطمئن، لكل الأعمار."],["مِشكاة","mishkah","نور يُهتدى به في الحفظ والفهم."],["تدبّر وحفظ","hifzwatadabbur","نحفظ لنفهم، ونفهم لنعمل."]];
+const SUR=[[1,"الفاتحة",7],[2,"البقرة",286],[3,"آل عمران",200],[4,"النساء",176],[5,"المائدة",120],[6,"الأنعام",165],[7,"الأعراف",206],[8,"الأنفال",75],[9,"التوبة",129],[10,"يونس",109],[11,"هود",123],[12,"يوسف",111],[13,"الرعد",43],[14,"ابراهيم",52],[15,"الحجر",99],[16,"النحل",128],[17,"الإسراء",111],[18,"الكهف",110],[19,"مريم",98],[20,"طه",135],[21,"الأنبياء",112],[22,"الحج",78],[23,"المؤمنون",118],[24,"النور",64],[25,"الفرقان",77],[26,"الشعراء",227],[27,"النمل",93],[28,"القصص",88],[29,"العنكبوت",69],[30,"الروم",60],[31,"لقمان",34],[32,"السجدة",30],[33,"الأحزاب",73],[34,"سبإ",54],[35,"فاطر",45],[36,"يس",83],[37,"الصافات",182],[38,"ص",88],[39,"الزمر",75],[40,"غافر",85],[41,"فصلت",54],[42,"الشورى",53],[43,"الزخرف",89],[44,"الدخان",59],[45,"الجاثية",37],[46,"الأحقاف",35],[47,"محمد",38],[48,"الفتح",29],[49,"الحجرات",18],[50,"ق",45],[51,"الذاريات",60],[52,"الطور",49],[53,"النجم",62],[54,"القمر",55],[55,"الرحمن",78],[56,"الواقعة",96],[57,"الحديد",29],[58,"المجادلة",22],[59,"الحشر",24],[60,"الممتحنة",13],[61,"الصف",14],[62,"الجمعة",11],[63,"المنافقون",11],[64,"التغابن",18],[65,"الطلاق",12],[66,"التحريم",12],[67,"الملك",30],[68,"القلم",52],[69,"الحاقة",52],[70,"المعارج",44],[71,"نوح",28],[72,"الجن",28],[73,"المزمل",20],[74,"المدثر",56],[75,"القيامة",40],[76,"الانسان",31],[77,"المرسلات",50],[78,"النبإ",40],[79,"النازعات",46],[80,"عبس",42],[81,"التكوير",29],[82,"الإنفطار",19],[83,"المطففين",36],[84,"الإنشقاق",25],[85,"البروج",22],[86,"الطارق",17],[87,"الأعلى",19],[88,"الغاشية",26],[89,"الفجر",30],[90,"البلد",20],[91,"الشمس",15],[92,"الليل",21],[93,"الضحى",11],[94,"الشرح",8],[95,"التين",8],[96,"العلق",19],[97,"القدر",5],[98,"البينة",8],[99,"الزلزلة",8],[100,"العاديات",11],[101,"القارعة",11],[102,"التكاثر",8],[103,"العصر",3],[104,"الهمزة",9],[105,"الفيل",5],[106,"قريش",4],[107,"الماعون",7],[108,"الكوثر",3],[109,"الكافرون",6],[110,"النصر",3],[111,"المسد",5],[112,"الإخلاص",4],[113,"الفلق",5],[114,"الناس",6]];
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
+const today=()=>Math.floor((Date.now()-new Date().getTimezoneOffset()*60000)/864e5);
+const num=n=>String(n).replace(/\d/g,d=>"0123456789"[d]);
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+/* عدد مع المعدود: days(3) = «3 أيام» */
+function count(n,[one,two,few,many]){if(n==1)return one;if(n==2)return two;if(n>=3&&n<=10)return num(n)+' '+few;return num(n)+' '+many}
+const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
+/* ملخّص تقدّم ملف (pid فارغ = صاحب الجهاز) */
+function prog(pid){
+  const S=J(progKey(pid),{}),ay=S.ay||{},t=today();let mem=0,due=0;
+  for(const k in ay){if(ay[k].mem)mem++;if(ay[k].b&&ay[k].due<=t)due++}
+  const surahs=SUR.map(([n,name,c])=>{let m=0;for(let i=1;i<=c;i++)if(ay[n+':'+i]?.mem)m++;return{n,name,c,m}});
+  const live=S.last>=t-1;
+  return{S,mem,due,surahs,full:surahs.filter(s=>s.m===s.c),started:surahs.filter(s=>s.m>0&&s.m<s.c),
+    quiz:Object.values(S.quiz||{}).filter(v=>v>=1).length,streak:live?(S.streak||0):0,last:S.last||0,
+    doneToday:S.doneDay===t?(S.doneCount||0):0,goal:S.goal||5,pts:S.pts||0,surah:S.surah||114,any:Object.keys(ay).length>0};
+}
+/* الجلسة في النسخة التجريبية */
+function session(){if(window.QA_CLOUD&&QA_CLOUD.on){const c=QA_CLOUD.cache();return c&&c.user?{user:c.user,cloud:c}:null}
+  const ss=J('qa-session',null),db=J('qa-demo-db',{});const u=ss&&db.users&&db.users[ss.uid];return u?{user:u,db}:null}
+/* ملفات الأبناء لوليّ الأمر المسجّل: ملفات أنشأها على الجهاز + حسابات مربوطة بموافقة الابن */
+function kids(){
+  const s=session();if(!s||s.user.role!=='parent')return[];
+  if(s.cloud)return[...s.cloud.kids,...s.cloud.links.filter(l=>l.side=='parent'&&l.status=='approved').map(l=>({id:l.other_id,name:l.other_name||'',age:l.other_age,kind:'linked'}))];
+  const db=s.db;
+  const local=Object.values(db.kids||{}).filter(k=>k.parent===s.user.id).map(k=>({id:k.id,name:k.name,age:k.age,kind:'local'}));
+  const linked=Object.values(db.links||{}).filter(l=>l.parent===s.user.id&&l.status==='approved').map(l=>{const u=db.users[l.child];return u&&{id:u.id,name:u.name,age:u.age,kind:'linked'}}).filter(Boolean);
+  return[...local,...linked];
+}
+const ageText=a=>a?count(+a,['سنة واحدة','سنتان','سنوات','سنة']):'';
+return{CFG,NAMES,SUR,ls,J,today,num,esc,count,prog,progKey,session,kids,ageText,
+  name(){return NAMES[+(ls.get('nm2')||0)]||NAMES[0]||['الموقع','','']}};
+})();
+
+</script>
+<script>
+{
+document.documentElement.dir="rtl";document.documentElement.lang="ar";
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+const {esc,ls}=QA;
+const root=document.documentElement;
+const N=QA.name();$$(".nm").forEach(e=>e.textContent=N[0]);document.title="البحث في القرآن: "+N[0];
+document.body.dataset.dir=ls.get("dir")||"a";
+function setTheme(t){root.dataset.theme=t;ls.set("theme",t);const b=$("#theme");b.setAttribute("aria-pressed",t=="dark");b.setAttribute("aria-label",t=="dark"?"الوضع النهاري":"الوضع الليلي");b.title=b.getAttribute("aria-label")}
+$("#theme").onclick=()=>setTheme(root.dataset.theme=="dark"?"light":"dark");setTheme(root.dataset.theme=="dark"?"dark":"light");
+const FS=[.9,1,1.12,1.25,1.4];let fs=+(ls.get("fs")??1);if(!(fs in FS))fs=1;
+function setFs(i){fs=Math.max(0,Math.min(FS.length-1,i));root.style.setProperty("--fs",FS[fs]);ls.set("fs",fs);$("#fsDown").disabled=fs==0;$("#fsUp").disabled=fs==FS.length-1}
+$("#fsDown").onclick=()=>setFs(fs-1);$("#fsUp").onclick=()=>setFs(fs+1);setFs(fs);
+
+/* ===== توحيد الحروف: حذف التشكيل والتطويل، وتوحيد الألف والهمزات والتاء المربوطة والألف المقصورة ===== */
+const norm=s=>s.replace(/[ً-ٰٟـۖ-ۭ]/g,"").replace(/[أإآٱ]/g,"ا").replace(/ى/g,"ي").replace(/ة/g,"ه").replace(/ؤ/g,"و").replace(/ئ/g,"ي");
+const cleanQ=s=>norm(s).replace(/[^ء-ي ]/g," ").replace(/\s+/g," ").trim();
+
+/* البيانات: [[اسم السورة, [[النص العثماني, النص الإملائي]...]]...]
+   في النص الإملائي كلمات مفصولة بمسافة بعدد كلمات العثماني: «_» تجمع كلمتين إملائيتين في كلمة عثمانية واحدة (يا_أيها)،
+   و«~» تعني أن الكلمة العثمانية تتمة لما قبلها (بعد ما = بعدما). */
+let DATA=null,IDX=null;
+const HAS=new Set(QA.SUR.map(s=>s[0]));   // السور الموجودة في المصحف الآن
+function load(){
+  if(DATA)return Promise.resolve();
+  return fetch("quran.json").then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{
+    DATA=d;IDX=[];
+    d.forEach(([name,ays],si)=>ays.forEach(([u,g],ai)=>{
+      const toks=g.split(" ");let t="",st=[],wi=[];
+      toks.forEach((w,k)=>{if(w=="~")return;if(t)t+=" ";st.push(t.length);wi.push(k);t+=norm(w.replace(/_/g," "))});
+      IDX.push({s:si+1,a:ai+1,t,st,wi,n:toks.length,tl:toks});
+    }));
+    const sel=$("#sur");sel.insertAdjacentHTML("beforeend",d.map(([n],i)=>`<option value="${i+1}">${i+1}. ${esc(n)}</option>`).join(""));
+    if(want.s)sel.value=want.s;
+  });
+}
+const reEsc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+let last=null,shown=0,filt=0;
+function search(q,mode,sur){
+  const re=new RegExp(mode=="w"?"(?:^| )("+reEsc(q)+")(?= |$)":"("+reEsc(q)+")","g");
+  const hits=[];let total=0;
+  for(const x of IDX){
+    if(sur&&x.s!=sur)continue;
+    re.lastIndex=0;let m,words=new Set();
+    while((m=re.exec(x.t))){
+      const a=m.index+m[0].length-m[1].length,b=a+m[1].length;total++;
+      for(let k=0;k<x.st.length;k++){const e=k+1<x.st.length?x.st[k+1]-1:x.t.length;if(x.st[k]<b&&e>a)words.add(x.wi[k])}
+      if(m[0].length==0)re.lastIndex++;
+    }
+    if(words.size){for(const k of [...words])for(let j=k+1;j<x.n&&x.tl[j]=="~";j++)words.add(j);hits.push({x,words})}
+  }
+  return{hits,total};
+}
+function ayahHTML(h){
+  const u=DATA[h.x.s-1][1][h.x.a-1][0].split(" ");
+  return u.map((w,k)=>h.words.has(k)?`<mark>${esc(w)}</mark>`:esc(w)).join(" ")+` <span class="n">﴿${h.x.a}﴾</span>`;
+}
+const PAGE=50;
+function render(more){
+  const o=$("#out"),{q,hits,total}=last;
+  const list=filt?hits.filter(h=>h.x.s==filt):hits;
+  if(!more){
+    if(!hits.length){o.innerHTML=`<div class="sum">لم نجد «${esc(q)}». جرّب جزءاً أقصر من الكلمة، أو اختر «ضمن الكلمة».</div>`;return}
+    const per={};hits.forEach(h=>per[h.x.s]=(per[h.x.s]||0)+1);
+    const ss=Object.keys(per).map(Number);
+    const C=(n,f)=>"<b>"+QA.count(n,f)+"</b>";
+    o.innerHTML=`<div class="sum">وردت «<b>${esc(q)}</b>» ${C(total,["مرة واحدة","مرتين","مرات","مرة"])} في ${C(hits.length,["آية واحدة","آيتين","آيات","آية"])}${ss.length>1?` من ${C(ss.length,["سورة واحدة","سورتين","سور","سورة"])}`:""}.`+
+      (ss.length>1?`<div class="chips" role="group" aria-label="تصفية حسب السورة"><button type="button" data-s="0" aria-pressed="${!filt}">الكل <i>${hits.length}</i></button>${ss.map(s=>`<button type="button" data-s="${s}" aria-pressed="${filt==s}">${esc(DATA[s-1][0])} <i>${per[s]}</i></button>`).join("")}</div>`:"")+
+      `</div><ol class="res" id="res"></ol><div class="more"><button class="btn o" id="more" type="button">عرض المزيد</button></div>`;
+    shown=0;
+  }
+  const part=list.slice(shown,shown+PAGE);shown+=part.length;
+  $("#res").insertAdjacentHTML("beforeend",part.map(h=>`<li><div class="hd"><b>${esc(DATA[h.x.s-1][0])}</b><span class="muted">الآية ${h.x.a}</span>`+
+    (HAS.has(h.x.s)?`<a class="go" href="hifz.html?s=${h.x.s}&a=${h.x.a}#learn">افتحها في المصحف ←</a>`:`<span class="soon">ستُضاف هذه السورة إلى المصحف قريباً</span>`)+
+    `</div><p class="ay">${ayahHTML(h)}</p></li>`).join(""));
+  $("#more").parentNode.hidden=shown>=list.length;
+  if(shown>PAGE)$("#more").textContent=`عرض المزيد (بقي ${list.length-shown})`;
+}
+$("#out").addEventListener("click",e=>{
+  const c=e.target.closest(".chips button");if(c){filt=+c.dataset.s;render();return}
+  if(e.target.id=="more")render(true);
+});
+function go(push){
+  const raw=$("#q").value,q=cleanQ(raw),mode=$("input[name=m]:checked").value,sur=DATA?+$("#sur").value:+(want.s||0);
+  const o=$("#out");
+  if(q.replace(/ /g,"").length<2){o.innerHTML=raw.trim()?`<div class="sum">اكتب حرفين على الأقل.</div>`:"";return}
+  const p=new URLSearchParams({q:raw.trim()});if(mode=="w")p.set("m","w");if(sur)p.set("s",sur);
+  try{history[push?"pushState":"replaceState"](null,"","?"+p)}catch(e){}
+  o.innerHTML=`<p class="load">نحمّل نص القرآن (مرة واحدة)…</p>`;
+  load().then(()=>{filt=0;last={q:raw.trim(),...search(q,mode,+$("#sur").value)};render()})
+    .catch(()=>{o.innerHTML=`<div class="sum">تعذّر تحميل نص القرآن. تأكد من الاتصال ثم أعد المحاولة.</div>`});
+}
+$("#f").onsubmit=e=>{e.preventDefault();$("#q").blur();go(true)};
+$$("input[name=m]").forEach(r=>r.onchange=()=>{if(last)go()});
+$("#sur").onchange=()=>{if(last||$("#q").value.trim())go()};
+$(".ex").onclick=e=>{const b=e.target.closest("button");if(!b)return;$("#q").value=b.textContent;go(true)};
+const want={};
+function fromUrl(){const p=new URLSearchParams(location.search);want.s=p.get("s");$("#q").value=p.get("q")||"";
+  $$("input[name=m]").forEach(r=>r.checked=r.value==(p.get("m")=="w"?"w":"p"));
+  if(want.s&&DATA)$("#sur").value=want.s;
+  if($("#q").value)go();else{$("#out").innerHTML="";load().catch(()=>{})}}
+addEventListener("popstate",fromUrl);
+fromUrl();
+if(!$("#q").value)$("#q").focus({preventScroll:true});
+}
+</script>
+</body></html>
