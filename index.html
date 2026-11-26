@@ -518,7 +518,7 @@ function renderUnderstand(){
   const s=sur(),c=s.c,lv=ageLevel();
   $$('#ageSeg button').forEach(b=>b.setAttribute('aria-pressed',+b.dataset.age===lv));
   const tfHtml=s.t.map(([f,to,x])=>`<div class="tfrow"><b>${f===to?'آية '+AR(f):'الآيات '+AR(f)+'–'+AR(to)}</b><div class="rd">${esc(x)}</div></div>`).join('');
-  let h=`<div class="uhead"><div><h2>سورة ${esc(s.name)}</h2><p>${esc(s.type||'')}، ${AR(s.v.length)} آيات</p></div><button class="rdbtn" id="rdBtn" aria-pressed="${!!S.reader}">🔊 القارئ الآلي: ${S.reader?'يعمل':'متوقف'}</button></div>${S.reader?'<p class="rdhint">مرّر المؤشر على الكلمة أو الفقرة، أو المسها، لتُقرأ بصوت آلي. (لا يقرأ آيات القرآن، فهي بصوت القارئ في قسم «احفظ».)</p>':''}<div class="ubody">`;
+  let h=`<div class="uhead"><div><h2>سورة ${esc(s.name)}</h2><p>${esc(s.type||'')}، ${AR(s.v.length)} آيات</p></div><button class="rdbtn" id="rdBtn" aria-pressed="${!!S.reader}">🔊 القارئ الآلي: ${S.reader?'يعمل':'متوقف'}</button></div>${S.reader?'<p class="rdhint">مرّر المؤشر على الكلمة أو الفقرة، أو المسها، لتُقرأ بصوت آلي. (لا يقرأ آيات القرآن، فهي بصوت القارئ في قسم «احفظ».) <button class="btn" id="rdTest" style="padding:3px 10px;font-size:13px">جرّب الصوت</button> <small id="rdVoice" class="muted">'+rdVoiceLabel()+'</small></p>':''}<div class="ubody">`;
   if(c){
     h+=`<p class="idea rd">${esc(lv===0?c.kids:c.theme)}</p>`;
     h+=`<div><h3>${lv===0?'كلمات جديدة':'معاني الكلمات'}</h3><div class="wgrid">${c.words.slice(0,lv===0?3:99).map(([a,i,m])=>`<div class="wcard"><div class="q">${esc(s.v[a-1].split(/\s+/)[i])}</div><span class="rd">${esc(m)}</span><small>الآية ${AR(a)}</small></div>`).join('')}</div></div>`;
@@ -558,21 +558,25 @@ function renderQ(){
     if(b.dataset.k==='0'){b.classList.add('right');if(!quiz.tries)quiz.score++;$$('#opts button').forEach(x=>x.disabled=true);toast(quiz.tries?'صحيح':(S.kids?'ممتاز! ⭐':'أحسنت'));setTimeout(()=>{quiz.i++;renderQ()},900)}
     else{quiz.tries++;b.classList.add('wrongc');b.disabled=true}};
 }
-var rdCur=null,rdT=null;
-function arVoice(){const vs=speechSynthesis.getVoices();return vs.find(v=>/^ar/i.test(v.lang))||null}
+var rdCur=null,rdT=null,rdAt=0;
+function arVoices(){try{return speechSynthesis.getVoices().filter(v=>/^ar/i.test(v.lang))}catch(e){return[]}}
+function arVoice(){const vs=arVoices();return vs.find(v=>/natural|online/i.test(v.name))||vs.find(v=>!v.localService)||vs[0]||null}
 function rdStop(){try{speechSynthesis.cancel()}catch(e){}if(rdCur)rdCur.classList.remove('reading');rdCur=null}
-function rdSpeak(el){
+function rdSay(text,el){
   if(!('speechSynthesis' in window)){toast('المتصفح لا يدعم القراءة الآلية');return}
-  if(rdCur===el)return;rdStop();rdCur=el;el.classList.add('reading');
-  const u=new SpeechSynthesisUtterance(el.textContent.trim());u.lang='ar-SA';const v=arVoice();if(v)u.voice=v;u.rate=S.kids?.85:.95;
-  u.onend=u.onerror=()=>{if(rdCur===el){el.classList.remove('reading');rdCur=null}};
-  speechSynthesis.speak(u);
+  rdStop();rdCur=el||null;rdAt=Date.now();if(el)el.classList.add('reading');
+  const u=new SpeechSynthesisUtterance(text);u.lang='ar-SA';const v=arVoice();if(v){u.voice=v;u.lang=v.lang}u.rate=S.kids?.85:.95;u.volume=1;
+  u.onend=u.onerror=ev=>{if(ev&&ev.error&&ev.error!=='interrupted'&&ev.error!=='canceled')toast('تعذّر تشغيل الصوت: '+ev.error);if(el&&rdCur===el){el.classList.remove('reading');rdCur=null}};
+  window.__u=u;
+  setTimeout(()=>{try{speechSynthesis.resume();speechSynthesis.speak(u)}catch(e){toast('تعذّر تشغيل الصوت')}},80);
 }
-if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{};
+function rdSpeak(el){if(rdCur===el)return;rdSay(el.textContent.trim(),el)}
+if('speechSynthesis' in window)speechSynthesis.onvoiceschanged=()=>{const n=$('#rdVoice');if(n)n.textContent=rdVoiceLabel()};
+function rdVoiceLabel(){const v=arVoice();return v?'الصوت: '+v.name:'لا يوجد صوت عربي في هذا المتصفح'}
 const uc=$('#uCard'),fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
-uc.addEventListener('mouseover',e=>{if(!S.reader||!fine)return;const el=e.target.closest('.rd');clearTimeout(rdT);if(el)rdT=setTimeout(()=>rdSpeak(el),350)});
+uc.addEventListener('mouseover',e=>{if(!S.reader||!fine)return;const el=e.target.closest('.rd');clearTimeout(rdT);if(el&&el!==rdCur)rdT=setTimeout(()=>rdSpeak(el),350)});
 uc.addEventListener('mouseout',e=>{if(!S.reader||!fine)return;const el=e.target.closest('.rd');if(el&&!el.contains(e.relatedTarget))clearTimeout(rdT)});
-uc.addEventListener('click',e=>{if(!S.reader)return;const el=e.target.closest('.rd');if(!el)return;if(rdCur===el)rdStop();else rdSpeak(el)});
+uc.addEventListener('click',e=>{if(!S.reader)return;if(e.target.closest('#rdTest')){rdSay('السَّلامُ عَلَيْكُم، هذا اختبارُ القارئِ الآلي.');return}const el=e.target.closest('.rd');if(!el)return;clearTimeout(rdT);if(rdCur===el&&Date.now()-rdAt>1200)rdStop();else if(rdCur!==el)rdSpeak(el)});
 $('#ageSeg').onclick=e=>{const b=e.target.closest('button');if(!b)return;S.age=+b.dataset.age;save();renderUnderstand()};
 
 const BADGES=[
