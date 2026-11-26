@@ -462,6 +462,97 @@ footer .about p{color:var(--soft)}
 </div>
 
 <script>
+/* الربط بالخادم (Supabase): الدخول، ونسخ التقدّم إلى الحساب ومزامنته بين الأجهزة، ونموذج الأفكار.
+   مشترك بين الصفحات الثلاث. إن كان الإعداد فارغاً يعمل الموقع كله على الجهاز كما كان.
+   المفتاح هنا هو المفتاح العام (anon/publishable) وحده، والحماية في قواعد RLS على الخادم. */
+window.QA_CLOUD=(()=>{
+const CFG={url:'https://igvjhyskbejhqpdcawic.supabase.co',key:'sb_publishable_scmaRFsCydWPc8Ysp3Zhiw_lL5hBBz9'};
+const on=!!(CFG.url&&!CFG.url.startsWith('/*')&&CFG.key&&!CFG.key.startsWith('/*'));
+const LIB='https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.3/dist/umd/supabase.js';
+const ls={get(k){try{return localStorage.getItem(k)}catch(e){return null}},set(k,v){try{localStorage.setItem(k,v)}catch(e){}},del(k){try{localStorage.removeItem(k)}catch(e){}}};
+const J=(k,d)=>{try{const v=JSON.parse(ls.get(k));return v??d}catch(e){return d}};
+const CACHE='qa-cache',SYNCED='qa-synced';
+const progKey=pid=>'hifz-proto-v1'+(pid?':'+pid:'');
+/* هل على هذا الجهاز جلسة دخول؟ (دون تحميل المكتبة) */
+function hasSession(){if(!on)return false;try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(/^sb-.*-auth-token$/.test(k))return true}}catch(e){}return false}
+let _c=null;
+function client(){
+  if(!on)return Promise.reject(new Error('off'));
+  return _c||(_c=new Promise((res,rej)=>{
+    const go=()=>res(window.supabase.createClient(CFG.url,CFG.key,{auth:{flowType:'implicit',detectSessionInUrl:true,persistSession:true,autoRefreshToken:true}}));
+    if(window.supabase&&window.supabase.createClient)return go();
+    const s=document.createElement('script');s.src=LIB;s.onload=go;s.onerror=()=>{_c=null;rej(new Error('تعذّر الاتصال بالخادم. تحقّق من الإنترنت ثم أعد المحاولة.'))};document.head.append(s)}));
+}
+
+/* ===== دمج تقدّمين: لا يضيع حفظ من أي جهاز ===== */
+function canon(o){if(Array.isArray(o))return'['+o.map(canon).join(',')+']';if(o&&typeof o=='object')return'{'+Object.keys(o).sort().map(k=>JSON.stringify(k)+':'+canon(o[k])).join(',')+'}';return JSON.stringify(o)}
+function better(a,b){if(!a)return b;if(!b)return a;
+  if(!!a.mem!=!!b.mem)return a.mem?a:b;if((a.due||0)!=(b.due||0))return(a.due||0)>(b.due||0)?a:b;
+  if((a.b||0)!=(b.b||0))return(a.b||0)>(b.b||0)?a:b;return(a.err||0)<=(b.err||0)?a:b}
+function merge(L,R){L=L||{};R=R||{};const M=Object.assign({},R,L);
+  const ay={},A=L.ay||{},B=R.ay||{};for(const k of new Set([...Object.keys(A),...Object.keys(B)]))ay[k]=better(A[k],B[k]);M.ay=ay;
+  const q={},qa=L.quiz||{},qb=R.quiz||{};for(const k of new Set([...Object.keys(qa),...Object.keys(qb)]))q[k]=Math.max(+qa[k]||0,+qb[k]||0);if(L.quiz||R.quiz)M.quiz=q;
+  if(L.badges||R.badges)M.badges=Object.assign({},R.badges||{},L.badges||{});
+  if('pts'in L||'pts'in R)M.pts=Math.max(+L.pts||0,+R.pts||0);
+  if('last'in L||'last'in R){const ll=+L.last||0,rl=+R.last||0;if(rl>ll){M.last=rl;M.streak=R.streak||0}else if(rl==ll)M.streak=Math.max(+L.streak||0,+R.streak||0)}
+  if('doneDay'in L||'doneDay'in R){const ld=+L.doneDay||0,rd=+R.doneDay||0;if(rd>ld){M.doneDay=rd;M.doneCount=R.doneCount||0}else if(rd==ld)M.doneCount=Math.max(+L.doneCount||0,+R.doneCount||0)}
+  for(const k of Object.keys(M))if(M[k]===undefined)delete M[k];
+  return M}
+
+/* ===== بيانات الحساب المحفوظة مؤقتاً على الجهاز (لتعمل الصفحات فوراً) ===== */
+async function refresh(){
+  const sb=await client();const {data:{session}}=await sb.auth.getSession();
+  if(!session){ls.del(CACHE);return null}
+  const uid=session.user.id;
+  const [p,k,l]=await Promise.all([sb.from('profiles').select('*').eq('id',uid).maybeSingle(),sb.from('children').select('*').order('created_at'),sb.rpc('my_links')]);
+  if(p.error)throw p.error;
+  const user=p.data?{...p.data,id:uid}:{id:uid,email:session.user.email,name:(session.user.user_metadata?.name)||session.user.email.split('@')[0],role:session.user.user_metadata?.role||'learner',country:'',age:null,pendingProfile:true};
+  const kids=(k.data||[]).map(x=>({id:x.id,name:x.name,age:x.age,kind:'local'}));
+  const links=(l.data||[]);
+  const c={user,kids,links,at:Date.now()};ls.set(CACHE,JSON.stringify(c));return c}
+function cache(){return hasSession()?J(CACHE,null):null}
+
+/* ===== المزامنة ===== */
+const pushT={};
+async function pushNow(pid){
+  const c=cache();if(!c)return;const sb=await client();
+  const st=J(progKey(pid),null);if(!st)return;
+  const {error}=await sb.from('progress').upsert({owner_id:c.user.id,profile:pid||'',state:st,updated_at:new Date().toISOString()});
+  if(!error)ls.set(SYNCED,String(Date.now()))}
+/* يُستدعى بعد كل حفظ في المصحف: يرفع بعد ثوانٍ قليلة من آخر تغيير */
+function push(pid){if(!hasSession())return;pid=pid||'';
+  const c=J(CACHE,null);if(pid&&!(c&&c.kids.some(k=>k.id==pid)))return; // ملف حساب مربوط: للقراءة فقط
+  clearTimeout(pushT[pid]);pushT[pid]=setTimeout(()=>pushNow(pid).catch(()=>{}),4000)}
+function flush(){for(const pid in pushT){clearTimeout(pushT[pid]);delete pushT[pid];pushNow(pid).catch(()=>{})}}
+/* يجلب تقدّم الحساب ويدمجه مع الجهاز ويرفع الناتج. يُرجع true إن تغيّر شيء على هذا الجهاز. */
+async function sync(){
+  if(!hasSession())return false;const sb=await client();const c=await refresh();if(!c)return false;
+  const mine=['',...c.kids.map(k=>k.id)];let changed=false;
+  const {data,error}=await sb.from('progress').select('owner_id,profile,state,updated_at');if(error)throw error;
+  const rows=data||[];
+  for(const pid of mine){
+    const row=rows.find(r=>r.owner_id==c.user.id&&r.profile==pid),loc=J(progKey(pid),null);
+    if(!row&&!loc)continue;
+    const m=merge(loc||{},row?row.state:{});
+    if(canon(m)!=canon(loc||{})){ls.set(progKey(pid),JSON.stringify(m));changed=true}
+    if(!row||canon(m)!=canon(row.state))await sb.from('progress').upsert({owner_id:c.user.id,profile:pid,state:m,updated_at:new Date().toISOString()});
+  }
+  /* تقدّم الأبناء المربوطين بموافقتهم: نسخة للعرض فقط */
+  for(const l of c.links)if(l.side=='parent'&&l.status=='approved'){
+    const row=rows.find(r=>r.owner_id==l.other_id&&r.profile=='');const key=progKey(l.other_id);
+    if(row&&canon(row.state)!=canon(J(key,{}))){ls.set(key,JSON.stringify(row.state));changed=true}}
+  ls.set(SYNCED,String(Date.now()));return changed}
+
+/* نموذج «شاركنا فكرتك» */
+async function sendIdea(d){if(!on)return false;
+  const r=await fetch(CFG.url+'/rest/v1/ideas',{method:'POST',headers:{apikey:CFG.key,'Content-Type':'application/json',Prefer:'return=minimal'},
+    body:JSON.stringify({kind:String(d.kind||'').slice(0,30),body:String(d.text||'').slice(0,3000),name:String(d.name||'').slice(0,80)||null,email:String(d.email||'').slice(0,120)||null,site:String(d.site||'').slice(0,60)})});
+  return r.ok}
+
+if(on&&typeof addEventListener=='function'){addEventListener('pagehide',flush);document.addEventListener('visibilitychange',()=>{if(document.visibilityState=='hidden')flush()})}
+return{on,CFG,client,hasSession,refresh,cache,sync,push,flush,merge,canon,sendIdea,lastSync:()=>+(ls.get(SYNCED)||0)};
+})();
+
 /* مشترك بين الرئيسية وصفحة الحساب: الإعدادات، قراءة التقدّم المحفوظ على الجهاز، والجلسة */
 window.QA=(()=>{
 const CFG={
@@ -470,7 +561,7 @@ const CFG={
   // خدمة استقبال «شاركنا فكرتك» (مثل Formspree). فارغ = النموذج لا يرسل بعد ويحفظ الفكرة على الجهاز.
   ideasEndpoint:'',
   // 'demo' = حسابات تجريبية في المتصفح. عند تفعيل Supabase تصبح 'supabase' مع url و anonKey.
-  backend:'demo',supabaseUrl:'',supabaseAnonKey:''
+  // الخادم: يُضبط في qa_cloud.js (QA_CLOUD.on)
 };
 const NAMES=[["اقرأ وارتقِ","iqrawartaqi","«اقرأ وارتقِ ورتّل كما كنت ترتّل في الدنيا، فإنّ منزلتك عند آخر آية تقرؤها»."],["أترجّة","otrujja","«مثلُ المؤمنِ الذي يقرأُ القرآنَ كمثلِ الأُترجّة، ريحُها طيّبٌ وطعمُها طيّب»."],["غَرْس","ghars","نغرس القرآن في القلوب صغاراً، فيكبر معنا."],["رَتِّل","rattil","﴿وَرَتِّلِ ٱلۡقُرۡءَانَ تَرۡتِيلًا﴾"],["سَكِينة","sakina","حفظ هادئ وفهم مطمئن، لكل الأعمار."],["مِشكاة","mishkah","نور يُهتدى به في الحفظ والفهم."],["تدبّر وحفظ","hifzwatadabbur","نحفظ لنفهم، ونفهم لنعمل."]];
 const SUR=[[1,"الفاتحة",7],[114,"الناس",6],[113,"الفلق",5],[112,"الإخلاص",4],[111,"المسد",5],[110,"النصر",3],[109,"الكافرون",6],[108,"الكوثر",3],[107,"الماعون",7],[106,"قريش",4],[105,"الفيل",5],[104,"الهمزة",9],[103,"العصر",3],[102,"التكاثر",8],[101,"القارعة",11],[100,"العاديات",11],[99,"الزلزلة",8],[98,"البينة",8],[97,"القدر",5],[96,"العلق",19],[95,"التين",8],[94,"الشرح",8],[93,"الضحى",11],[92,"الليل",21],[91,"الشمس",15],[90,"البلد",20],[89,"الفجر",30],[88,"الغاشية",26],[87,"الأعلى",19],[86,"الطارق",17],[85,"البروج",22],[84,"الإنشقاق",25],[83,"المطففين",36],[82,"الإنفطار",19],[81,"التكوير",29],[80,"عبس",42],[79,"النازعات",46],[78,"النبإ",40]];
@@ -493,10 +584,13 @@ function prog(pid){
     doneToday:S.doneDay===t?(S.doneCount||0):0,goal:S.goal||5,pts:S.pts||0,surah:S.surah||114,any:Object.keys(ay).length>0};
 }
 /* الجلسة في النسخة التجريبية */
-function session(){const ss=J('qa-session',null),db=J('qa-demo-db',{});const u=ss&&db.users&&db.users[ss.uid];return u?{user:u,db}:null}
+function session(){if(window.QA_CLOUD&&QA_CLOUD.on){const c=QA_CLOUD.cache();return c&&c.user?{user:c.user,cloud:c}:null}
+  const ss=J('qa-session',null),db=J('qa-demo-db',{});const u=ss&&db.users&&db.users[ss.uid];return u?{user:u,db}:null}
 /* ملفات الأبناء لوليّ الأمر المسجّل: ملفات أنشأها على الجهاز + حسابات مربوطة بموافقة الابن */
 function kids(){
-  const s=session();if(!s||s.user.role!=='parent')return[];const db=s.db;
+  const s=session();if(!s||s.user.role!=='parent')return[];
+  if(s.cloud)return[...s.cloud.kids,...s.cloud.links.filter(l=>l.side=='parent'&&l.status=='approved').map(l=>({id:l.other_id,name:l.other_name||'',age:l.other_age,kind:'linked'}))];
+  const db=s.db;
   const local=Object.values(db.kids||{}).filter(k=>k.parent===s.user.id).map(k=>({id:k.id,name:k.name,age:k.age,kind:'local'}));
   const linked=Object.values(db.links||{}).filter(l=>l.parent===s.user.id&&l.status==='approved').map(l=>{const u=db.users[l.child];return u&&{id:u.id,name:u.name,age:u.age,kind:'linked'}}).filter(Boolean);
   return[...local,...linked];
@@ -584,7 +678,7 @@ function drawReport(){
   sel.onclick=e=>{const b=e.target.closest("[data-k]");if(b){QA.ls.set("repKid",b.dataset.k);drawReport()}};
   const k=ks.find(x=>x.id==cur),P=QA.prog(k.id),tot=P.surahs.length;
   $("#repName").textContent=`تقرير ${k.name}`+(k.age?`، ${QA.ageText(k.age)}`:"");
-  $("#repNote").textContent=k.kind=="linked"?"من هذا الجهاز، ويكتمل بعد تفعيل المزامنة":"من هذا الجهاز";
+  $("#repNote").textContent=window.QA_CLOUD&&QA_CLOUD.on?"من حسابه، يُحدَّث تلقائياً":k.kind=="linked"?"من هذا الجهاز، ويكتمل بعد تفعيل المزامنة":"من هذا الجهاز";
   const bar=(lab,v,txt)=>`<div class="row"><span>${lab}</span><div class="bar"><i style="width:${Math.round(Math.min(1,v)*100)}%"></i></div><em>${txt}</em></div>`;
   const lastFull=P.full.length?P.full[P.full.length-1].name:"—";
   $("#repBody").innerHTML=P.any?
@@ -608,7 +702,8 @@ $("#shOk").textContent=ok?"نُسخت الرسالة، الصقها حيث تش�
 $("#iform").onsubmit=async e=>{e.preventDefault();const f=e.target;if(!$("#iText").value.trim()){$("#iText").focus();return}
   const d={kind:f.querySelector("[name=kind]:checked").value,text:$("#iText").value.trim(),name:f.querySelector("[type=text]").value.trim(),email:f.querySelector("[type=email]").value.trim(),at:new Date().toISOString(),site:QA.name()[0]};
   let sent=false;const btn=f.querySelector("[type=submit]");btn.disabled=true;
-  if(QA.CFG.ideasEndpoint){try{const r=await fetch(QA.CFG.ideasEndpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(d)});sent=r.ok}catch(_){}}
+  if(window.QA_CLOUD&&QA_CLOUD.on){try{sent=await QA_CLOUD.sendIdea(d)}catch(_){}}
+  else if(QA.CFG.ideasEndpoint){try{const r=await fetch(QA.CFG.ideasEndpoint,{method:"POST",headers:{"Content-Type":"application/json",Accept:"application/json"},body:JSON.stringify(d)});sent=r.ok}catch(_){}}
   if(!sent){const o=QA.J("qa-ideas-outbox",[]);o.push(d);QA.ls.set("qa-ideas-outbox",JSON.stringify(o))}
   f.innerHTML=`<div class="thanks"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="30" fill="var(--tint)"/><path d="M20 33l8 8 16-17" stroke="var(--p)" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><h3 style="margin:10px 0 6px">جزاك الله خيراً</h3><p style="color:var(--soft)">${sent?"وصلتنا فكرتك، وسنقرؤها بعناية.":"حفظنا فكرتك. (النموذج لم يُربط بعدُ بخدمة استقبال، فلم تُرسل إلى الفريق بعد.)"}</p></div>`};
 function homeInit(){
@@ -616,6 +711,10 @@ function homeInit(){
   if(SES){$("#accBtn").textContent=SES.user.name.split(" ")[0];$("#accBtn").title="حسابي"}
   if(SES&&SES.user.role=="parent"){$("#parBtn").textContent="ملفات أبنائي";$("#parBtn").href="account.html#parent"}
   if(P0.any)$("#startBtn").textContent="واصل الحفظ";
+  /* بعد الدخول: نجلب التقدّم من الحساب ونعيد الرسم إن تغيّر */
+  if(window.QA_CLOUD&&QA_CLOUD.hasSession())QA_CLOUD.sync().then(ch=>{if(!ch)return;const P=QA.prog(QA.J('qa-profile',null)?.id||'');drawTree(P);drawToday(P);drawReport();if(P.any)$("#startBtn").textContent="واصل الحفظ"}).catch(()=>{});
+  /* أفكار حُفظت على الجهاز قبل ربط الخادم: نرسلها مرة واحدة */
+  if(window.QA_CLOUD&&QA_CLOUD.on){const o=QA.J("qa-ideas-outbox",[]);if(o.length)Promise.all(o.map(d=>QA_CLOUD.sendIdea(d).catch(()=>false))).then(r=>{const left=o.filter((_,i)=>!r[i]);if(left.length)QA.ls.set("qa-ideas-outbox",JSON.stringify(left));else QA.ls.del("qa-ideas-outbox")})}
 }
 
 /* الأسماء */
