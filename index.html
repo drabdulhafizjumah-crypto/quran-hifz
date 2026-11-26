@@ -260,6 +260,39 @@ footer .about p{color:var(--soft)}
 .kidsel{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
 .kidsel .chip{min-height:38px}
 .empty{color:var(--soft);font-size:.95rem;padding:10px 0}
+/* ===== مواقيت الصلاة ===== */
+.pray{padding-top:clamp(26px,4vw,44px)!important;padding-bottom:0!important}
+.pbox{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:clamp(16px,2.5vw,26px)}
+.phead{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between;margin-bottom:14px}
+.phead h2{font-size:clamp(1.35rem,1.1rem + 1vw,1.75rem);display:flex;align-items:center;gap:10px}
+.phead h2 svg{width:1.3em;height:1.3em;flex:none}
+.pmeta{color:var(--soft);margin:4px 0 0;font-size:.95rem}
+.pmeta b{color:var(--ink)}
+.pact{display:flex;flex-wrap:wrap;gap:8px}
+.pact .chip{display:inline-flex;align-items:center;gap:6px}
+.pact .chip svg{width:18px;height:18px}
+.pguess{font-size:.85rem;color:var(--acc)}
+.pset[hidden]{display:none}
+.pset{display:flex;flex-wrap:wrap;gap:10px 16px;background:var(--field);border-radius:14px;padding:12px 14px;margin-bottom:14px}
+.pset label{display:grid;gap:4px;font-size:.9rem;font-weight:600;flex:1 1 13em}
+.pset select{font:500 1rem "IBM Plex Sans Arabic",sans-serif;min-height:44px;padding:0 10px;border-radius:10px;border:1.5px solid var(--line);background:var(--card);color:var(--ink)}
+.ptimes{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.ptimes li{background:var(--field);border:2px solid transparent;border-radius:14px;padding:10px 8px;text-align:center;display:grid;gap:2px;align-content:start}
+.ptimes span{font-weight:700;font-size:.95rem}
+.ptimes b{font:700 1.35rem/1.3 "IBM Plex Sans Arabic",sans-serif;font-variant-numeric:tabular-nums}
+.ptimes b small{font-size:.65em;font-weight:600;margin-inline-start:3px;color:var(--soft)}
+.ptimes li.sr{background:transparent;border:2px dashed var(--line)}
+.ptimes li.sr span,.ptimes li.sr b{color:var(--soft)}
+.ptimes li.on{background:var(--p);color:var(--onp);border-color:var(--p)}
+.ptimes li.on b small{color:inherit;opacity:.85}
+.ptimes em{font-style:normal;font-size:.8rem;font-weight:600;opacity:.92}
+.pnext{margin:14px 0 0;font-weight:500}
+.pnext b{color:var(--p)}
+.pnote{color:var(--soft);font-size:.85rem;margin:6px 0 0}
+.pmsg:empty{display:none}
+.pmsg{color:var(--acc);font-size:.92rem;margin:0 0 10px}
+body[data-dir=b] .ptimes li,body[data-dir=b] .pset{border-radius:6px}
+@media(max-width:760px){.ptimes{grid-template-columns:repeat(3,minmax(0,1fr))}.ptimes b{font-size:1.2rem}}
 /* ===== المقاسات ===== */
 @media(max-width:980px){.links{display:none}.steps{grid-template-columns:repeat(2,minmax(0,1fr))}.facts{grid-template-columns:repeat(2,minmax(0,1fr))}footer .in{grid-template-columns:repeat(3,minmax(0,1fr))}footer .about{grid-column:1/-1}}
 @media(max-width:760px){
@@ -305,6 +338,28 @@ footer .about p{color:var(--soft)}
     <div><svg viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16" fill="var(--tint)"/><rect x="14" y="7" width="6" height="12" rx="3" fill="var(--acc)"/><path d="M10 16q0 7 7 7t7-7M17 23v4" stroke="var(--p)" stroke-width="2.2" fill="none" stroke-linecap="round"/></svg><span>بصوت معلّم حقيقي<small>وتسميع بصوتك أنت</small></span></div>
   </div>
 </div></header>
+
+<section class="pray band" id="pray" aria-labelledby="prayH"><div class="in"><div class="pbox">
+  <div class="phead">
+    <div>
+      <h2 id="prayH"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3c-1.5 3-6 5-6 10v2h12v-2c0-5-4.5-7-6-10z" fill="var(--p)"/><rect x="7" y="15" width="18" height="13" rx="2" fill="var(--p)"/><path d="M13 28v-6a3 3 0 0 1 6 0v6z" fill="var(--p2)"/><rect x="3" y="11" width="3" height="17" rx="1.5" fill="var(--p2)"/><rect x="26" y="11" width="3" height="17" rx="1.5" fill="var(--p2)"/></svg>مواقيت الصلاة</h2>
+      <p class="pmeta"><b id="pPlace"></b> · <span id="pDate"></span> <span class="pguess" id="pGuess" hidden>(مدينة مقترحة من توقيت جهازك)</span></p>
+    </div>
+    <div class="pact">
+      <button class="chip" id="pLoc"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3.5" fill="currentColor"/><circle cx="12" cy="12" r="7.5" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 1.5v3M12 19.5v3M1.5 12h3M19.5 12h3" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>حدّد موقعي</button>
+      <button class="chip" id="pSet" aria-expanded="false" aria-controls="pSetBox">تغيير المدينة</button>
+    </div>
+  </div>
+  <p class="pmsg" id="pMsg" role="status"></p>
+  <div class="pset" id="pSetBox" hidden>
+    <label>المدينة<select id="pCity"></select></label>
+    <label>طريقة الحساب<select id="pMethod"></select></label>
+    <label>وقت العصر<select id="pAsr"><option value="1">الجمهور (ظل الشيء مثله)</option><option value="2">الحنفي (ظل الشيء مثلاه)</option></select></label>
+  </div>
+  <ol class="ptimes" id="pTimes"></ol>
+  <p class="pnext" id="pNext" aria-live="polite"></p>
+  <p class="pnote"><span id="pHow"></span> تُحسب المواقيت على جهازك، وقد تختلف دقيقة أو دقيقتين عن تقويم بلدك الرسمي، والعبرة بأذان مسجدك.</p>
+</div></div></section>
 
 <section class="band" id="hifz"><div class="in">
   <div class="shead">
@@ -716,6 +771,167 @@ function homeInit(){
   /* أفكار حُفظت على الجهاز قبل ربط الخادم: نرسلها مرة واحدة */
   if(window.QA_CLOUD&&QA_CLOUD.on){const o=QA.J("qa-ideas-outbox",[]);if(o.length)Promise.all(o.map(d=>QA_CLOUD.sendIdea(d).catch(()=>false))).then(r=>{const left=o.filter((_,i)=>!r[i]);if(left.length)QA.ls.set("qa-ideas-outbox",JSON.stringify(left));else QA.ls.del("qa-ideas-outbox")})}
 }
+
+/* ===== مواقيت الصلاة: تُحسب على جهاز الزائر، بلا خدمة خارجية ولا مفتاح =====
+   الطريقة الفلكية المعروفة (موقع الشمس وزاوية انخفاضها)، مع طرق الهيئات الرسمية المشهورة.
+   الموقع: مدينة يختارها الزائر، أو موقعه الفعلي إن أذن، وإلا مدينة تُخمَّن من المنطقة الزمنية لجهازه. */
+const PT=(()=>{
+const R=Math.PI/180,sin=d=>Math.sin(d*R),cos=d=>Math.cos(d*R),tan=d=>Math.tan(d*R),
+  asin=x=>Math.asin(x)/R,acos=x=>Math.acos(x)/R,atan2=(y,x)=>Math.atan2(y,x)/R,acot=x=>Math.atan(1/x)/R,
+  fix=(a,b)=>{a-=b*Math.floor(a/b);return a<0?a+b:a},fixH=a=>fix(a,24);
+/* f: زاوية الفجر، i: زاوية العشاء، im: العشاء بعد المغرب بدقائق، adj: تعديل بالدقائق كما تنشره الهيئة */
+const METHODS={
+  mwl:{n:'رابطة العالم الإسلامي',f:18,i:17},
+  makkah:{n:'أم القرى، مكة المكرمة',f:18.5,im:90},
+  uae:{n:'الهيئة العامة للشؤون الإسلامية، الإمارات',f:18.2,i:18.2,adj:{sunrise:-3,dhuhr:3,asr:3,maghrib:3}},
+  egypt:{n:'الهيئة المصرية العامة للمساحة',f:19.5,i:17.5},
+  kuwait:{n:'وزارة الأوقاف، الكويت',f:18,i:17.5},
+  qatar:{n:'وزارة الأوقاف، قطر',f:18,im:90},
+  jordan:{n:'وزارة الأوقاف، الأردن',f:18,i:18},
+  algeria:{n:'وزارة الشؤون الدينية، الجزائر',f:18,i:17},
+  tunisia:{n:'وزارة الشؤون الدينية، تونس',f:18,i:18},
+  morocco:{n:'وزارة الأوقاف، المغرب',f:19,i:17,adj:{dhuhr:5,maghrib:5}},
+  turkey:{n:'رئاسة الشؤون الدينية، تركيا',f:18,i:17,adj:{sunrise:-7,dhuhr:5,asr:4,maghrib:7}},
+  karachi:{n:'جامعة العلوم الإسلامية، كراتشي',f:18,i:18},
+  sea:{n:'ماليزيا وإندونيسيا وسنغافورة',f:20,i:18,adj:{dhuhr:1}},
+  isna:{n:'الجمعية الإسلامية لأمريكا الشمالية',f:15,i:15}
+};
+/* [الاسم، البلد، خط العرض، خط الطول، المنطقة الزمنية، الطريقة، العصر (2 = الحنفي)] */
+const CITIES=[
+  ['أبوظبي','الإمارات',24.4539,54.3773,'Asia/Dubai','uae'],['دبي','الإمارات',25.2048,55.2708,'Asia/Dubai','uae'],
+  ['الشارقة','الإمارات',25.3463,55.4209,'Asia/Dubai','uae'],['العين','الإمارات',24.2075,55.7447,'Asia/Dubai','uae'],
+  ['عجمان','الإمارات',25.4052,55.5136,'Asia/Dubai','uae'],['رأس الخيمة','الإمارات',25.8007,55.9762,'Asia/Dubai','uae'],
+  ['الفجيرة','الإمارات',25.1288,56.3265,'Asia/Dubai','uae'],
+  ['مكة المكرمة','السعودية',21.4225,39.8262,'Asia/Riyadh','makkah'],['المدينة المنورة','السعودية',24.4672,39.6111,'Asia/Riyadh','makkah'],
+  ['الرياض','السعودية',24.7136,46.6753,'Asia/Riyadh','makkah'],['جدة','السعودية',21.4858,39.1925,'Asia/Riyadh','makkah'],
+  ['الدمام','السعودية',26.4207,50.0888,'Asia/Riyadh','makkah'],
+  ['الكويت','الكويت',29.3759,47.9774,'Asia/Kuwait','kuwait'],['الدوحة','قطر',25.2854,51.531,'Asia/Qatar','qatar'],
+  ['المنامة','البحرين',26.2285,50.586,'Asia/Bahrain','makkah'],['مسقط','عُمان',23.588,58.3829,'Asia/Muscat','mwl'],
+  ['صنعاء','اليمن',15.3694,44.191,'Asia/Aden','makkah'],['عدن','اليمن',12.7855,45.0187,'Asia/Aden','makkah'],
+  ['القاهرة','مصر',30.0444,31.2357,'Africa/Cairo','egypt'],['الإسكندرية','مصر',31.2001,29.9187,'Africa/Cairo','egypt'],
+  ['عمّان','الأردن',31.9539,35.9106,'Asia/Amman','jordan'],['القدس','فلسطين',31.7767,35.2345,'Asia/Hebron','jordan'],
+  ['غزة','فلسطين',31.5017,34.4668,'Asia/Gaza','jordan'],['دمشق','سوريا',33.5138,36.2765,'Asia/Damascus','mwl'],
+  ['حلب','سوريا',36.2021,37.1343,'Asia/Damascus','mwl'],['حمص','سوريا',34.7324,36.7137,'Asia/Damascus','mwl'],
+  ['بيروت','لبنان',33.8938,35.5018,'Asia/Beirut','mwl'],['بغداد','العراق',33.3152,44.3661,'Asia/Baghdad','mwl'],
+  ['البصرة','العراق',30.5085,47.7804,'Asia/Baghdad','mwl'],['أربيل','العراق',36.1911,44.0092,'Asia/Baghdad','mwl'],
+  ['الخرطوم','السودان',15.5007,32.5599,'Africa/Khartoum','egypt'],['طرابلس','ليبيا',32.8872,13.1913,'Africa/Tripoli','egypt'],
+  ['تونس','تونس',36.8065,10.1815,'Africa/Tunis','tunisia'],['الجزائر','الجزائر',36.7538,3.0588,'Africa/Algiers','algeria'],
+  ['الرباط','المغرب',34.0209,-6.8416,'Africa/Casablanca','morocco'],['الدار البيضاء','المغرب',33.5731,-7.5898,'Africa/Casablanca','morocco'],
+  ['نواكشوط','موريتانيا',18.0735,-15.9582,'Africa/Nouakchott','mwl'],['مقديشو','الصومال',2.0469,45.3182,'Africa/Mogadishu','mwl'],
+  ['جيبوتي','جيبوتي',11.5721,43.1456,'Africa/Djibouti','mwl'],
+  ['إسطنبول','تركيا',41.0082,28.9784,'Europe/Istanbul','turkey'],['أنقرة','تركيا',39.9334,32.8597,'Europe/Istanbul','turkey'],
+  ['غازي عنتاب','تركيا',37.0662,37.3833,'Europe/Istanbul','turkey'],
+  ['كراتشي','باكستان',24.8607,67.0011,'Asia/Karachi','karachi',2],['لاهور','باكستان',31.5204,74.3587,'Asia/Karachi','karachi',2],
+  ['دلهي','الهند',28.6139,77.209,'Asia/Kolkata','karachi',2],['دكا','بنغلاديش',23.8103,90.4125,'Asia/Dhaka','karachi',2],
+  ['كابل','أفغانستان',34.5553,69.2075,'Asia/Kabul','karachi',2],
+  ['جاكرتا','إندونيسيا',-6.2088,106.8456,'Asia/Jakarta','sea'],['كوالالمبور','ماليزيا',3.139,101.6869,'Asia/Kuala_Lumpur','sea'],
+  ['سنغافورة','سنغافورة',1.3521,103.8198,'Asia/Singapore','sea'],
+  ['لندن','بريطانيا',51.5074,-0.1278,'Europe/London','mwl'],['باريس','فرنسا',48.8566,2.3522,'Europe/Paris','mwl'],
+  ['برلين','ألمانيا',52.52,13.405,'Europe/Berlin','mwl'],['ستوكهولم','السويد',59.3293,18.0686,'Europe/Stockholm','mwl'],
+  ['نيويورك','الولايات المتحدة',40.7128,-74.006,'America/New_York','isna'],['تورنتو','كندا',43.6532,-79.3832,'America/Toronto','isna'],
+  ['سيدني','أستراليا',-33.8688,151.2093,'Australia/Sydney','mwl']
+];
+function julian(y,m,d){if(m<=2){y--;m+=12}const A=Math.floor(y/100),B=2-A+Math.floor(A/4);return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5}
+function sun(jd){const D=jd-2451545,g=fix(357.529+.98560028*D,360),q=fix(280.459+.98564736*D,360),L=fix(q+1.915*sin(g)+.02*sin(2*g),360),e=23.439-.00000036*D;
+  return{decl:asin(sin(e)*sin(L)),eqt:q/15-fixH(atan2(cos(e)*sin(L),cos(L))/15)}}
+/* المواقيت بالساعات بتوقيت غرينتش، ابتداءً من منتصف ليل اليوم المطلوب (قد تكون سالبة أو فوق 24) */
+function times(y,mo,d,lat,lng,mk,asrF,ramadan){
+  const M=METHODS[mk]||METHODS.mwl,jd=julian(y,mo,d)-lng/360;
+  const noon=t=>fixH(12-sun(jd+t/24).eqt);
+  const ang=(a,t,ccw)=>{const s=sun(jd+t/24),v=acos((-sin(a)-sin(s.decl)*sin(lat))/(cos(s.decl)*cos(lat)))/15;return noon(t)+(ccw?-v:v)};
+  const asr=(f,t)=>{const s=sun(jd+t/24);return ang(-acot(f+tan(Math.abs(lat-s.decl))),t)};
+  let T={fajr:5,sunrise:6,dhuhr:12,asr:13,maghrib:18,isha:18};
+  for(let k=0;k<2;k++)T={fajr:ang(M.f,T.fajr,1),sunrise:ang(.833,T.sunrise,1),dhuhr:noon(T.dhuhr),asr:asr(asrF||1,T.asr),maghrib:ang(.833,T.maghrib),isha:M.im?0:ang(M.i,T.isha)};
+  if(M.im)T.isha=T.maghrib+(M.im+(ramadan?30:0))/60;
+  /* خطوط العرض العالية: إن لم تبلغ الشمس الزاوية، يُؤخذ جزء من الليل بنسبة الزاوية */
+  const night=fixH(T.sunrise-T.maghrib);
+  if(isNaN(T.fajr)||fixH(T.sunrise-T.fajr)>M.f/60*night)T.fajr=T.sunrise-M.f/60*night;
+  if(!M.im&&(isNaN(T.isha)||fixH(T.isha-T.maghrib)>M.i/60*night))T.isha=T.maghrib+M.i/60*night;
+  const out={};for(const k in T)out[k]=T[k]-lng/15+((M.adj||{})[k]||0)/60;
+  return out;
+}
+/* التاريخ المحلي في منطقة زمنية */
+function ymd(ms,tz){const p={};for(const x of new Intl.DateTimeFormat('en-US',{timeZone:tz,year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'numeric',hourCycle:'h23'}).formatToParts(ms))p[x.type]=+x.value||x.value;return p}
+/* مواقيت يوم ما (off أيام من اليوم) كأختام زمنية */
+function day(L,off){
+  const now=Date.now(),p=ymd(now,L.tz),base=Date.UTC(p.year,p.month-1,p.day+(off||0)),q=new Date(base);
+  let ram=false;try{ram=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{month:'numeric',timeZone:'UTC'}).format(base+432e5).replace(/\D/g,'')==='9'}catch(e){}
+  const h=times(q.getUTCFullYear(),q.getUTCMonth()+1,q.getUTCDate(),L.lat,L.lng,L.m,L.a,ram),o={};
+  for(const k in h)o[k]=Math.round((base+h[k]*36e5)/6e4)*6e4;
+  return o;
+}
+return{METHODS,CITIES,times,day,ymd};
+})();
+
+/* ===== بطاقة المواقيت في الرئيسية ===== */
+(()=>{
+const box=document.getElementById('pray');if(!box)return;
+const $p=s=>box.querySelector(s),KEY='qa-prayer',NAMES={fajr:'الفجر',sunrise:'الشروق',dhuhr:'الظهر',asr:'العصر',maghrib:'المغرب',isha:'العشاء'};
+const myTz=(()=>{try{return Intl.DateTimeFormat().resolvedOptions().timeZone||''}catch(e){return''}})();
+const C=PT.CITIES;
+const dist=(a,b,c,d)=>{const r=Math.PI/180,x=Math.sin((c-a)*r/2)**2+Math.cos(a*r)*Math.cos(c*r)*Math.sin((d-b)*r/2)**2;return 12742*Math.asin(Math.sqrt(x))};
+const nearest=(lat,lng)=>{let b=0,bd=1e9;C.forEach((c,i)=>{const d=dist(lat,lng,c[2],c[3]);if(d<bd){bd=d;b=i}});return{i:b,d:bd}};
+function load(){
+  const s=QA.J(KEY,null)||{};let L;
+  if(s.geo){const n=nearest(s.geo.lat,s.geo.lng),c=C[n.i];
+    L={lat:s.geo.lat,lng:s.geo.lng,tz:s.geo.tz||myTz||c[4],name:n.d<40?'قرب '+c[0]:'موقعك الحالي',m:c[5],a:c[6]||1,geo:1}}
+  else{let i=C[s.c]?s.c:C.findIndex(c=>c[4]===myTz);const guess=i<0||s.c==null;if(i<0)i=7;const c=C[i];
+    L={lat:c[2],lng:c[3],tz:c[4],name:c[0],m:c[5],a:c[6]||1,ci:i,guess}}
+  if(s.m&&PT.METHODS[s.m])L.m=s.m;if(s.a)L.a=s.a;
+  return L;
+}
+const save=o=>QA.ls.set(KEY,JSON.stringify(Object.assign(QA.J(KEY,null)||{},o)));
+let L=load(),T,T2,timer;
+const hm=(ms)=>{const p=PT.ymd(ms,L.tz),h=p.hour%24;return`<bdi dir="ltr">${h%12||12}:${String(p.minute).padStart(2,'0')}</bdi><small>${h<12?'ص':'م'}</small>`};
+function dates(){
+  const o={timeZone:L.tz};let g='',hj='';
+  try{g=new Intl.DateTimeFormat('ar-u-nu-latn',{...o,weekday:'long',day:'numeric',month:'long'}).format(Date.now())}catch(e){}
+  try{hj=new Intl.DateTimeFormat('ar-u-ca-islamic-umalqura-nu-latn',{...o,day:'numeric',month:'long',year:'numeric'}).format(Date.now())}catch(e){}
+  return [g,hj].filter(Boolean).join('، ');
+}
+const left=ms=>{const m=Math.max(0,Math.round(ms/6e4)),h=Math.floor(m/60),mm=m%60;
+  if(!m)return'الآن';return'بعد '+[h?QA.count(h,['ساعة','ساعتين','ساعات','ساعة']):'',mm?QA.count(mm,['دقيقة','دقيقتين','دقائق','دقيقة']):''].filter(Boolean).join(' و');};
+function draw(){
+  T=PT.day(L,0);T2=PT.day(L,1);
+  const now=Date.now(),dp=PT.ymd(now,L.tz),wd=new Date(Date.UTC(dp.year,dp.month-1,dp.day)).getUTCDay();
+  const order=['fajr','sunrise','dhuhr','asr','maghrib','isha'];
+  let next=order.find(k=>k!=='sunrise'&&T[k]>now-6e4),tmr=!next;if(tmr){T=T2;next='fajr'}const nextAt=T[next],fri=(wd+(tmr?1:0))%7===5;
+  $p('#pTimes').innerHTML=order.map(k=>{const nm=k==='dhuhr'&&fri?'الجمعة':NAMES[k],on=k===next;
+    return`<li class="${k==='sunrise'?'sr':''}${on?' on':''}"${on?' aria-current="time"':''}><span>${nm}</span><b>${hm(T[k])}</b>${on?`<em>${left(nextAt-now)}</em>`:''}</li>`}).join('');
+  const nn=tmr?'الفجر':(next==='dhuhr'&&fri?'الجمعة':NAMES[next]);
+  $p('#pNext').innerHTML=(tmr?'انقضت صلوات اليوم، وهذه مواقيت الغد. ':'')+`الصلاة القادمة: <b>${nn}</b> ${left(nextAt-now)}، عند ${hm(nextAt).replace(/<[^>]*>/g,' ').replace(/ +/g,' ').trim()}`;
+  $p('#pPlace').textContent=L.name;
+  $p('#pDate').textContent=dates();
+  $p('#pGuess').hidden=!L.guess;
+  $p('#pHow').textContent=`طريقة الحساب: ${PT.METHODS[L.m].n}${L.a==2?'، والعصر على المذهب الحنفي':''}.`;
+  clearTimeout(timer);timer=setTimeout(draw,(60-new Date().getSeconds())*1000+200);
+}
+/* الإعدادات */
+const sel=$p('#pCity'),ms=$p('#pMethod'),as=$p('#pAsr');
+let groups={};C.forEach((c,i)=>(groups[c[1]]=groups[c[1]]||[]).push(i));
+sel.innerHTML=(L.geo?'<option value="geo">موقعي الحالي</option>':'')+Object.entries(groups).map(([g,ix])=>`<optgroup label="${g}">${ix.map(i=>`<option value="${i}">${C[i][0]}</option>`).join('')}</optgroup>`).join('');
+ms.innerHTML=Object.entries(PT.METHODS).map(([k,m])=>`<option value="${k}">${m.n}</option>`).join('');
+function syncForm(){sel.value=L.geo?'geo':String(L.ci);ms.value=L.m;as.value=String(L.a)}
+syncForm();
+sel.onchange=()=>{if(sel.value==='geo')return;const s=QA.J(KEY,null)||{};delete s.geo;delete s.m;delete s.a;s.c=+sel.value;QA.ls.set(KEY,JSON.stringify(s));
+  [...sel.options].forEach(o=>{if(o.value==='geo')o.remove()});L=load();syncForm();draw()};
+ms.onchange=()=>{save({m:ms.value});L=load();draw()};
+as.onchange=()=>{save({a:+as.value});L=load();draw()};
+const setBtn=$p('#pSet'),box2=$p('#pSetBox');
+setBtn.onclick=()=>{const o=box2.hidden;box2.hidden=!o;setBtn.setAttribute('aria-expanded',String(o))};
+const locBtn=$p('#pLoc'),msg=$p('#pMsg');
+if(!navigator.geolocation)locBtn.hidden=true;
+locBtn.onclick=()=>{
+  msg.textContent='نطلب موقعك من المتصفح…';
+  navigator.geolocation.getCurrentPosition(p=>{
+    const s=QA.J(KEY,null)||{};delete s.c;delete s.m;delete s.a;s.geo={lat:+p.coords.latitude.toFixed(3),lng:+p.coords.longitude.toFixed(3),tz:myTz};QA.ls.set(KEY,JSON.stringify(s));
+    L=load();if(![...sel.options].some(o=>o.value==='geo'))sel.insertAdjacentHTML('afterbegin','<option value="geo">موقعي الحالي</option>');
+    syncForm();msg.textContent='';draw();
+  },e=>{msg.textContent=e.code===1?'لم يُؤذن بمعرفة الموقع. اختر مدينتك من «تغيير المدينة».':'تعذّر تحديد الموقع الآن. اختر مدينتك من «تغيير المدينة».';box2.hidden=false;setBtn.setAttribute('aria-expanded','true')},{timeout:15000,maximumAge:6e5});
+};
+draw();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)draw()});
+})();
 
 /* الأسماء */
 $("#nm").innerHTML=NAMES.map((n,i)=>`<option value="${i}">${n[0]}</option>`).join("");
